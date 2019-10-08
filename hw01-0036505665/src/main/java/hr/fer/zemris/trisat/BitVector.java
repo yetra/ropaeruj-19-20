@@ -1,5 +1,6 @@
 package hr.fer.zemris.trisat;
 
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -16,13 +17,22 @@ import java.util.Random;
 public class BitVector {
 
     /**
+     * An array of the variables' boolean values.
+     */
+    private boolean[] bits;
+
+    /**
      * Constructs a {@link BitVector} of random boolean values.
      *
      * @param rand the object for generating random values
      * @param numberOfBits the size of the vector
      */
     public BitVector(Random rand, int numberOfBits) {
+        bits = new boolean[numberOfBits];
 
+        for (int i = 0; i < numberOfBits; i++) {
+            bits[i] = rand.nextBoolean();
+        }
     }
 
     /**
@@ -31,7 +41,7 @@ public class BitVector {
      * @param bits the boolean values of the vector
      */
     public BitVector(boolean... bits) {
-
+        this.bits = bits;
     }
 
     /**
@@ -40,16 +50,20 @@ public class BitVector {
      * @param n the size of the vector
      */
     public BitVector(int n) {
-
+        bits = new boolean[n];
     }
 
     /**
      * Returns the boolean value of the index-th variable.
      *
      * @param index the index of the variable whose value should be returned
+     * @throws IllegalArgumentException if the given index is not in range [1, size]
      * @return the boolean value of the index-th variable
      */
     public boolean get(int index) {
+        if (index < 1 || index > getSize()) {
+            throw new IllegalArgumentException("Index must be in range [1, size]");
+        }
         return false;
     }
 
@@ -59,12 +73,12 @@ public class BitVector {
      * @return the number of variables represented by this vector
      */
     public int getSize() {
-        return -1;
+        return bits.length;
     }
 
     @Override
     public String toString() {
-        return null;
+        return Arrays.toString(bits).replace("true", "1").replace("false", "0");
     }
 
     /**
@@ -73,6 +87,6 @@ public class BitVector {
      * @return a mutable copy of this vector
      */
     public MutableBitVector copy() {
-        return null;
+        return new MutableBitVector(bits);
     }
 }
