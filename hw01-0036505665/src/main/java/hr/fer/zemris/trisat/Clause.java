@@ -1,22 +1,47 @@
 package hr.fer.zemris.trisat;
 
+/**
+ * This class represents a sum of literals (variables or their complements) of a formula in conjunctive normal form.
+ *
+ * @author Bruna Dujmović
+ *
+ */
 public class Clause {
 
+    /**
+     * Constructs a clause containing literals specified by the given indexes.
+     *
+     * @param indexes the indexes of literals in this clause
+     */
     public Clause(int[] indexes) {
 
     }
 
-    // vraća broj literala koji čine klauzulu
+    /**
+     * Returns the number of literals in this clause.
+     *
+     * @return the number of literals in this clause
+     */
     public int getSize() {
         return -1;
     }
 
-    // vraća indeks varijable koja je index-ti član ove klauzule
+    /**
+     * Returns the index of the literal that is on the index-th position in this clause.
+     *
+     * @param index the position of the literal
+     * @return the index of the literal that is on the index-th position in this clause
+     */
     public int getLiteral(int index) {
         return -1;
     }
 
-    // vraća true ako predana dodjela zadovoljava ovu klauzulu
+    /**
+     * Returns {@code true} if the given bit assignment satisfies this clause.
+     *
+     * @param assignment the bit assignment to check
+     * @return {@code true} if the given bit assignment satisfies this clause
+     */
     public boolean isSatisfied(BitVector assignment) {
         return false;
     }
