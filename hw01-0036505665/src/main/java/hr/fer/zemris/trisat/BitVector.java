@@ -19,7 +19,7 @@ public class BitVector {
     /**
      * An array of the variables' boolean values.
      */
-    private boolean[] bits;
+    boolean[] bits;
 
     /**
      * Constructs a {@link BitVector} of random boolean values.
