@@ -64,7 +64,8 @@ public class BitVector {
         if (index < 1 || index > getSize()) {
             throw new IllegalArgumentException("Index must be in range [1, size]");
         }
-        return false;
+
+        return bits[index - 1];
     }
 
     /**
