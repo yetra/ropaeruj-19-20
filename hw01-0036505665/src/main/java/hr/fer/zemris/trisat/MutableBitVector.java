@@ -15,7 +15,7 @@ public class MutableBitVector extends BitVector {
      * @param bits the boolean values of the vector
      */
     public MutableBitVector(boolean... bits) {
-
+        super(bits);
     }
 
     /**
@@ -24,7 +24,7 @@ public class MutableBitVector extends BitVector {
      * @param n the size of the vector
      */
     public MutableBitVector(int n) {
-
+        super(n);
     }
 
     /**
@@ -35,6 +35,10 @@ public class MutableBitVector extends BitVector {
      * @throws IllegalArgumentException if the given index is not in range [1, size]
      */
     public void set(int index, boolean value) {
+        if (index < 1 || index > getSize()) {
+            throw new IllegalArgumentException("Index must be in range [1, size]");
+        }
 
+        bits[index - 1] = value;
     }
 }
