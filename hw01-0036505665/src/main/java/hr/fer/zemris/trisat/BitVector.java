@@ -6,7 +6,7 @@ import java.util.Random;
 /**
  * This class is an immutable representation of a 3-SAT problem solution.
  *
- * The size of the vector determines the number of variables of the problem.
+ * The size of the vector is determined by the number of variables of the problem.
  *
  * Each bit in the vector represents the boolean value of a given variable.
  * The leftmost bit is for the variable x1, the next one is for x2, etc.
