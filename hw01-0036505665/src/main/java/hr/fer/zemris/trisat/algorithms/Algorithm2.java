@@ -36,7 +36,7 @@ public class Algorithm2 {
     private BitVector solution;
 
     /**
-     * Constructs an {@link Algorithm1} object for the given formula.
+     * Constructs an {@link Algorithm2} object for the given formula.
      *
      * @param formula the formula whose solution should be found
      */
