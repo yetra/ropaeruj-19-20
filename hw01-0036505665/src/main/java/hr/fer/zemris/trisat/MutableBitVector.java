@@ -19,9 +19,10 @@ public class MutableBitVector extends BitVector {
     }
 
     /**
-     * Constructs a {@link MutableBitVector} of the given size with all bits set to zero.
+     * Constructs a {@link MutableBitVector} from the binary representation of a given integer.
+     * The size of the vector is set to {@link Integer#SIZE}.
      *
-     * @param n the size of the vector
+     * @param n the integer whose binary representation should be used
      */
     public MutableBitVector(int n) {
         super(n);
