@@ -46,6 +46,21 @@ public class BitVector {
 
     /**
      * Constructs a {@link BitVector} from the binary representation of a given integer.
+     * Only the integer's {@code numberOfBits} least significant bits are taken into account.
+     *
+     * @param n the integer whose binary representation should be used
+     * @param numberOfBits the size of the vector
+     */
+    public BitVector(int n, int numberOfBits) {
+        bits = new boolean[numberOfBits];
+
+        for (int i = numberOfBits - 1; i >= 0; i--) {
+            bits[i] = (n & (1 << i)) != 0;
+        }
+    }
+    
+    /**
+     * Constructs a {@link BitVector} from the binary representation of a given integer.
      * The size of the vector is set to {@link Integer#SIZE}.
      *
      * @param n the integer whose binary representation should be used
