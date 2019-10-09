@@ -66,11 +66,7 @@ public class BitVector {
      * @param n the integer whose binary representation should be used
      */
     public BitVector(int n) {
-        bits = new boolean[Integer.SIZE];
-
-        for (int i = Integer.SIZE - 1; i >= 0; i--) {
-            bits[i] = (n & (1 << i)) != 0;
-        }
+        this(n, Integer.SIZE);
     }
 
     /**
