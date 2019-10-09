@@ -23,17 +23,17 @@ public class Algorithm2 {
     /**
      * The maximum number of iterations.
      */
-    private static final int MAX_TRIES = 100_000;
+    static final int MAX_TRIES = 100_000;
 
     /**
      * The formula whose solution should be found.
      */
-    private SATFormula formula;
+    SATFormula formula;
 
     /**
      * The solution of the 3-SAT problem.
      */
-    private BitVector solution;
+    BitVector solution;
 
     /**
      * Constructs an {@link Algorithm2} object for the given formula.
@@ -104,7 +104,7 @@ public class Algorithm2 {
      * @param neighborhood the neighborhood of solutions
      * @return an array of solutions with the highest fitness from a given neighborhood
      */
-    private BitVector[] bestOf(BitVector[] neighborhood) {
+    BitVector[] bestOf(BitVector[] neighborhood) {
         List<BitVector> bestNeighbors = new ArrayList<>();
         int bestFitness = 0;
 
