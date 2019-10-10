@@ -101,7 +101,7 @@ public class Algorithm5 extends Algorithm2 {
     private BitVector getRandomlyFlippedAssignment(Random rand, Clause clause, BitVector assignment) {
         int index = rand.nextInt(clause.getSize());
         int literal = clause.getLiteral(index);
-        int indexToFlip = Math.abs(literal) - 1;
+        int indexToFlip = Math.abs(literal);
 
         MutableBitVector mutableAssignment = assignment.copy();
         mutableAssignment.set(indexToFlip, !assignment.get(indexToFlip));
@@ -124,7 +124,7 @@ public class Algorithm5 extends Algorithm2 {
             MutableBitVector mutableAssignment = assignment.copy();
 
             int literal = clause.getLiteral(i);
-            int indexToFlip = Math.abs(literal) - 1;
+            int indexToFlip = Math.abs(literal);
 
             mutableAssignment.set(indexToFlip, !assignment.get(indexToFlip));
             flippedAssignments[i] = mutableAssignment;
