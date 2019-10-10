@@ -50,7 +50,7 @@ public class SATFormulaBuilder {
         BufferedReader br = Files.newBufferedReader(filePath);
 
         String line;
-        while (!((line = br.readLine()).startsWith("%"))) {
+        while (!((line = br.readLine().trim()).startsWith("%"))) {
 
             if (line.startsWith("c")) {
                 continue;
