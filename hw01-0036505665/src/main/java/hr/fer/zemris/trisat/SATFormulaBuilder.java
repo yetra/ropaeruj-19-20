@@ -24,6 +24,11 @@ public class SATFormulaBuilder {
     private static int numberOfClauses;
 
     /**
+     * The size of formula clauses.
+     */
+    private static int clauseSize;
+
+    /**
      * A counter of formula clauses.
      */
     private static int clauseCount;
@@ -58,12 +63,16 @@ public class SATFormulaBuilder {
                 clauses = new Clause[numberOfClauses];
 
             } else {
-                if (parts.length != numberOfVariables + 1) {
+                if (clauseSize == 0) {
+                    clauseSize = parts.length - 1;
+                }
+
+                if (parts.length != clauseSize + 1) {
                     throw new IllegalArgumentException("Invalid number of variables!");
                 }
 
-                int[] indexes = new int[numberOfVariables];
-                for (int i = 0; i < numberOfVariables; i++) {
+                int[] indexes = new int[clauseSize];
+                for (int i = 0; i < clauseSize; i++) {
                     indexes[i] = Integer.parseInt(parts[i]);
                 }
 
