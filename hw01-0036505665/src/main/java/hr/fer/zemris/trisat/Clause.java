@@ -56,13 +56,15 @@ public class Clause {
      * @return {@code true} if the given bit assignment satisfies this clause
      */
     public boolean isSatisfied(BitVector assignment) {
-        boolean result = false;
-
         for (int index : literals) {
-            result |= assignment.get(Math.abs(index));
+            boolean bit = assignment.get(Math.abs(index));
+
+            if ((index > 0) == bit) {
+                return true;
+            }
         }
 
-        return result;
+        return false;
     }
 
     @Override
