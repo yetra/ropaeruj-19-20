@@ -1,5 +1,6 @@
 package hr.fer.zemris.trisat;
 
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -109,6 +110,6 @@ public class BitVector {
      * @return a mutable copy of this vector
      */
     public MutableBitVector copy() {
-        return new MutableBitVector(bits);
+        return new MutableBitVector(Arrays.copyOf(bits, bits.length));
     }
 }
