@@ -53,15 +53,15 @@ public class SATFormula {
      * Returns the clause that is on the specified index in this formula.
      *
      * @param index the index of the clause
-     * @throws IllegalArgumentException if the given index is not in range [1, size]
+     * @throws IllegalArgumentException if the given index is not in range [0, size-1]
      * @return the clause that is on the specified index in this formula
      */
     public Clause getClause(int index) {
-        if (index < 1 || index > getNumberOfClauses()) {
-            throw new IllegalArgumentException("Index must be in range [1, size]");
+        if (index < 0 || index >= getNumberOfClauses()) {
+            throw new IllegalArgumentException("Index must be in range [0, size-1]");
         }
 
-        return clauses[index - 1];
+        return clauses[index];
     }
 
     /**
