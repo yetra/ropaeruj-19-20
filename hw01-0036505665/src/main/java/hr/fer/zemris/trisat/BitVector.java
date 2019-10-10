@@ -53,8 +53,8 @@ public class BitVector {
     public BitVector(int n, int numberOfBits) {
         bits = new boolean[numberOfBits];
 
-        for (int i = numberOfBits - 1; i >= 0; i--) {
-            bits[i] = (n & (1 << i)) != 0;
+        for (int i = 0; i < numberOfBits; i++) {
+            bits[numberOfBits - 1 - i] = (1 << i & n) != 0;
         }
     }
     
