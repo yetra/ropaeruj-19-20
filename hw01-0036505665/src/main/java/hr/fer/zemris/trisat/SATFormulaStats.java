@@ -62,7 +62,7 @@ public class SATFormulaStats {
         numberOfSatisfied = 0;
 
         if (updatePercentages) {
-            for (int i = 1, size = formula.getNumberOfClauses(); i <= size; i++) {
+            for (int i = 0, size = formula.getNumberOfClauses(); i < size; i++) {
                 if (formula.getClause(i).isSatisfied(assignment)) {
                     percentages[i] += (1 - percentages[i]) * PERCENTAGE_CONSTANT_UP;
                     numberOfSatisfied++;
@@ -75,7 +75,7 @@ public class SATFormulaStats {
         } else {
             percentageBonus = 0.0;
 
-            for (int i = 1, size = formula.getNumberOfClauses(); i <= size; i++) {
+            for (int i = 0, size = formula.getNumberOfClauses(); i < size; i++) {
                 if (formula.getClause(i).isSatisfied(assignment)) {
                     percentageBonus += PERCENTAGE_UNIT_AMOUNT * (1 - percentages[i]);
 
