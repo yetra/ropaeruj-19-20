@@ -12,17 +12,7 @@ import hr.fer.zemris.trisat.SATFormula;
  * @author Bruna Dujmović
  *
  */
-public class Algorithm1 {
-
-    /**
-     * The formula whose solution should be found.
-     */
-    private SATFormula formula;
-
-    /**
-     * The solution of the 3-SAT problem.
-     */
-    private BitVector solution;
+public class Algorithm1 extends Algorithm {
 
     /**
      * Constructs an {@link Algorithm1} object for the given formula.

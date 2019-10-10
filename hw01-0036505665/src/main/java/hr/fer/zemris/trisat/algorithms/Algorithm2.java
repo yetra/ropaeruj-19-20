@@ -18,22 +18,12 @@ import java.util.Random;
  * @author Bruna Dujmović
  *
  */
-public class Algorithm2 {
+public class Algorithm2 extends Algorithm {
 
     /**
      * The maximum number of iterations.
      */
     static final int MAX_TRIES = 100_000;
-
-    /**
-     * The formula whose solution should be found.
-     */
-    SATFormula formula;
-
-    /**
-     * The solution of the 3-SAT problem.
-     */
-    BitVector solution;
 
     /**
      * Constructs an {@link Algorithm2} object for the given formula.

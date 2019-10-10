@@ -15,7 +15,7 @@ import java.util.*;
  * @author Bruna Dujmović
  *
  */
-public class Algorithm3 {
+public class Algorithm3 extends Algorithm {
 
     /**
      * The precision used for {@code double} comparison.
@@ -28,19 +28,9 @@ public class Algorithm3 {
     private static final int MAX_TRIES = 100_000;
 
     /**
-     * The formula whose solution should be found.
-     */
-    private SATFormula formula;
-
-    /**
      * An object storing statistical data for the formula.
      */
     private SATFormulaStats stats;
-
-    /**
-     * The solution of the 3-SAT problem.
-     */
-    private BitVector solution;
 
     /**
      * Constructs an {@link Algorithm3} object for the given formula.
