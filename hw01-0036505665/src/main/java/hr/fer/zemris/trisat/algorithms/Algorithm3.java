@@ -28,6 +28,11 @@ public class Algorithm3 extends Algorithm {
     private static final int MAX_TRIES = 100_000;
 
     /**
+     * The number of best solutions to extract from a neighborhood.
+     */
+    private static final int NUMBER_OF_BEST = 2;
+
+    /**
      * An object storing statistical data for the formula.
      */
     private SATFormulaStats stats;
@@ -97,8 +102,7 @@ public class Algorithm3 extends Algorithm {
     }
 
     /**
-     * Returns an array of {@link SATFormulaStats#NUMBER_OF_BEST} solutions with
-     * the highest fitness from a given neighborhood.
+     * Returns an array of {@link #NUMBER_OF_BEST} solutions with the highest fitness from a given neighborhood.
      *
      * @param neighborhood the neighborhood of solutions
      * @return an array of solutions with the highest fitness from a given neighborhood
@@ -107,7 +111,7 @@ public class Algorithm3 extends Algorithm {
         List<BitVector> neighbors = Arrays.asList(neighborhood);
         neighbors.sort(Comparator.comparingDouble(this::fit).reversed());
 
-        List<BitVector> bestNeighbors = neighbors.subList(0, SATFormulaStats.NUMBER_OF_BEST);
+        List<BitVector> bestNeighbors = neighbors.subList(0, NUMBER_OF_BEST);
 
         return (BitVector[]) bestNeighbors.toArray();
     }

@@ -4,14 +4,9 @@ package hr.fer.zemris.trisat;
  * A helper class for obtaining and maintaining statistics used in {@link hr.fer.zemris.trisat.algorithms.Algorithm3}.
  *
  * @author Bruna Dujmović
- * 
+ *
  */
 public class SATFormulaStats {
-
-    /**
-     * The number of best solutions to extract from a neighborhood.
-     */
-    public static final int NUMBER_OF_BEST = 2;
 
     /**
      * Constants used in calculations.
