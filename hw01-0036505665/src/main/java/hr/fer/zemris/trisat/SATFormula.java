@@ -71,13 +71,13 @@ public class SATFormula {
      * @return {@code true} if the given bit assignment satisfies this formula
      */
     public boolean isSatisfied(BitVector assignment) {
-        boolean result = true;
-
         for (Clause clause : clauses) {
-            result &= clause.isSatisfied(assignment);
+            if (!clause.isSatisfied(assignment)) {
+                return false;
+            }
         }
 
-        return result;
+        return true;
     }
 
     @Override
