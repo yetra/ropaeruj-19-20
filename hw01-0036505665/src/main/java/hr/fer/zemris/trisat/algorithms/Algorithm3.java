@@ -18,11 +18,6 @@ import java.util.*;
 public class Algorithm3 extends Algorithm {
 
     /**
-     * The precision used for {@code double} comparison.
-     */
-    private static final double DOUBLE_PRECISION = 1E-10;
-
-    /**
      * The maximum number of iterations.
      */
     private static final int MAX_TRIES = 100_000;
