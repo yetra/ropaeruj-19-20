@@ -34,7 +34,7 @@ public class Algorithm1 extends Algorithm {
      * @return a solution if found, else {@code null}
      */
     public BitVector execute() {
-        double maximumValue = Math.pow(2, formula.getNumberOfClauses());
+        double maximumValue = Math.pow(2, formula.getNumberOfVariables());
         int currentValue = 0;
 
         while (currentValue < maximumValue) {
