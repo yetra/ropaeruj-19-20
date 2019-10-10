@@ -76,7 +76,7 @@ public class Algorithm6 extends Algorithm2 {
         int numberToFlip = rand.nextInt(formula.getNumberOfVariables() + 1);
 
         for (int i = 0; i < numberToFlip; i++) {
-            int index = rand.nextInt(assignment.getSize());
+            int index = rand.nextInt(assignment.getSize()) + 1;
             mutableAssignment.set(index, !assignment.get(index));
         }
 
