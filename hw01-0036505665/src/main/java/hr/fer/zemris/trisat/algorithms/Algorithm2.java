@@ -112,6 +112,6 @@ public class Algorithm2 extends Algorithm {
             }
         }
 
-        return (BitVector[]) bestNeighbors.toArray();
+        return bestNeighbors.toArray(new BitVector[0]);
     }
 }

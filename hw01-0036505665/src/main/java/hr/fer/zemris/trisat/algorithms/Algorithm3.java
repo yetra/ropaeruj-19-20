@@ -113,6 +113,6 @@ public class Algorithm3 extends Algorithm {
 
         List<BitVector> bestNeighbors = neighbors.subList(0, NUMBER_OF_BEST);
 
-        return (BitVector[]) bestNeighbors.toArray();
+        return bestNeighbors.toArray(new BitVector[0]);
     }
 }
