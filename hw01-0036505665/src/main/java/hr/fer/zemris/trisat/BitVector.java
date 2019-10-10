@@ -1,6 +1,5 @@
 package hr.fer.zemris.trisat;
 
-import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -95,7 +94,13 @@ public class BitVector {
 
     @Override
     public String toString() {
-        return Arrays.toString(bits).replace("true", "1").replace("false", "0");
+        StringBuilder sb = new StringBuilder();
+
+        for (boolean bit : bits) {
+            sb.append(bit ? "1" : "0");
+        }
+
+        return sb.toString();
     }
 
     /**
