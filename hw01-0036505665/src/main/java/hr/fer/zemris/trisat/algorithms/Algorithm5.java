@@ -54,7 +54,6 @@ public class Algorithm5 extends Algorithm2 {
                 }
 
                 Clause clause = getRandomUnsatisfiedClause(rand, assignment);
-                MutableBitVector mutableAssignment = assignment.copy();
 
                 if (rand.nextDouble() < RANDOM_FLIP_PROBABILITY) {
                     assignment = getRandomlyFlippedAssignment(rand, clause, assignment);
