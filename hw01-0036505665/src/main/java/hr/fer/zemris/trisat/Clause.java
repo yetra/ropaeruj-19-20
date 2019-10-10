@@ -38,15 +38,15 @@ public class Clause {
      * Returns the index of the literal that is on the index-th position in this clause.
      *
      * @param index the position of the literal
-     * @throws IllegalArgumentException if the given index is not in range [1, size]
+     * @throws IllegalArgumentException if the given position is not in range [0, size-1]
      * @return the index of the literal that is on the index-th position in this clause
      */
     public int getLiteral(int index) {
-        if (index < 1 || index > getSize()) {
-            throw new IllegalArgumentException("Index must be in range [1, size]");
+        if (index < 0 || index >= getSize()) {
+            throw new IllegalArgumentException("Position must be in range [0, size-1]");
         }
 
-        return literals[index - 1];
+        return literals[index];
     }
 
     /**
