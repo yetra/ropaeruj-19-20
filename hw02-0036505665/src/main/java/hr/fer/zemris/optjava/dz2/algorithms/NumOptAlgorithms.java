@@ -1,6 +1,8 @@
 package hr.fer.zemris.optjava.dz2.algorithms;
 
+import hr.fer.zemris.optjava.dz2.Util;
 import hr.fer.zemris.optjava.dz2.functions.IFunction;
+import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
 
 /**
@@ -19,7 +21,24 @@ public class NumOptAlgorithms {
      * @return the approximate minimum of the given function
      */
     public static RealVector gradientDescent(IFunction function, int maxTries) {
-        return null;
+        RealVector nullVector = new ArrayRealVector(function.getNumberOfVariables());
+        RealVector solution = Util.getRandomVector(function.getNumberOfVariables());
+        int t = 0;
+
+        while (t < maxTries) {
+            if (function.getGradientIn(solution).equals(nullVector)) {
+                return solution;
+            }
+
+            RealVector d = function.getGradientIn(solution).mapMultiplyToSelf(-1.0);
+
+            double lambda = getLambda(d, solution);
+
+            solution = solution.add(solution.mapMultiplyToSelf(lambda));
+            t++;
+        }
+
+        return solution;
     }
 
     /**
