@@ -31,5 +31,5 @@ public interface IFunction {
      * @param point the point for calculating the value of the gradient
      * @return the value of the gradient of this function in the specified point
      */
-    double getGradientIn(RealVector point);
+    RealVector getGradientIn(RealVector point);
 }
