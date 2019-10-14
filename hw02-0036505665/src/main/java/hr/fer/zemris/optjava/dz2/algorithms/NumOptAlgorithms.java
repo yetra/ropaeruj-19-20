@@ -2,7 +2,10 @@ package hr.fer.zemris.optjava.dz2.algorithms;
 
 import hr.fer.zemris.optjava.dz2.Util;
 import hr.fer.zemris.optjava.dz2.functions.IFunction;
+import hr.fer.zemris.optjava.dz2.functions.IHFunction;
 import org.apache.commons.math3.linear.ArrayRealVector;
+import org.apache.commons.math3.linear.MatrixUtils;
+import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 
 /**
@@ -48,7 +51,26 @@ public class NumOptAlgorithms {
      * @param maxTries the maximum number of iterations before the algorithm terminates
      * @return the approximate minimum of the given function
      */
-    public static RealVector newtonsMethod(IFunction function, int maxTries) {
-        return null;
+    public static RealVector newtonsMethod(IHFunction function, int maxTries) {
+        RealVector nullVector = new ArrayRealVector(function.getNumberOfVariables());
+        RealVector solution = Util.getRandomVector(function.getNumberOfVariables());
+        int t = 0;
+
+        while (t < maxTries) {
+            if (function.getGradientIn(solution).equals(nullVector)) {
+                return solution;
+            }
+
+            RealVector negativeGradient = function.getGradientIn(solution).mapMultiplyToSelf(-1.0);
+            RealMatrix inverseHessian = MatrixUtils.inverse(function.getHessianIn(solution));
+            RealVector d = inverseHessian.operate(negativeGradient);
+
+            double lambda = getLambda(d, solution);
+
+            solution = solution.add(solution.mapMultiplyToSelf(lambda));
+            t++;
+        }
+
+        return solution;
     }
 }
