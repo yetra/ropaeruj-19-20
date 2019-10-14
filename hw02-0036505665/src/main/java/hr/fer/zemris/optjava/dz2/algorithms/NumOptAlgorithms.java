@@ -38,6 +38,7 @@ public class NumOptAlgorithms {
             double lambda = getLambda(d, solution);
 
             solution = solution.add(solution.mapMultiplyToSelf(lambda));
+            System.out.println("Iteration " + t + " - " + solution);
             t++;
         }
 
@@ -68,6 +69,7 @@ public class NumOptAlgorithms {
             double lambda = getLambda(d, solution);
 
             solution = solution.add(solution.mapMultiplyToSelf(lambda));
+            System.out.println("Iteration " + t + " - " + solution);
             t++;
         }
 
