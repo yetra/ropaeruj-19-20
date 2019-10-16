@@ -33,8 +33,7 @@ public class Jednostavno {
         }
 
         int maxTries = Integer.parseInt(args[1]);
-
-        // TODO catch NumberFormatException?
+        
         RealVector initialSolution = null;
         if (args.length == 4) {
             double[] values = {Double.parseDouble(args[2]), Double.parseDouble(args[3])};
