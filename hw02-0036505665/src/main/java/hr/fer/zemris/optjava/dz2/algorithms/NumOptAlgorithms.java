@@ -2,7 +2,6 @@ package hr.fer.zemris.optjava.dz2.algorithms;
 
 import hr.fer.zemris.optjava.dz2.functions.IFunction;
 import hr.fer.zemris.optjava.dz2.functions.IHFunction;
-import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
@@ -18,7 +17,7 @@ public class NumOptAlgorithms {
     /**
      * A constant used for comparing doubles to zero.
      */
-    private static final double PRECISION = 1E-3;
+    private static final double PRECISION = 1E-6;
 
     /**
      * Implements the gradient descent algorithm for finding the minimum of a given function.
@@ -29,14 +28,13 @@ public class NumOptAlgorithms {
      * @return the approximate minimum of the given function
      */
     public static RealVector gradientDescent(IFunction function, int maxTries, RealVector solution) {
-        RealVector nullVector = new ArrayRealVector(function.getNumberOfVariables());
         if (solution == null) {
             solution = VectorBuilder.getRandomVector(function.getNumberOfVariables());
         }
         int t = 0;
 
         while (t < maxTries) {
-            if (function.getGradientIn(solution).equals(nullVector)) {
+            if (function.getGradientIn(solution).getNorm() < PRECISION) {
                 return solution;
             }
 
@@ -61,14 +59,13 @@ public class NumOptAlgorithms {
      * @return the approximate minimum of the given function
      */
     public static RealVector newtonsMethod(IHFunction function, int maxTries, RealVector solution) {
-        RealVector nullVector = new ArrayRealVector(function.getNumberOfVariables());
         if (solution == null) {
             solution = VectorBuilder.getRandomVector(function.getNumberOfVariables());
         }
         int t = 0;
 
         while (t < maxTries) {
-            if (function.getGradientIn(solution).equals(nullVector)) {
+            if (function.getGradientIn(solution).getNorm() < PRECISION) {
                 return solution;
             }
 
