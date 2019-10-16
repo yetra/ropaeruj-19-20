@@ -42,7 +42,7 @@ public class NumOptAlgorithms {
 
             double lambda = getLambda(function, d, solution);
 
-            solution = solution.add(solution.mapMultiply(lambda));
+            solution = solution.add(d.mapMultiply(lambda));
             System.out.println("Iteration " + t + " - " + solution);
             t++;
         }
@@ -75,7 +75,7 @@ public class NumOptAlgorithms {
 
             double lambda = getLambda(function, d, solution);
 
-            solution = solution.add(solution.mapMultiply(lambda));
+            solution = solution.add(d.mapMultiply(lambda));
             System.out.println("Iteration " + t + " - " + solution);
             t++;
         }
