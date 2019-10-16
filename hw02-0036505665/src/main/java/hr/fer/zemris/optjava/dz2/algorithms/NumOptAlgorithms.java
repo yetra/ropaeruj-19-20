@@ -17,6 +17,11 @@ import org.apache.commons.math3.linear.RealVector;
 public class NumOptAlgorithms {
 
     /**
+     * A constant used for comparing doubles to zero.
+     */
+    private static final double PRECISION = 1E-3;
+
+    /**
      * Implements the gradient descent algorithm for finding the minimum of a given function.
      *
      * @param function the function whose minimum should be found
@@ -35,7 +40,7 @@ public class NumOptAlgorithms {
 
             RealVector d = function.getGradientIn(solution).mapMultiplyToSelf(-1.0);
 
-            double lambda = getLambda(d, solution);
+            double lambda = getLambda(function, d, solution);
 
             solution = solution.add(solution.mapMultiplyToSelf(lambda));
             System.out.println("Iteration " + t + " - " + solution);
@@ -66,7 +71,7 @@ public class NumOptAlgorithms {
             RealMatrix inverseHessian = MatrixUtils.inverse(function.getHessianIn(solution));
             RealVector d = inverseHessian.operate(negativeGradient);
 
-            double lambda = getLambda(d, solution);
+            double lambda = getLambda(function, d, solution);
 
             solution = solution.add(solution.mapMultiplyToSelf(lambda));
             System.out.println("Iteration " + t + " - " + solution);
@@ -74,5 +79,63 @@ public class NumOptAlgorithms {
         }
 
         return solution;
+    }
+
+    /**
+     * Returns the lambda parameter calculated using the bisection method.
+     *
+     * @param function the function that is being minimized
+     * @param d a vector in the direction of the change needed to decrease the function's values
+     * @param solution the current solution
+     * @return the lambda parameter calculated using the bisection method
+     */
+    private static double getLambda(IFunction function, RealVector d, RealVector solution) {
+        double lower = 0;
+        double upper = getLambdaUpper(function, d, solution);
+
+        double lambda;
+        while (true) {
+            lambda = (lower + upper) / 2;
+
+            RealVector x = solution.add(d.mapMultiplyToSelf(lambda));
+            double thetaDerivative = function.getGradientIn(x).dotProduct(d);
+
+            if (Math.abs(thetaDerivative) < PRECISION) {
+                break;
+            }
+
+            if (thetaDerivative > 0) {
+                upper = lambda;
+            } else {
+                lower = lambda;
+            }
+        }
+
+        return lambda;
+    }
+
+    /**
+     * Returns the upper bound of the range in which the lambda parameter lies.
+     *
+     * @param function the function that is being minimized
+     * @param d a vector in the direction of the change needed to decrease the function's values
+     * @param solution the current solution
+     * @return the upper bound of the range in which the lambda parameter lies
+     */
+    private static double getLambdaUpper(IFunction function, RealVector d, RealVector solution) {
+        double upper = 1;
+
+        while (true) {
+            RealVector x = solution.add(d.mapMultiplyToSelf(upper));
+            double thetaDerivative = function.getGradientIn(x).dotProduct(d);
+
+            if (thetaDerivative > 0) {
+                break;
+            } else {
+                upper *= 2;
+            }
+        }
+
+        return upper;
     }
 }
