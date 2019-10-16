@@ -1,6 +1,5 @@
 package hr.fer.zemris.optjava.dz2.algorithms;
 
-import hr.fer.zemris.optjava.dz2.Util;
 import hr.fer.zemris.optjava.dz2.functions.IFunction;
 import hr.fer.zemris.optjava.dz2.functions.IHFunction;
 import org.apache.commons.math3.linear.ArrayRealVector;
@@ -30,7 +29,7 @@ public class NumOptAlgorithms {
      */
     public static RealVector gradientDescent(IFunction function, int maxTries) {
         RealVector nullVector = new ArrayRealVector(function.getNumberOfVariables());
-        RealVector solution = Util.getRandomVector(function.getNumberOfVariables());
+        RealVector solution = VectorBuilder.getRandomVector(function.getNumberOfVariables());
         int t = 0;
 
         while (t < maxTries) {
@@ -59,7 +58,7 @@ public class NumOptAlgorithms {
      */
     public static RealVector newtonsMethod(IHFunction function, int maxTries) {
         RealVector nullVector = new ArrayRealVector(function.getNumberOfVariables());
-        RealVector solution = Util.getRandomVector(function.getNumberOfVariables());
+        RealVector solution = VectorBuilder.getRandomVector(function.getNumberOfVariables());
         int t = 0;
 
         while (t < maxTries) {

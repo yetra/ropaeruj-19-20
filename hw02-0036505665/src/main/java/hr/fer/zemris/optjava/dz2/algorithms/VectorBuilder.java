@@ -1,4 +1,4 @@
-package hr.fer.zemris.optjava.dz2;
+package hr.fer.zemris.optjava.dz2.algorithms;
 
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
@@ -6,12 +6,12 @@ import org.apache.commons.math3.linear.RealVector;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * A class containing helper methods and constants.
+ * A helper class for creating {@link RealVector} objects.
  *
  * @author Bruna Dujmović
  * 
  */
-public class Util {
+public class VectorBuilder {
 
     /**
      * The default minimum value of a randomly generated vector.
