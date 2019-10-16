@@ -35,7 +35,7 @@ public class Prijenosna {
 
         TransferFunction function = null;
         try {
-            function = (TransferFunction) FunctionBuilder.fromFile(FunctionType.TRANSFER, filePath);
+            function = (TransferFunction) FunctionBuilder.fromFile(FunctionType.TRANSFER, 5, filePath);
 
         } catch (IOException e) {
             System.out.println("An I/O error occured!");

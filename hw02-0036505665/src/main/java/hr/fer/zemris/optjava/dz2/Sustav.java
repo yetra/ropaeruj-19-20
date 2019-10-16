@@ -39,7 +39,7 @@ public class Sustav {
 
         LinearSystemFunction function = null;
         try {
-            function = (LinearSystemFunction) FunctionBuilder.fromFile(FunctionType.LINEAR_SYSTEM, filePath);
+            function = (LinearSystemFunction) FunctionBuilder.fromFile(FunctionType.LINEAR_SYSTEM, 10, filePath);
 
         } catch (IOException e) {
             System.out.println("An I/O error occured!");

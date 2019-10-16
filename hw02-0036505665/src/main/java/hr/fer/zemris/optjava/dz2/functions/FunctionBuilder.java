@@ -33,13 +33,12 @@ public class FunctionBuilder {
      * @throws IOException if an I/O error occurs while reading
      * @throws IllegalArgumentException if the file is incorrectly formatted
      */
-    public static IFunction fromFile(FunctionType type, Path filePath) throws IOException {
+    public static IFunction fromFile(FunctionType type, int numberOfVariables, Path filePath) throws IOException {
         List<String> lines = Files.readAllLines(filePath);
         lines.removeIf(line -> line.startsWith("#"));
-        int numberOfVariables = lines.size();
 
-        double[][] xes = new double[numberOfVariables][numberOfVariables];
-        double[] ys = new double[numberOfVariables];
+        double[][] xes = new double[lines.size()][numberOfVariables];
+        double[] ys = new double[lines.size()];
 
         for (int i = 0; i < numberOfVariables; i++) {
             String[] parts = lines.get(i).substring(1, lines.get(i).length() - 1).split(", ");
