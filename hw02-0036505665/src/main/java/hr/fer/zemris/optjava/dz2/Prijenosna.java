@@ -1,6 +1,8 @@
 package hr.fer.zemris.optjava.dz2;
 
 import hr.fer.zemris.optjava.dz2.algorithms.NumOptAlgorithms;
+import hr.fer.zemris.optjava.dz2.functions.FunctionBuilder;
+import hr.fer.zemris.optjava.dz2.functions.FunctionBuilder.FunctionType;
 import hr.fer.zemris.optjava.dz2.functions.TransferFunction;
 import org.apache.commons.math3.linear.RealVector;
 
@@ -35,7 +37,7 @@ public class Prijenosna {
 
         TransferFunction function = null;
         try {
-            function = TransferFunction.fromFile(filePath);
+            function = (TransferFunction) FunctionBuilder.fromFile(FunctionType.TRANSFER, filePath);
 
         } catch (IOException e) {
             System.out.println("An I/O error occured!");

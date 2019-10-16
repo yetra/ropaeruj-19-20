@@ -1,6 +1,8 @@
 package hr.fer.zemris.optjava.dz2;
 
 import hr.fer.zemris.optjava.dz2.algorithms.NumOptAlgorithms;
+import hr.fer.zemris.optjava.dz2.functions.FunctionBuilder;
+import hr.fer.zemris.optjava.dz2.functions.FunctionBuilder.FunctionType;
 import hr.fer.zemris.optjava.dz2.functions.LinearSystemFunction;
 import org.apache.commons.math3.linear.RealVector;
 
@@ -38,7 +40,7 @@ public class Sustav {
 
         LinearSystemFunction function = null;
         try {
-            function = LinearSystemFunction.fromFile(filePath);
+            function = (LinearSystemFunction) FunctionBuilder.fromFile(FunctionType.LINEAR_SYSTEM, filePath);
 
         } catch (IOException e) {
             System.out.println("An I/O error occured!");
