@@ -125,7 +125,7 @@ public class NumOptAlgorithms {
      * @return the upper bound of the range in which the lambda parameter lies
      */
     private static double getLambdaUpper(IFunction function, RealVector d, RealVector solution) {
-        double upper = 1;
+        double upper = 0.1;
 
         while (true) {
             RealVector x = solution.add(d.mapMultiply(upper));
