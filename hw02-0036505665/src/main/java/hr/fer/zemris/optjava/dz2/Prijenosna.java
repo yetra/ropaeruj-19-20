@@ -48,7 +48,7 @@ public class Prijenosna {
         RealVector solution = null;
         switch (args[0]) {
             case "grad":
-                solution = NumOptAlgorithms.gradientDescent(function, maxTries);
+                solution = NumOptAlgorithms.gradientDescent(function, maxTries, null);
                 break;
             case "newton":
                 System.out.println("Unsupported algorithm! Try gradient descent.");

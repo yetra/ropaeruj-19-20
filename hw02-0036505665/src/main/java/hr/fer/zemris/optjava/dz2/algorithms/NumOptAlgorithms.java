@@ -25,11 +25,14 @@ public class NumOptAlgorithms {
      *
      * @param function the function whose minimum should be found
      * @param maxTries the maximum number of iterations before the algorithm terminates
+     * @param solution the initial solution or {@code null} if a random initial solution should be generated
      * @return the approximate minimum of the given function
      */
-    public static RealVector gradientDescent(IFunction function, int maxTries) {
+    public static RealVector gradientDescent(IFunction function, int maxTries, RealVector solution) {
         RealVector nullVector = new ArrayRealVector(function.getNumberOfVariables());
-        RealVector solution = VectorBuilder.getRandomVector(function.getNumberOfVariables());
+        if (solution == null) {
+            solution = VectorBuilder.getRandomVector(function.getNumberOfVariables());
+        }
         int t = 0;
 
         while (t < maxTries) {
@@ -54,11 +57,14 @@ public class NumOptAlgorithms {
      *
      * @param function the function whose minimum should be found
      * @param maxTries the maximum number of iterations before the algorithm terminates
+     * @param solution the initial solution or {@code null} if a random initial solution should be generated
      * @return the approximate minimum of the given function
      */
-    public static RealVector newtonsMethod(IHFunction function, int maxTries) {
+    public static RealVector newtonsMethod(IHFunction function, int maxTries, RealVector solution) {
         RealVector nullVector = new ArrayRealVector(function.getNumberOfVariables());
-        RealVector solution = VectorBuilder.getRandomVector(function.getNumberOfVariables());
+        if (solution == null) {
+            solution = VectorBuilder.getRandomVector(function.getNumberOfVariables());
+        }
         int t = 0;
 
         while (t < maxTries) {

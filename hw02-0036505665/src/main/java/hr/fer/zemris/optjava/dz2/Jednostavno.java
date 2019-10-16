@@ -35,7 +35,6 @@ public class Jednostavno {
         int maxTries = Integer.parseInt(args[1]);
 
         // TODO catch NumberFormatException?
-        // TODO use initial solution
         RealVector initialSolution = null;
         if (args.length == 4) {
             double[] values = {Double.parseDouble(args[2]), Double.parseDouble(args[3])};
@@ -45,19 +44,19 @@ public class Jednostavno {
         RealVector solution = null;
         switch (args[0]) {
             case "1a":
-                solution = NumOptAlgorithms.gradientDescent(new Function1(), maxTries);
+                solution = NumOptAlgorithms.gradientDescent(new Function1(), maxTries, initialSolution);
                 break;
 
             case "1b":
-                solution = NumOptAlgorithms.newtonsMethod(new Function1(), maxTries);
+                solution = NumOptAlgorithms.newtonsMethod(new Function1(), maxTries, initialSolution);
                 break;
 
             case "2a":
-                solution = NumOptAlgorithms.gradientDescent(new Function2(), maxTries);
+                solution = NumOptAlgorithms.gradientDescent(new Function2(), maxTries, initialSolution);
                 break;
 
             case "2b":
-                solution = NumOptAlgorithms.newtonsMethod(new Function2(), maxTries);
+                solution = NumOptAlgorithms.newtonsMethod(new Function2(), maxTries, initialSolution);
                 break;
 
             default:

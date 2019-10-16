@@ -52,10 +52,10 @@ public class Sustav {
         RealVector solution = null;
         switch (args[0]) {
             case "grad":
-                solution = NumOptAlgorithms.gradientDescent(function, maxTries);
+                solution = NumOptAlgorithms.gradientDescent(function, maxTries, null);
                 break;
             case "newton":
-                solution = NumOptAlgorithms.newtonsMethod(function, maxTries);
+                solution = NumOptAlgorithms.newtonsMethod(function, maxTries, null);
                 break;
             default:
                 System.out.println("Unknown algorithm name " + args[0]);
