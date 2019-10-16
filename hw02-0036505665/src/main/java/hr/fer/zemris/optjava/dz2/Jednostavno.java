@@ -32,7 +32,6 @@ public class Jednostavno {
             System.exit(1);
         }
 
-        String taskName = args[0];
         int maxTries = Integer.parseInt(args[1]);
 
         // TODO catch NumberFormatException?
@@ -44,7 +43,7 @@ public class Jednostavno {
         }
 
         RealVector solution = null;
-        switch (taskName) {
+        switch (args[0]) {
             case "1a":
                 solution = NumOptAlgorithms.gradientDescent(new Function1(), maxTries);
                 break;
@@ -62,7 +61,7 @@ public class Jednostavno {
                 break;
 
             default:
-                System.out.println("Unknown task " + taskName);
+                System.out.println("Unknown task " + args[0]);
                 System.exit(1);
         }
 

@@ -30,10 +30,8 @@ public class Prijenosna {
             System.exit(1);
         }
 
-        String algorithmName = args[0];
         int maxTries = Integer.parseInt(args[1]);
         Path filePath = Paths.get(args[2]);
-
 
         TransferFunction function = null;
         try {
@@ -48,7 +46,7 @@ public class Prijenosna {
         }
 
         RealVector solution = null;
-        switch (algorithmName) {
+        switch (args[0]) {
             case "grad":
                 solution = NumOptAlgorithms.gradientDescent(function, maxTries);
                 break;
@@ -57,7 +55,7 @@ public class Prijenosna {
                 System.exit(1);
                 break;
             default:
-                System.out.println("Unknown algorithm name " + algorithmName);
+                System.out.println("Unknown algorithm name " + args[0]);
                 System.exit(1);
         }
 

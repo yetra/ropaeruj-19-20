@@ -34,7 +34,6 @@ public class Sustav {
             System.exit(1);
         }
 
-        String algorithmName = args[0];
         int maxTries = Integer.parseInt(args[1]);
         Path filePath = Paths.get(args[2]);
 
@@ -51,7 +50,7 @@ public class Sustav {
         }
 
         RealVector solution = null;
-        switch (algorithmName) {
+        switch (args[0]) {
             case "grad":
                 solution = NumOptAlgorithms.gradientDescent(function, maxTries);
                 break;
@@ -59,7 +58,7 @@ public class Sustav {
                 solution = NumOptAlgorithms.newtonsMethod(function, maxTries);
                 break;
             default:
-                System.out.println("Unknown algorithm name " + algorithmName);
+                System.out.println("Unknown algorithm name " + args[0]);
                 System.exit(1);
         }
 
