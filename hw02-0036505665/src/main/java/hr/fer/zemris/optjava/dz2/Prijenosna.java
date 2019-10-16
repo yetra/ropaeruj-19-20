@@ -24,6 +24,11 @@ import java.nio.file.Paths;
  */
 public class Prijenosna {
 
+    /**
+     * The main method. Uses {@link NumOptAlgorithms} for finding transfer function coefficients.
+     *
+     * @param args the command-line arguments, 3 expected
+     */
     public static void main(String[] args) {
         if (args.length != 3) {
             System.out.println("Expected 3 arguments, got " + args.length);
@@ -51,7 +56,7 @@ public class Prijenosna {
                 solution = NumOptAlgorithms.gradientDescent(function, maxTries, null);
                 break;
             case "newton":
-                System.out.println("Unsupported algorithm! Try gradient descent.");
+                System.out.println("Unsupported algorithm for finding coefficients! Try gradient descent.");
                 System.exit(1);
                 break;
             default:
