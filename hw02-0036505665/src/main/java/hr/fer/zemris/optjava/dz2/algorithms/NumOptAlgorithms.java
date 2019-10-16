@@ -38,11 +38,11 @@ public class NumOptAlgorithms {
                 return solution;
             }
 
-            RealVector d = function.getGradientIn(solution).mapMultiplyToSelf(-1.0);
+            RealVector d = function.getGradientIn(solution).mapMultiply(-1.0);
 
             double lambda = getLambda(function, d, solution);
 
-            solution = solution.add(solution.mapMultiplyToSelf(lambda));
+            solution = solution.add(solution.mapMultiply(lambda));
             System.out.println("Iteration " + t + " - " + solution);
             t++;
         }
@@ -69,13 +69,13 @@ public class NumOptAlgorithms {
                 return solution;
             }
 
-            RealVector negativeGradient = function.getGradientIn(solution).mapMultiplyToSelf(-1.0);
+            RealVector negativeGradient = function.getGradientIn(solution).mapMultiply(-1.0);
             RealMatrix inverseHessian = MatrixUtils.inverse(function.getHessianIn(solution));
             RealVector d = inverseHessian.operate(negativeGradient);
 
             double lambda = getLambda(function, d, solution);
 
-            solution = solution.add(solution.mapMultiplyToSelf(lambda));
+            solution = solution.add(solution.mapMultiply(lambda));
             System.out.println("Iteration " + t + " - " + solution);
             t++;
         }
@@ -99,7 +99,7 @@ public class NumOptAlgorithms {
         while (true) {
             lambda = (lower + upper) / 2;
 
-            RealVector x = solution.add(d.mapMultiplyToSelf(lambda));
+            RealVector x = solution.add(d.mapMultiply(lambda));
             double thetaDerivative = function.getGradientIn(x).dotProduct(d);
 
             if (Math.abs(thetaDerivative) < PRECISION) {
@@ -128,7 +128,7 @@ public class NumOptAlgorithms {
         double upper = 1;
 
         while (true) {
-            RealVector x = solution.add(d.mapMultiplyToSelf(upper));
+            RealVector x = solution.add(d.mapMultiply(upper));
             double thetaDerivative = function.getGradientIn(x).dotProduct(d);
 
             if (thetaDerivative > 0) {
