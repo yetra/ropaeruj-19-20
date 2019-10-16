@@ -104,6 +104,6 @@ public class TransferFunction implements IFunction {
             gradientValues[5] += doubledDifference * x4 * x5*x5;
         }
 
-        return new ArrayRealVector(gradientValues);
+        return new ArrayRealVector(gradientValues).unitVector();
     }
 }
