@@ -13,14 +13,14 @@ import java.util.concurrent.ThreadLocalRandom;
 public class DoubleArrayNormNeighborhood implements INeighborhood<DoubleArraySolution> {
 
     /**
-     * An array for specifying the range in which each solution variable can be generated.
+     * An array of factors for multiplying randomly generated variable values.
      */
     private double[] deltas;
 
     /**
      * Constructs a {@link DoubleArrayNormNeighborhood} with the given deltas.
      *
-     * @param deltas an array for specifying the range in which each solution variable can be generated
+     * @param deltas an array of factors for multiplying randomly generated variable values
      */
     public DoubleArrayNormNeighborhood(double[] deltas) {
         this.deltas = deltas;
