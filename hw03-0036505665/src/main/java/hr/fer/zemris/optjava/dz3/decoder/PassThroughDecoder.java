@@ -23,8 +23,6 @@ public class PassThroughDecoder implements IDecoder<DoubleArraySolution> {
     public void decode(DoubleArraySolution solution, double[] values) {
         double[] decoded = decode(solution);
 
-        for (int i = 0; i < values.length; i++) {
-            values[i] = decoded[i];
-        }
+        System.arraycopy(decoded, 0, values, 0, values.length);
     }
 }
