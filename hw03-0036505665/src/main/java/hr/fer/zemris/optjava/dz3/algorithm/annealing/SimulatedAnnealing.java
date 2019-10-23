@@ -6,6 +6,8 @@ import hr.fer.zemris.optjava.dz3.function.IFunction;
 import hr.fer.zemris.optjava.dz3.neighborhood.INeighborhood;
 import hr.fer.zemris.optjava.dz3.solution.SingleObjectiveSolution;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 /**
  * An implementation of the simulated annealing optimization algorithm.
  *
@@ -65,5 +67,29 @@ public class SimulatedAnnealing<T extends SingleObjectiveSolution> implements IO
 
     @Override
     public void run() {
+        int innerLoopCount = tempSchedule.getInnerLoopCount();
+        int outerLoopCount = tempSchedule.getOuterLoopCount();
+
+        T solution = startWith;
+
+        for (int i = 0; i < outerLoopCount; i++) {
+            double temperature = tempSchedule.getNextTemperature();
+
+            for (int j = 0; j < innerLoopCount; j++) {
+                T neighbor = neighborhood.randomNeighbor(solution);
+
+                double[] newPoint = decoder.decode(neighbor);
+                double[] point = decoder.decode(solution);
+
+                double delta = function.valueAt(point) - function.valueAt(newPoint);
+                if (minimize) {
+                    delta = -delta;
+                }
+
+                if (delta <= 0 || ThreadLocalRandom.current().nextDouble() < Math.exp(-delta/temperature)) {
+                    solution = neighbor;
+                }
+            }
+        }
     }
 }
