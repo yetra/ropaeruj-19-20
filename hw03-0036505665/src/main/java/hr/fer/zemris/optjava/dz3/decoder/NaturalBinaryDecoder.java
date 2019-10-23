@@ -24,10 +24,24 @@ public class NaturalBinaryDecoder extends BitVectorDecoder {
 
     @Override
     public double[] decode(BitVectorSolution solution) {
-        return null;
+        double[] values = new double[n];
+        boolean[] bits = solution.getBits();
+
+        for (int i = 0; i < n; i++) {
+            int k = 0;
+
+            for (int j = 0; j < bitsPerVariable[i]; i++) {
+                k = (k << 1) + (bits[i] ? 1 : 0);
+            }
+
+            values[i] = mins[i] + k / (Math.pow(2, bitsPerVariable[i]) - 1) * (maxs[i] - mins[i]);
+        }
+
+        return values;
     }
 
     @Override
     public void decode(BitVectorSolution solution, double[] values) {
+
     }
 }
