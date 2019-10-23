@@ -96,11 +96,12 @@ public class TransferFunction implements IFunction {
     public static TransferFunction fromFile(Path filePath) throws IOException {
         List<String> lines = Files.readAllLines(filePath);
         lines.removeIf(line -> line.startsWith("#"));
+        int lineCount = lines.size();
 
-        double[][] xes = new double[lines.size()][NUMBER_OF_ORIG_VARIABLES];
-        double[] ys = new double[lines.size()];
+        double[][] xes = new double[lineCount][NUMBER_OF_ORIG_VARIABLES];
+        double[] ys = new double[lineCount];
 
-        for (int i = 0; i < NUMBER_OF_VARIABLES; i++) {
+        for (int i = 0; i < lineCount; i++) {
             String[] parts = lines.get(i).substring(1, lines.get(i).length() - 1).split(", ");
 
             for (int j = 0; j < parts.length - 1; j++) {
