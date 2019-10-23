@@ -1,5 +1,8 @@
 package hr.fer.zemris.optjava.dz3.solution;
 
+import java.util.Arrays;
+import java.util.concurrent.ThreadLocalRandom;
+
 /**
  * Models an optimization algorithm solution that is based on an array of doubles.
  *
@@ -19,6 +22,7 @@ public class DoubleArraySolution extends SingleObjectiveSolution {
      * @param size the size of the solution (the length of the double array)
      */
     public DoubleArraySolution(int size) {
+        values = new double[size];
     }
 
     /**
@@ -27,6 +31,7 @@ public class DoubleArraySolution extends SingleObjectiveSolution {
      * @param values the array containing the values of this solution
      */
     public DoubleArraySolution(double[] values) {
+        this.values = values;
     }
 
     /**
@@ -35,7 +40,7 @@ public class DoubleArraySolution extends SingleObjectiveSolution {
      * @return the array of doubles representing this solution
      */
     public double[] getValues() {
-        return null;
+        return values;
     }
 
     /**
@@ -44,7 +49,7 @@ public class DoubleArraySolution extends SingleObjectiveSolution {
      * @return a new {@link DoubleArraySolution} that is a duplicate of this solution
      */
     public DoubleArraySolution duplicate() {
-        return null;
+        return new DoubleArraySolution(Arrays.copyOf(values, values.length));
     }
 
     /**
@@ -54,5 +59,8 @@ public class DoubleArraySolution extends SingleObjectiveSolution {
      * @param maxs an array of upper bounds for each of the values in this solution
      */
     public void randomize(double[] mins, double[] maxs) {
+        for (int i = 0; i < values.length; i++) {
+            values[i] = ThreadLocalRandom.current().nextDouble(mins[i], maxs[i]);
+        }
     }
 }
