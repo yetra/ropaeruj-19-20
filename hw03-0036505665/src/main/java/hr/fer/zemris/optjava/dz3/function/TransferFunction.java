@@ -1,8 +1,14 @@
 package hr.fer.zemris.optjava.dz3.function;
 
+import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
 
 /**
  * A an implementation of {@link IFunction} for finding the coefficients of a transfer function
@@ -72,5 +78,32 @@ public class TransferFunction implements IFunction {
         }
 
         return value;
+    }
+
+    /**
+     * Returns a {@link TransferFunction} parsed from the given file.
+     *
+     * @param filePath a path to the file to parse
+     * @return a {@link TransferFunction} parsed from the given file
+     * @throws IOException if an I/O error occurs while reading
+     * @throws IllegalArgumentException if the file is incorrectly formatted
+     */
+    public static TransferFunction fromFile(Path filePath) throws IOException {
+        List<String> lines = Files.readAllLines(filePath);
+        lines.removeIf(line -> line.startsWith("#"));
+
+        double[][] xes = new double[lines.size()][NUMBER_OF_VARIABLES];
+        double[] ys = new double[lines.size()];
+
+        for (int i = 0; i < NUMBER_OF_VARIABLES; i++) {
+            String[] parts = lines.get(i).substring(1, lines.get(i).length() - 1).split(", ");
+
+            for (int j = 0; j < parts.length - 1; j++) {
+                xes[i][j] = Double.parseDouble(parts[j]);
+            }
+            ys[i] = Double.parseDouble(parts[parts.length - 1]);
+        }
+
+        return new TransferFunction(new Array2DRowRealMatrix(xes), new ArrayRealVector(ys));
     }
 }
