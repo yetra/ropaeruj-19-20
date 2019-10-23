@@ -31,7 +31,7 @@ public abstract class BitVectorDecoder implements IDecoder<BitVectorSolution> {
     int n;
 
     /**
-     * Constructs a {@link BitVectorSolution} with the specified parameters.
+     * Constructs a {@link BitVectorDecoder} with the specified parameters.
      *
      * @param mins the minimum values that each solution variable can assume
      * @param maxs the maximum values that each solution variable can assume
