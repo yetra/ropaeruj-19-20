@@ -21,6 +21,10 @@ public class PassThroughDecoder implements IDecoder<DoubleArraySolution> {
 
     @Override
     public void decode(DoubleArraySolution solution, double[] values) {
-        values = decode(solution);
+        double[] decoded = decode(solution);
+
+        for (int i = 0; i < values.length; i++) {
+            values[i] = decoded[i];
+        }
     }
 }
