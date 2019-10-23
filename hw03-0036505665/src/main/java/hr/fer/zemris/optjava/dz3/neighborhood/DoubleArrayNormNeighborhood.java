@@ -5,7 +5,7 @@ import hr.fer.zemris.optjava.dz3.solution.DoubleArraySolution;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * An {@link INeighborhood} implementation that generated {@link DoubleArraySolution} neighbors
+ * An {@link INeighborhood} implementation that generates {@link DoubleArraySolution} neighbors
  * using normal distribution.
  *
  * @author Bruna Dujmović
