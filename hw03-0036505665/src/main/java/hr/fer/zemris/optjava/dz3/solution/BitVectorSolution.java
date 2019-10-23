@@ -3,7 +3,7 @@ package hr.fer.zemris.optjava.dz3.solution;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * Models an optimization algorithm solution that is based on a bit vector.
+ * Models an optimization algorithm solution using on a bit vector.
  *
  * @author Bruna Dujmović
  */
@@ -21,6 +21,7 @@ public class BitVectorSolution extends SingleObjectiveSolution {
      * @param size the size of the solution (the length of the bit array)
      */
     public BitVectorSolution(int size) {
+        bits = new boolean[size];
     }
 
     /**
@@ -29,6 +30,7 @@ public class BitVectorSolution extends SingleObjectiveSolution {
      * @param bits the boolean array representing the solution
      */
     public BitVectorSolution(boolean[] bits) {
+        this.bits = bits;
     }
 
     /**
@@ -37,7 +39,7 @@ public class BitVectorSolution extends SingleObjectiveSolution {
      * @return the array of bits representing this solution
      */
     public boolean[] getBits() {
-        return null;
+        return bits;
     }
 
     /**
@@ -46,12 +48,15 @@ public class BitVectorSolution extends SingleObjectiveSolution {
      * @return a new {@link BitVectorSolution} that is a duplicate of this solution
      */
     public BitVectorSolution duplicate() {
-        return null;
+        return new BitVectorSolution(bits);
     }
 
     /**
      * Randomizes the bits of this solution.
      */
     public void randomize() {
+        for (int i = 0; i < bits.length; i++) {
+            bits[i] = ThreadLocalRandom.current().nextBoolean();
+        }
     }
 }
