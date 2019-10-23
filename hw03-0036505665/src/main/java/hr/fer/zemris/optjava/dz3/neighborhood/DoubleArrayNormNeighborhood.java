@@ -28,6 +28,13 @@ public class DoubleArrayNormNeighborhood implements INeighborhood<DoubleArraySol
 
     @Override
     public DoubleArraySolution randomNeighbor(DoubleArraySolution solution) {
-        return null;
+        DoubleArraySolution neighbor = solution.duplicate();
+
+        double[] values = neighbor.getValues();
+        for (int i = 0; i < values.length; i++) {
+            values[i] += ThreadLocalRandom.current().nextGaussian() * deltas[i];
+        }
+
+        return neighbor;
     }
 }
