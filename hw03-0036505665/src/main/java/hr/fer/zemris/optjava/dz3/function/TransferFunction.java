@@ -23,9 +23,14 @@ import java.util.List;
 public class TransferFunction implements IFunction {
 
     /**
-     * The number of variables of this function.
+     * The number of unknown coefficients (a, ..., f).
      */
     private static final int NUMBER_OF_VARIABLES = 6;
+
+    /**
+     * The original number of variables (x1, ..., x5) of the transfer function.
+     */
+    private static final int NUMBER_OF_ORIG_VARIABLES = 5;
 
     /**
      * A matrix of points.
@@ -92,7 +97,7 @@ public class TransferFunction implements IFunction {
         List<String> lines = Files.readAllLines(filePath);
         lines.removeIf(line -> line.startsWith("#"));
 
-        double[][] xes = new double[lines.size()][5];
+        double[][] xes = new double[lines.size()][NUMBER_OF_ORIG_VARIABLES];
         double[] ys = new double[lines.size()];
 
         for (int i = 0; i < NUMBER_OF_VARIABLES; i++) {
