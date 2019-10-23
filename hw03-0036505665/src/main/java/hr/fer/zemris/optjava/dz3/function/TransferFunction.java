@@ -92,7 +92,7 @@ public class TransferFunction implements IFunction {
         List<String> lines = Files.readAllLines(filePath);
         lines.removeIf(line -> line.startsWith("#"));
 
-        double[][] xes = new double[lines.size()][NUMBER_OF_VARIABLES];
+        double[][] xes = new double[lines.size()][5];
         double[] ys = new double[lines.size()];
 
         for (int i = 0; i < NUMBER_OF_VARIABLES; i++) {
