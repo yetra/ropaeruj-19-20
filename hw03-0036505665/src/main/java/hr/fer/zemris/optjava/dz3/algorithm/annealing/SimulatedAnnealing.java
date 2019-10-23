@@ -6,6 +6,7 @@ import hr.fer.zemris.optjava.dz3.function.IFunction;
 import hr.fer.zemris.optjava.dz3.neighborhood.INeighborhood;
 import hr.fer.zemris.optjava.dz3.solution.SingleObjectiveSolution;
 
+import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -91,5 +92,10 @@ public class SimulatedAnnealing<T extends SingleObjectiveSolution> implements IO
                 }
             }
         }
+
+        double[] decodedSolution = decoder.decode(solution);
+
+        System.out.println("Solution: " + Arrays.toString(decodedSolution));
+        System.out.println("Error: " + function.valueAt(decodedSolution));
     }
 }
