@@ -21,6 +21,18 @@ public class NaturalBinaryDecoder extends BitVectorDecoder {
     public NaturalBinaryDecoder(double[] mins, double[] maxs, int[] bitsPerVariable, int n) {
         super(mins, maxs, bitsPerVariable, n);
     }
+    /**
+     * Constructs a {@link BitVectorDecoder} with the specified parameters.
+     * All variables are considered to be encoded with the same number of bits.
+     *
+     * @param mins the minimum values that each solution variable can assume
+     * @param maxs the maximum values that each solution variable can assume
+     * @param bitsPerAllVariables how many bits are used to encode a solution variable
+     * @param n the total number of variables represented by the solution
+     */
+    public NaturalBinaryDecoder(double[] mins, double[] maxs, int bitsPerAllVariables, int n) {
+        super(mins, maxs, bitsPerAllVariables, n);
+    }
 
     @Override
     public double[] decode(BitVectorSolution solution) {
