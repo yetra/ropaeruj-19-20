@@ -1,5 +1,6 @@
 package hr.fer.zemris.optjava.dz3.solution;
 
+import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -48,7 +49,7 @@ public class BitVectorSolution extends SingleObjectiveSolution {
      * @return a new {@link BitVectorSolution} that is a duplicate of this solution
      */
     public BitVectorSolution duplicate() {
-        return new BitVectorSolution(bits);
+        return new BitVectorSolution(Arrays.copyOf(bits, bits.length));
     }
 
     /**
