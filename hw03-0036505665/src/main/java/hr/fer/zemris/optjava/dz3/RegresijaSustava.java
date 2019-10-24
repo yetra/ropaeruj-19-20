@@ -27,8 +27,8 @@ import java.nio.file.Paths;
  */
 public class RegresijaSustava {
 
-    private static final double[] MINS = {-0.1, -0.1, -0.1, -0.1, -0.1, -0.1};
-    private static final double[] MAXS = {0.1, 0.1, 0.1, 0.1, 0.1, 0.1};
+    private static final double[] MINS = {-10, -10, -10, -10, -10, -10};
+    private static final double[] MAXS = {10, 10, 10, 10, 10, 10};
 
     /**
      * The main method. Uses simulated annealing for finding transfer function coefficients.
@@ -57,7 +57,7 @@ public class RegresijaSustava {
         }
 
         int numberOfVariables = function.getNumberOfVariables();
-        ITempSchedule tempSchedule = new GeometricTempSchedule(0.995, 1000, 100, 1000);
+        ITempSchedule tempSchedule = new GeometricTempSchedule(0.99, 1000, 100, 1000);
 
         if (solutionType.equals("decimal")) {
             DoubleArraySolution solution = new DoubleArraySolution(numberOfVariables);
