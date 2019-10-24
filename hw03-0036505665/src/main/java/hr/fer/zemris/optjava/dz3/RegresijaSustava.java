@@ -27,8 +27,8 @@ import java.nio.file.Paths;
  */
 public class RegresijaSustava {
 
-    private static final double[] MINS = {-10, -10, -10, -10, -10, -10};
-    private static final double[] MAXS = {10, 10, 10, 10, 10, 10};
+    private static final double[] MINS = {-3, -3, -3, -3, -3, -3};
+    private static final double[] MAXS = {7, 7, 7, 7, 7, 7};
 
     /**
      * The main method. Uses simulated annealing for finding transfer function coefficients.
