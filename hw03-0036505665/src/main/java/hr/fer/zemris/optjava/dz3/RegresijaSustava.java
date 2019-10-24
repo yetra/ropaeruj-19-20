@@ -6,7 +6,7 @@ import hr.fer.zemris.optjava.dz3.algorithm.annealing.SimulatedAnnealing;
 import hr.fer.zemris.optjava.dz3.decoder.NaturalBinaryDecoder;
 import hr.fer.zemris.optjava.dz3.decoder.PassThroughDecoder;
 import hr.fer.zemris.optjava.dz3.function.TransferFunction;
-import hr.fer.zemris.optjava.dz3.neighborhood.BitVectorFlipNeighborhood;
+import hr.fer.zemris.optjava.dz3.neighborhood.BitVectorFlipMultipleNeighborhood;
 import hr.fer.zemris.optjava.dz3.neighborhood.DoubleArrayNormNeighborhood;
 import hr.fer.zemris.optjava.dz3.solution.BitVectorSolution;
 import hr.fer.zemris.optjava.dz3.solution.DoubleArraySolution;
@@ -77,7 +77,7 @@ public class RegresijaSustava {
 
             new SimulatedAnnealing<>(
                     new NaturalBinaryDecoder(MINS, MAXS, bitsPerVariable, numberOfVariables),
-                    new BitVectorFlipNeighborhood(), solution, function, tempSchedule, true
+                    new BitVectorFlipMultipleNeighborhood(), solution, function, tempSchedule, true
             ).run();
 
         } else {
