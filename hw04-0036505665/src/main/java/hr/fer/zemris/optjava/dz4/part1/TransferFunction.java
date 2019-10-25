@@ -84,4 +84,32 @@ public class TransferFunction implements IFunction {
 
         return value;
     }
+
+    /**
+     * Returns a {@link TransferFunction} parsed from the given file.
+     *
+     * @param filePath a path to the file to parse
+     * @return a {@link TransferFunction} parsed from the given file
+     * @throws IOException if an I/O error occurs while reading
+     * @throws IllegalArgumentException if the file is incorrectly formatted
+     */
+    public static TransferFunction fromFile(Path filePath) throws IOException {
+        List<String> lines = Files.readAllLines(filePath);
+        lines.removeIf(line -> line.startsWith("#"));
+        int lineCount = lines.size();
+
+        double[][] xes = new double[lineCount][NUMBER_OF_ORIG_VARIABLES];
+        double[] ys = new double[lineCount];
+
+        for (int i = 0; i < lineCount; i++) {
+            String[] parts = lines.get(i).substring(1, lines.get(i).length() - 1).split(", ");
+
+            for (int j = 0; j < parts.length - 1; j++) {
+                xes[i][j] = Double.parseDouble(parts[j]);
+            }
+            ys[i] = Double.parseDouble(parts[parts.length - 1]);
+        }
+
+        return new TransferFunction(new Array2DRowRealMatrix(xes), new ArrayRealVector(ys));
+    }
 }
