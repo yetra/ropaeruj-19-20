@@ -1,0 +1,102 @@
+package hr.fer.zemris.optjava.dz4.part1;
+
+import java.util.Collection;
+
+/**
+ * An implementation of a generational genetic algorithm with elitism.
+ *
+ * @author Bruna Dujmović
+ *
+ */
+public class GeneticAlgorithm {
+
+    /**
+     * The size of the population.
+     */
+    private int populationSize;
+
+    /**
+     * The minimum error value which, if reached, will terminate the algorithm.
+     */
+    private double minError;
+
+    /**
+     * The maximum number of iterations before the algorithm terminates.
+     */
+    private int maxIterations;
+
+    /**
+     * The function that is being optimized.
+     */
+    private IFunction function;
+
+    /**
+     * Constructs a {@link GeneticAlgorithm} object with the given parameters.
+     *
+     * @param populationSize the size of the population
+     * @param minError the minimum error value which, if reached, will terminate the algorithm
+     * @param maxIterations the maximum number of iterations before the algorithm terminates
+     * @param function the function that is being optimized
+     */
+    public GeneticAlgorithm(int populationSize, double minError, int maxIterations, IFunction function) {
+        this.populationSize = populationSize;
+        this.minError = minError;
+        this.maxIterations = maxIterations;
+        this.function = function;
+    }
+
+    /**
+     * Executes the genetic algorithm.
+     */
+    public void run() {
+
+    }
+
+    /**
+     * Initializes the given population with random chromosomes.
+     *
+     * @param population the population to initialize
+     */
+    private void initialize(Collection<Chromosome> population) {
+
+    }
+
+    /**
+     * Evaluates the given population.
+     *
+     * @param population the population to evaluate
+     */
+    private void evaluate(Collection<Chromosome> population) {
+
+    }
+
+    /**
+     * Selects a chromosome from the given population.
+     *
+     * @param population the chromosome to select from
+     * @return a chromosome to be used in crossover
+     */
+    private Chromosome selectFrom(Collection<Chromosome> population) {
+        return null;
+    }
+
+    /**
+     * Performs a crossover on the given parent chromosomes.
+     *
+     * @param firstParent the first parent chromosome
+     * @param secondParent the second parent chromosome
+     * @return a collection of two child chromosomes obtained by crossing the parents
+     */
+    private Collection<Chromosome> cross(Chromosome firstParent, Chromosome secondParent) {
+        return null;
+    }
+
+    /**
+     * Mutates the given collection of child chromosomes.
+     *
+     * @param children the collection of child chromosomes to mutate
+     */
+    private void mutate(Collection<Chromosome> children) {
+
+    }
+}
