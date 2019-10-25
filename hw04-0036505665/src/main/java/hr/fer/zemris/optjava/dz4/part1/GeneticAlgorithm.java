@@ -97,7 +97,9 @@ public class GeneticAlgorithm {
      * @param population the population to evaluate
      */
     private void evaluate(Collection<Chromosome> population) {
-
+        for (Chromosome chromosome : population) {
+            chromosome.fitness = function.valueAt(chromosome.values);
+        }
     }
 
     /**
