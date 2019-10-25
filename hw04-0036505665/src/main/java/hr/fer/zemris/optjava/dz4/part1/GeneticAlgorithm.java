@@ -13,6 +13,8 @@ import java.util.List;
  */
 public class GeneticAlgorithm {
 
+    private static final int CHROMOSOME_SIZE = 10;
+
     /**
      * The size of the population.
      */
@@ -84,7 +86,9 @@ public class GeneticAlgorithm {
      * @param population the population to initialize
      */
     private void initialize(Collection<Chromosome> population) {
-
+        for (int i = 0; i < populationSize; i++) {
+            population.add(new Chromosome(CHROMOSOME_SIZE));
+        }
     }
 
     /**
