@@ -1,6 +1,9 @@
 package hr.fer.zemris.optjava.dz4.part1;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * An implementation of a generational genetic algorithm with elitism.
@@ -49,7 +52,30 @@ public class GeneticAlgorithm {
      * Executes the genetic algorithm.
      */
     public void run() {
+        Collection<Chromosome> population = new ArrayList<>(populationSize);
 
+        initialize(population);
+        evaluate(population);
+
+        for (int iteration = 0; iteration < maxIterations; iteration++) {
+            List<Chromosome> newGeneration = new ArrayList<>(populationSize);
+
+            Chromosome best = Collections.max(population);
+            newGeneration.add(best); // elitism
+
+            for (int i = 0; i < populationSize / 2; i++) {
+                Chromosome firstParent = selectFrom(population);
+                Chromosome secondParent = selectFrom(population);
+
+                Collection<Chromosome> children = cross(firstParent, secondParent);
+                mutate(children);
+
+                newGeneration.addAll(children);
+            }
+
+            population = newGeneration;
+            evaluate(population);
+        }
     }
 
     /**
