@@ -17,16 +17,26 @@ import java.util.Collection;
 public class TournamentSelection implements ISelection {
 
     /**
+     * The minimum tournament size.
+     */
+    private static final int MIN_TOURNAMENT_SIZE = 2;
+
+    /**
      * The size of the tournament.
      */
     private int tournamentSize;
 
     /**
-     * Constructs a {@link TournamentSelection} of the given size.
+     * Constructs a {@link TournamentSelection} of a given size.
      *
      * @param tournamentSize the size of the tournament
+     * @throws IllegalArgumentException if the size is less than the minimum size
      */
     public TournamentSelection(int tournamentSize) {
+        if (tournamentSize < MIN_TOURNAMENT_SIZE) {
+            throw new IllegalArgumentException("Tournament size must be >= " + MIN_TOURNAMENT_SIZE);
+        }
+
         this.tournamentSize = tournamentSize;
     }
 
