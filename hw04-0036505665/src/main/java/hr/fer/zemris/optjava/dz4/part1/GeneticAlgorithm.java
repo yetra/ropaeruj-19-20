@@ -1,5 +1,7 @@
 package hr.fer.zemris.optjava.dz4.part1;
 
+import hr.fer.zemris.optjava.dz4.part1.selection.ISelection;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -31,6 +33,11 @@ public class GeneticAlgorithm {
     private int maxIterations;
 
     /**
+     * The selection type to be used on the population.
+     */
+    private ISelection selection;
+
+    /**
      * The function that is being optimized.
      */
     private IFunction function;
@@ -41,12 +48,15 @@ public class GeneticAlgorithm {
      * @param populationSize the size of the population
      * @param minError the minimum error value which, if reached, will terminate the algorithm
      * @param maxIterations the maximum number of iterations before the algorithm terminates
+     * @param selection the selection type to be used on the population
      * @param function the function that is being optimized
      */
-    public GeneticAlgorithm(int populationSize, double minError, int maxIterations, IFunction function) {
+    public GeneticAlgorithm(int populationSize, double minError, int maxIterations, ISelection selection,
+                            IFunction function) {
         this.populationSize = populationSize;
         this.minError = minError;
         this.maxIterations = maxIterations;
+        this.selection = selection;
         this.function = function;
     }
 
@@ -66,8 +76,8 @@ public class GeneticAlgorithm {
             newGeneration.add(best); // elitism
 
             for (int i = 0; i < populationSize / 2; i++) {
-                Chromosome firstParent = selectFrom(population);
-                Chromosome secondParent = selectFrom(population);
+                Chromosome firstParent = selection.from(population);
+                Chromosome secondParent = selection.from(population);
 
                 Collection<Chromosome> children = cross(firstParent, secondParent);
                 mutate(children);
@@ -100,16 +110,6 @@ public class GeneticAlgorithm {
         for (Chromosome chromosome : population) {
             chromosome.fitness = function.valueAt(chromosome.values);
         }
-    }
-
-    /**
-     * Selects a chromosome from the given population.
-     *
-     * @param population the chromosome to select from
-     * @return a chromosome to be used in crossover
-     */
-    private Chromosome selectFrom(Collection<Chromosome> population) {
-        return null;
     }
 
     /**
