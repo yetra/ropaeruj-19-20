@@ -1,4 +1,4 @@
-package hr.fer.zemris.optjava.dz4.part1;
+package hr.fer.zemris.optjava.dz4.part1.function;
 
 /**
  * Models an arbitrary function of n real variables.

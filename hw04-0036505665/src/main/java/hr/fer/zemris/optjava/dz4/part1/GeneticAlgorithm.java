@@ -1,5 +1,6 @@
 package hr.fer.zemris.optjava.dz4.part1;
 
+import hr.fer.zemris.optjava.dz4.part1.function.IFunction;
 import hr.fer.zemris.optjava.dz4.part1.selection.ISelection;
 
 import java.util.ArrayList;

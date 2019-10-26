@@ -1,4 +1,4 @@
-package hr.fer.zemris.optjava.dz4.part1;
+package hr.fer.zemris.optjava.dz4.part1.function;
 
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.ArrayRealVector;
