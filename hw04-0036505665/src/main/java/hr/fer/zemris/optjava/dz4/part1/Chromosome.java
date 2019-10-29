@@ -14,12 +14,12 @@ public class Chromosome implements Comparable<Chromosome> {
     /**
      * The values of the chromosome.
      */
-    double[] values;
+    public double[] values;
 
     /**
      * The fitness of the chromosome.
      */
-    double fitness;
+    public double fitness;
 
     /**
      * Constructs a random {@link Chromosome} of the specified size.
