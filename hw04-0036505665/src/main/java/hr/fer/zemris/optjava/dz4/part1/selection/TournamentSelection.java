@@ -2,7 +2,7 @@ package hr.fer.zemris.optjava.dz4.part1.selection;
 
 import hr.fer.zemris.optjava.dz4.part1.Chromosome;
 
-import java.util.Collection;
+import java.util.List;
 
 /**
  * An implementation of tournament selection.
@@ -41,7 +41,7 @@ public class TournamentSelection implements ISelection {
     }
 
     @Override
-    public Chromosome from(Collection<Chromosome> population) {
+    public Chromosome from(List<Chromosome> population) {
         return null;
     }
 }

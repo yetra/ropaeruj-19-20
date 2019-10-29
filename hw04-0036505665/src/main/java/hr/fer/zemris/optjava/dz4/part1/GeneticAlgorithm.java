@@ -81,7 +81,7 @@ public class GeneticAlgorithm {
      * Executes the genetic algorithm.
      */
     public void run() {
-        Collection<Chromosome> population = new ArrayList<>(populationSize);
+        List<Chromosome> population = new ArrayList<>(populationSize);
 
         initialize(population);
         evaluate(population);
