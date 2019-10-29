@@ -2,7 +2,11 @@ package hr.fer.zemris.optjava.dz4.part1.selection;
 
 import hr.fer.zemris.optjava.dz4.part1.Chromosome;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * An implementation of tournament selection.
@@ -10,6 +14,8 @@ import java.util.List;
  * The size of the tournament is specified using the {@link #tournamentSize} field.
  * For example, if {@link #tournamentSize} is 4 then 4 chromosomes will be chosen from
  * the population to form a tournament, and the best one among them will be selected.
+ *
+ * This implementation makes sure that all chromosomes in a tournament are unique.
  *
  * @author Bruna Dujmović
  *
@@ -42,6 +48,13 @@ public class TournamentSelection implements ISelection {
 
     @Override
     public Chromosome from(List<Chromosome> population) {
-        return null;
+        Set<Chromosome> tournament = new HashSet<>();
+
+        while (tournament.size() < tournamentSize) {
+            int randomIndex = ThreadLocalRandom.current().nextInt(population.size());
+            tournament.add(population.get(randomIndex));
+        }
+
+        return Collections.max(tournament, Chromosome::compareTo);
     }
 }
