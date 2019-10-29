@@ -46,6 +46,15 @@ public class Chromosome implements Comparable<Chromosome> {
     }
 
     /**
+     * Constructs a {@link Chromosome} of the given values.
+     *
+     * @param values the values of the chromosome
+     */
+    public Chromosome(double[] values) {
+        this.values = values;
+    }
+
+    /**
      * Randomizes the values of this chromosome.
      */
     public void randomize() {
