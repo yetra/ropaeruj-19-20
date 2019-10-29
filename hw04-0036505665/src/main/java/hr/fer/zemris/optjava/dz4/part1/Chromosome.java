@@ -29,7 +29,14 @@ public class Chromosome implements Comparable<Chromosome> {
     public Chromosome(int size) {
         values = new double[size];
 
-        for (int i = 0; i < size; i++) {
+        randomize();
+    }
+
+    /**
+     * Randomizes the values of this chromosome.
+     */
+    public void randomize() {
+        for (int i = 0; i < values.length; i++) {
             values[i] = ThreadLocalRandom.current().nextDouble();
         }
     }
