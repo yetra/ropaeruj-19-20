@@ -22,14 +22,27 @@ public class Chromosome implements Comparable<Chromosome> {
     public double fitness;
 
     /**
-     * Constructs a random {@link Chromosome} of the specified size.
+     * Constructs a {@link Chromosome} of the specified size with all values set to zero.
      *
      * @param size the size of the chromosome
      */
     public Chromosome(int size) {
         values = new double[size];
+    }
 
-        randomize();
+    /**
+     * Constructs a random {@link Chromosome} of the specified size if {@code randomize}
+     * is set to {@code true}. Otherwise, all chromosome values will be set to zero.
+     *
+     * @param size the size of the chromosome
+     * @param randomize {@code true} if {@link #values} should be set to random values
+     */
+    public Chromosome(int size, boolean randomize) {
+        this(size);
+
+        if (randomize) {
+            randomize();
+        }
     }
 
     /**
