@@ -1,5 +1,6 @@
 package hr.fer.zemris.optjava.dz4.part1;
 
+import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -61,6 +62,15 @@ public class Chromosome implements Comparable<Chromosome> {
         for (int i = 0; i < values.length; i++) {
             values[i] = ThreadLocalRandom.current().nextDouble();
         }
+    }
+
+    /**
+     * Returns a copy of this chromosome.
+     *
+     * @return a copy of this chromosome
+     */
+    public Chromosome copy() {
+        return new Chromosome(Arrays.copyOf(values, values.length));
     }
 
     @Override
