@@ -25,6 +25,13 @@ public class BLXAlphaCrossover implements ICrossover {
     private double alpha;
 
     /**
+     * Constructs a {@link BLXAlphaCrossover} of the {@link #DEFAULT_ALPHA} parameter.
+     */
+    public BLXAlphaCrossover() {
+        this.alpha = DEFAULT_ALPHA;
+    }
+
+    /**
      * Constructs a {@link BLXAlphaCrossover} of the given parameter.
      *
      * @param alpha the alpha parameter of the crossover
