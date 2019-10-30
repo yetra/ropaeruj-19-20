@@ -13,6 +13,11 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Chromosome implements Comparable<Chromosome> {
 
     /**
+     * The default chromosome size;
+     */
+    private static final int DEFAULT_SIZE = 10;
+
+    /**
      * The values of the chromosome.
      */
     public double[] values;
