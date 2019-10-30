@@ -1,4 +1,6 @@
-package hr.fer.zemris.optjava.dz4.part1;
+package hr.fer.zemris.optjava.dz4.ga;
+
+import hr.fer.zemris.optjava.dz4.part1.GeneticAlgorithm;
 
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;

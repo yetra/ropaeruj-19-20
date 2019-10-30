@@ -1,6 +1,6 @@
-package hr.fer.zemris.optjava.dz4.part1.selection;
+package hr.fer.zemris.optjava.dz4.ga.selection;
 
-import hr.fer.zemris.optjava.dz4.part1.Chromosome;
+import hr.fer.zemris.optjava.dz4.ga.Chromosome;
 
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;

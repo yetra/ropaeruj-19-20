@@ -1,6 +1,6 @@
-package hr.fer.zemris.optjava.dz4.part1.mutation;
+package hr.fer.zemris.optjava.dz4.ga.mutation;
 
-import hr.fer.zemris.optjava.dz4.part1.Chromosome;
+import hr.fer.zemris.optjava.dz4.ga.Chromosome;
 
 /**
  * An interface to be implemented by different types of GA mutation.

@@ -1,6 +1,6 @@
-package hr.fer.zemris.optjava.dz4.part1.crossover;
+package hr.fer.zemris.optjava.dz4.ga.crossover;
 
-import hr.fer.zemris.optjava.dz4.part1.Chromosome;
+import hr.fer.zemris.optjava.dz4.ga.Chromosome;
 
 import java.util.Collection;
 

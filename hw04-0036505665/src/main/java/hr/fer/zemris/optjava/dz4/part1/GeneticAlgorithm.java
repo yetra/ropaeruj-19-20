@@ -1,14 +1,15 @@
 package hr.fer.zemris.optjava.dz4.part1;
 
-import hr.fer.zemris.optjava.dz4.part1.crossover.BLXAlphaCrossover;
-import hr.fer.zemris.optjava.dz4.part1.crossover.ICrossover;
-import hr.fer.zemris.optjava.dz4.part1.function.IFunction;
-import hr.fer.zemris.optjava.dz4.part1.function.TransferFunction;
-import hr.fer.zemris.optjava.dz4.part1.mutation.GaussianMutation;
-import hr.fer.zemris.optjava.dz4.part1.mutation.IMutation;
-import hr.fer.zemris.optjava.dz4.part1.selection.ISelection;
-import hr.fer.zemris.optjava.dz4.part1.selection.RouletteWheelSelection;
-import hr.fer.zemris.optjava.dz4.part1.selection.TournamentSelection;
+import hr.fer.zemris.optjava.dz4.ga.Chromosome;
+import hr.fer.zemris.optjava.dz4.ga.crossover.BLXAlphaCrossover;
+import hr.fer.zemris.optjava.dz4.ga.crossover.ICrossover;
+import hr.fer.zemris.optjava.dz4.ga.function.IFunction;
+import hr.fer.zemris.optjava.dz4.ga.function.TransferFunction;
+import hr.fer.zemris.optjava.dz4.ga.mutation.GaussianMutation;
+import hr.fer.zemris.optjava.dz4.ga.mutation.IMutation;
+import hr.fer.zemris.optjava.dz4.ga.selection.ISelection;
+import hr.fer.zemris.optjava.dz4.ga.selection.RouletteWheelSelection;
+import hr.fer.zemris.optjava.dz4.ga.selection.TournamentSelection;
 
 import java.io.IOException;
 import java.nio.file.Path;
