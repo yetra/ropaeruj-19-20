@@ -77,4 +77,17 @@ public class Chromosome implements Comparable<Chromosome> {
     public int compareTo(Chromosome o) {
         return Double.compare(this.fitness, o.fitness);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Chromosome that = (Chromosome) o;
+        return Arrays.equals(values, that.values);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(values);
+    }
 }
