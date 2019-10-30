@@ -13,10 +13,7 @@ import hr.fer.zemris.optjava.dz4.part1.selection.TournamentSelection;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * An implementation of a generational genetic algorithm with elitism.
@@ -97,6 +94,7 @@ public class GeneticAlgorithm {
 
             // elitism
             Chromosome best = Collections.max(population);
+            System.out.println("Solution " + iteration + ": f(" + Arrays.toString(best.values) + ") = " + best.fitness);
             newGeneration.add(best);
 
             for (int i = 0; i < populationSize / 2; i++) {
