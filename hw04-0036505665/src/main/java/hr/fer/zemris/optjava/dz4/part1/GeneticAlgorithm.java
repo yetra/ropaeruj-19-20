@@ -90,12 +90,15 @@ public class GeneticAlgorithm {
         evaluate(population);
 
         for (int iteration = 0; iteration < maxIterations; iteration++) {
-            List<Chromosome> newGeneration = new ArrayList<>(populationSize);
-
-            // elitism
             Chromosome best = Collections.max(population);
             System.out.println("Solution " + iteration + ": f(" + Arrays.toString(best.values) + ") = " + best.fitness);
-            newGeneration.add(best);
+
+            if (best.fitness <= minError) {
+                return;
+            }
+
+            List<Chromosome> newGeneration = new ArrayList<>(populationSize);
+            newGeneration.add(best); // elitism
 
             for (int i = 0; i < populationSize / 2; i++) {
                 Chromosome firstParent = selection.from(population);
