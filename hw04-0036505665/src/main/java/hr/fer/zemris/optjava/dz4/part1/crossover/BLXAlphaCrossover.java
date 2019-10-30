@@ -15,6 +15,11 @@ import java.util.concurrent.ThreadLocalRandom;
 public class BLXAlphaCrossover implements ICrossover {
 
     /**
+     * The default alpha parameter of the crossover.
+     */
+    private static final double DEFAULT_ALPHA = 0.5;
+
+    /**
      * The alpha parameter of the crossover.
      */
     private double alpha;
