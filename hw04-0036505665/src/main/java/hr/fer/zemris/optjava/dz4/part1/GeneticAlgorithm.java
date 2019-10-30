@@ -7,6 +7,8 @@ import hr.fer.zemris.optjava.dz4.part1.function.TransferFunction;
 import hr.fer.zemris.optjava.dz4.part1.mutation.GaussianMutation;
 import hr.fer.zemris.optjava.dz4.part1.mutation.IMutation;
 import hr.fer.zemris.optjava.dz4.part1.selection.ISelection;
+import hr.fer.zemris.optjava.dz4.part1.selection.RouletteWheelSelection;
+import hr.fer.zemris.optjava.dz4.part1.selection.TournamentSelection;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -180,6 +182,15 @@ public class GeneticAlgorithm {
      * @throws IllegalArgumentException if the given selection type string is invalid
      */
     private static ISelection parseSelectionType(String selectionType) {
-        return null;
+        if (selectionType.equals("rouletteWheel")) {
+            return new RouletteWheelSelection();
+        }
+
+        if (selectionType.startsWith("tournament:")) {
+            int tournamenSize = Integer.parseInt(selectionType.split(":")[1]);
+            return new TournamentSelection(tournamenSize);
+        }
+
+        throw new IllegalArgumentException("Unknown selection type " + selectionType);
     }
 }
