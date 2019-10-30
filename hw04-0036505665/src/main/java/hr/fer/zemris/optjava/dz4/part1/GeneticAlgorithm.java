@@ -185,8 +185,8 @@ public class GeneticAlgorithm {
         }
 
         if (selectionType.startsWith("tournament:")) {
-            int tournamenSize = Integer.parseInt(selectionType.split(":")[1]);
-            return new TournamentSelection(tournamenSize);
+            int tournamentSize = Integer.parseInt(selectionType.split(":")[1]);
+            return new TournamentSelection(tournamentSize);
         }
 
         throw new IllegalArgumentException("Unknown selection type " + selectionType);
