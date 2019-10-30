@@ -28,6 +28,13 @@ public class Chromosome implements Comparable<Chromosome> {
     public double fitness;
 
     /**
+     * Constructs a {@link Chromosome} of {@link #DEFAULT_SIZE} with all values set to zero.
+     */
+    public Chromosome() {
+        values = new double[DEFAULT_SIZE];
+    }
+
+    /**
      * Constructs a {@link Chromosome} of the specified size with all values set to zero.
      *
      * @param size the size of the chromosome

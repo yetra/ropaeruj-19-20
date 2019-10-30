@@ -121,7 +121,7 @@ public class GeneticAlgorithm {
      */
     private void initialize(Collection<Chromosome> population) {
         for (int i = 0; i < populationSize; i++) {
-            population.add(new Chromosome(10));
+            population.add(new Chromosome());
         }
     }
 
