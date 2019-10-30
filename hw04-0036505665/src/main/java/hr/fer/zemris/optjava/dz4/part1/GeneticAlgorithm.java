@@ -1,10 +1,16 @@
 package hr.fer.zemris.optjava.dz4.part1;
 
+import hr.fer.zemris.optjava.dz4.part1.crossover.BLXAlphaCrossover;
 import hr.fer.zemris.optjava.dz4.part1.crossover.ICrossover;
 import hr.fer.zemris.optjava.dz4.part1.function.IFunction;
+import hr.fer.zemris.optjava.dz4.part1.function.TransferFunction;
+import hr.fer.zemris.optjava.dz4.part1.mutation.GaussianMutation;
 import hr.fer.zemris.optjava.dz4.part1.mutation.IMutation;
 import hr.fer.zemris.optjava.dz4.part1.selection.ISelection;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -128,5 +134,52 @@ public class GeneticAlgorithm {
         for (Chromosome chromosome : population) {
             chromosome.fitness = function.valueAt(chromosome.values);
         }
+    }
+
+    /**
+     * The main method. Uses this GA implementation for finding the coefficients of a transfer
+     * function whose formula and system response are known.
+
+     * The {@link #populationSize}, {@link #minError}, {@link #maxIterations}, type of selection to
+     * use, and standard deviation for {@link GaussianMutation} are all given as command-line arguments.
+     *
+     *
+     * @param args the command-line arguments, 5 expected
+     */
+    public static void main(String[] args) {
+        if (args.length != 5)  {
+            System.out.println("Expected 5 arguments, got " + args.length);
+            System.exit(1);
+        }
+
+        try {
+            int populationSize = Integer.parseInt(args[0]);
+            double minError = Double.parseDouble(args[1]);
+            int maxIterations = Integer.parseInt(args[2]);
+            ISelection selection = parseSelectionType(args[3]);
+            double sigma = Double.parseDouble(args[4]);
+            Path filePath = Paths.get("02-zad-prijenosna.txt");
+
+            GeneticAlgorithm ga = new GeneticAlgorithm(populationSize, minError, maxIterations, selection,
+                    new BLXAlphaCrossover(), new GaussianMutation(sigma), TransferFunction.fromFile(filePath));
+
+            ga.run();
+
+        } catch (IllegalArgumentException | IOException e) {
+            System.out.println(e.getMessage());
+            System.exit(1);
+        }
+    }
+
+    /**
+     * Returns an implementation of {@link ISelection}.
+     * The given string determines which implementation is returned.
+     *
+     * @param selectionType the {@link ISelection} implementation to return
+     * @return an implementation of {@link ISelection} determined by the given string
+     * @throws IllegalArgumentException if the given selection type string is invalid
+     */
+    private static ISelection parseSelectionType(String selectionType) {
+        return null;
     }
 }
