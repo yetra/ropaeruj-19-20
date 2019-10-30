@@ -20,6 +20,7 @@ public interface ICrossover {
      * @param firstParent the first parent
      * @param secondParent the second parent
      * @return a collection of child chromosomes obtained by crossing the given parents
+     * @throws IllegalArgumentException if the parent chromosomes are not the same size
      */
     Collection<Chromosome> of(Chromosome firstParent, Chromosome secondParent);
 }

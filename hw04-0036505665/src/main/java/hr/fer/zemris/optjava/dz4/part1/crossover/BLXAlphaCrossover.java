@@ -42,6 +42,10 @@ public class BLXAlphaCrossover implements ICrossover {
 
     @Override
     public Collection<Chromosome> of(Chromosome firstParent, Chromosome secondParent) {
+        if (firstParent.values.length != secondParent.values.length) {
+            throw new IllegalArgumentException("Parent chromosomes are not the same size!");
+        }
+
         Chromosome child = new Chromosome(firstParent.values.length);
 
         for (int i = 0; i < firstParent.values.length; i++) {
