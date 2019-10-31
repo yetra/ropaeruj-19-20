@@ -53,7 +53,10 @@ public class BLXAlphaCrossover implements ICrossover {
             double maxValue = Math.min(firstParent.values[i], secondParent.values[i]);
             double delta = maxValue - minValue;
 
-            child.values[i] = ThreadLocalRandom.current().nextDouble(minValue - delta * alpha, maxValue + delta * alpha);
+            double lower = minValue - delta * alpha;
+            double upper = maxValue + delta * alpha;
+
+            child.values[i] = ThreadLocalRandom.current().nextDouble() + (upper - lower) + upper;
         }
 
         return Collections.singletonList(child);
