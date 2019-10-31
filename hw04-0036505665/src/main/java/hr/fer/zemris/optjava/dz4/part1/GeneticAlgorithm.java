@@ -123,7 +123,10 @@ public class GeneticAlgorithm {
      */
     private void initialize(Collection<Chromosome> population) {
         for (int i = 0; i < populationSize; i++) {
-            population.add(new Chromosome());
+            Chromosome chromosome = new Chromosome();
+            chromosome.randomize(-5, 5);
+
+            population.add(chromosome);
         }
     }
 
