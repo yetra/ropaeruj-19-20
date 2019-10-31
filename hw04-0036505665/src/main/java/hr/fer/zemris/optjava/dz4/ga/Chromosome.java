@@ -79,6 +79,15 @@ public class Chromosome implements Comparable<Chromosome> {
     }
 
     /**
+     * Randomizes the values of this chromosome in the given range.
+     */
+    public void randomize(int lower, int upper) {
+        for (int i = 0; i < values.length; i++) {
+            values[i] = ThreadLocalRandom.current().nextDouble(lower, upper);
+        }
+    }
+
+    /**
      * Returns a copy of this chromosome.
      *
      * @return a copy of this chromosome
