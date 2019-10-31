@@ -52,6 +52,6 @@ public class TournamentSelection implements ISelection {
             tournament.add(population.get(randomIndex));
         }
 
-        return Collections.max(tournament, Chromosome::compareTo);
+        return Collections.min(tournament);
     }
 }
