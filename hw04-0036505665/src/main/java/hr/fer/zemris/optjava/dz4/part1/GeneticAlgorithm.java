@@ -101,7 +101,7 @@ public class GeneticAlgorithm {
             List<Chromosome> newGeneration = new ArrayList<>(populationSize);
             newGeneration.add(best); // elitism
 
-            for (int i = 0; i < populationSize / 2; i++) {
+            for (int i = 0; i < populationSize; i++) {
                 Chromosome firstParent = selection.from(population);
                 Chromosome secondParent = selection.from(population);
                 
