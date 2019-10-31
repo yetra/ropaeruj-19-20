@@ -15,22 +15,22 @@ public class RouletteWheelSelection implements ISelection {
 
     @Override
     public Chromosome from(List<Chromosome> population) {
-        double fitnessSum = 0;
-        double maxFitness = population.get(0).fitness;
+        double errorSum = 0;
+        double minError = population.get(0).error;
 
         for (Chromosome chromosome : population) {
-            fitnessSum += chromosome.fitness;
+            errorSum += chromosome.error;
 
-            if (maxFitness < chromosome.fitness) {
-                maxFitness = chromosome.fitness;
+            if (minError > chromosome.error) {
+                minError = chromosome.error;
             }
         }
-        fitnessSum = population.size() * maxFitness - fitnessSum;
+        errorSum = population.size() * minError - errorSum;
 
         double accumulatedSum = 0;
-        double randomNumber = ThreadLocalRandom.current().nextDouble() * fitnessSum;
+        double randomNumber = ThreadLocalRandom.current().nextDouble() * errorSum;
         for (Chromosome chromosome : population) {
-            accumulatedSum += maxFitness - chromosome.fitness;
+            accumulatedSum += minError - chromosome.error;
 
             if (randomNumber < accumulatedSum) {
                 return chromosome;
