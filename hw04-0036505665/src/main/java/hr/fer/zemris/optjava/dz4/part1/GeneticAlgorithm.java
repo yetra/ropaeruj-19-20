@@ -91,7 +91,7 @@ public class GeneticAlgorithm {
         evaluate(population);
 
         for (int iteration = 0; iteration < maxIterations; iteration++) {
-            Chromosome best = Collections.max(population);
+            Chromosome best = Collections.min(population);
             System.out.println("Solution " + iteration + ": f(" + Arrays.toString(best.values) + ") = " + best.fitness);
 
             if (best.fitness <= minError) {
