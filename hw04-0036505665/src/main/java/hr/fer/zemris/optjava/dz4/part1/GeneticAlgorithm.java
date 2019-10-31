@@ -92,9 +92,9 @@ public class GeneticAlgorithm {
 
         for (int iteration = 0; iteration < maxIterations; iteration++) {
             Chromosome best = Collections.min(population);
-            System.out.println("Solution " + iteration + ": f(" + Arrays.toString(best.values) + ") = " + best.fitness);
+            System.out.println("Solution " + iteration + ": f(" + Arrays.toString(best.values) + ") = " + best.error);
 
-            if (best.fitness <= minError) {
+            if (best.error <= minError) {
                 return;
             }
 
@@ -137,7 +137,7 @@ public class GeneticAlgorithm {
      */
     private void evaluate(Collection<Chromosome> population) {
         for (Chromosome chromosome : population) {
-            chromosome.fitness = function.valueAt(chromosome.values);
+            chromosome.error = function.valueAt(chromosome.values);
         }
     }
 

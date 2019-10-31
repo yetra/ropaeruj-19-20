@@ -25,9 +25,9 @@ public class Chromosome implements Comparable<Chromosome> {
     public double[] values;
 
     /**
-     * The fitness of the chromosome.
+     * The error of the chromosome.
      */
-    public double fitness;
+    public double error;
 
     /**
      * Constructs a {@link Chromosome} of {@link #DEFAULT_SIZE} with all values set to zero.
@@ -98,7 +98,7 @@ public class Chromosome implements Comparable<Chromosome> {
 
     @Override
     public int compareTo(Chromosome o) {
-        return Double.compare(this.fitness, o.fitness);
+        return Double.compare(this.error, o.error);
     }
 
     @Override
