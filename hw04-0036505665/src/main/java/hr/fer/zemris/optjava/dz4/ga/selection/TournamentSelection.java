@@ -2,10 +2,7 @@ package hr.fer.zemris.optjava.dz4.ga.selection;
 
 import hr.fer.zemris.optjava.dz4.ga.Chromosome;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -48,7 +45,7 @@ public class TournamentSelection implements ISelection {
 
     @Override
     public Chromosome from(List<Chromosome> population) {
-        Set<Chromosome> tournament = new HashSet<>();
+        List<Chromosome> tournament = new ArrayList<>();
 
         while (tournament.size() < tournamentSize) {
             int randomIndex = ThreadLocalRandom.current().nextInt(population.size());
