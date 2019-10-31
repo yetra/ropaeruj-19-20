@@ -17,7 +17,7 @@ public class Chromosome implements Comparable<Chromosome> {
     /**
      * The default chromosome size;
      */
-    private static final int DEFAULT_SIZE = 10;
+    private static final int DEFAULT_SIZE = 6;
 
     /**
      * The values of the chromosome.
