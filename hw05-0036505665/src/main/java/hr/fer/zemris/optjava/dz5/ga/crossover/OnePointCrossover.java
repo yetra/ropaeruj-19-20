@@ -22,6 +22,12 @@ public class OnePointCrossover implements ICrossover {
      */
     private static final double DEFAULT_PROBABILITY = 0.9;
 
+    /**
+     * Constructs a {@link OnePointCrossover} of the default probability.
+     */
+    public OnePointCrossover() {
+    }
+
     @Override
     public Collection<Chromosome> of(Chromosome firstParent, Chromosome secondParent) {
         return null;
