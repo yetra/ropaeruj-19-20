@@ -11,7 +11,7 @@ public abstract class AbstractCompFactor {
     /**
      * The current comparison factor.
      */
-    private double factor;
+    double factor;
 
     /**
      * Constructs a comparison factor object of the given initial value.
