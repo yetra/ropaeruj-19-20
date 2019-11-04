@@ -11,6 +11,11 @@ import hr.fer.zemris.optjava.dz5.ga.Chromosome;
  */
 public class BitFlipMutation implements IMutation {
 
+    /**
+     * The default bit flip probability.
+     */
+    private static final double DEFAULT_PROBABILITY = 0.005;
+
     @Override
     public Chromosome of(Chromosome chromosome) {
         return null;
