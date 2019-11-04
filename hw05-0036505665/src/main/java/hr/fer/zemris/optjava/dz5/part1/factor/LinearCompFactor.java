@@ -21,7 +21,7 @@ public class LinearCompFactor implements ICompFactor {
     /**
      * Constructs a {@link LinearCompFactor}.
      */
-    public LinearCompFactor(double factor) {
+    public LinearCompFactor() {
         this.factor = 0.0;
     }
 
