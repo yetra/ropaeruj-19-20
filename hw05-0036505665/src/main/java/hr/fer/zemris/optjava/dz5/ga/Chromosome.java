@@ -75,6 +75,29 @@ public class Chromosome implements Comparable<Chromosome> {
         return new Chromosome(Arrays.copyOf(values, values.length));
     }
 
+    /**
+     * Calculates the fitness of this chromosome.
+     */
+    public void calculateFitness() {
+        int k = 0;
+
+        for (boolean value : values) {
+            if (value) {
+                k++;
+            }
+        }
+
+        if (k <= 0.8 * values.length) {
+            fitness = (double) k / values.length;
+
+        } else if (k <= 0.9 * values.length) {
+            fitness = 0.8;
+
+        } else {
+            fitness = 2.0 * k / values.length - 1;
+        }
+    }
+
     @Override
     public int compareTo(Chromosome o) {
         return Double.compare(this.fitness, o.fitness);
