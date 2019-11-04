@@ -14,7 +14,8 @@ import hr.fer.zemris.optjava.dz5.part1.factor.ICompFactor;
 import java.util.*;
 
 /**
- * An implementation of Relevant Alleles Preserving Genetic Algorithm (RAPGA).
+ * An implementation of Relevant Alleles Preserving Genetic Algorithm (RAPGA)
+ * that is used for solving the Max-Ones problem.
  *
  * @author Bruna Dujmović
  *
