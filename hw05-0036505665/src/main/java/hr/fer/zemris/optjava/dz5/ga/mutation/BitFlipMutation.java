@@ -17,9 +17,24 @@ public class BitFlipMutation implements IMutation {
     private static final double DEFAULT_PROBABILITY = 0.005;
 
     /**
-     * Constructs a {@link BitFlipMutation} of the default probability.
+     * The bit flip probability.
+     */
+    private double probability;
+
+    /**
+     * Constructs a {@link BitFlipMutation} of the default bit flip probability.
      */
     public BitFlipMutation() {
+        this.probability = DEFAULT_PROBABILITY;
+    }
+
+    /**
+     * Constructs a {@link BitFlipMutation} of the given bit flip probability.
+     *
+     * @param probability the bit flip probability
+     */
+    public BitFlipMutation(double probability) {
+        this.probability = probability;
     }
 
     @Override
