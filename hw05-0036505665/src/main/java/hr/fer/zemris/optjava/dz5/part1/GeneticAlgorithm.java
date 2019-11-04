@@ -2,9 +2,12 @@ package hr.fer.zemris.optjava.dz5.part1;
 
 import hr.fer.zemris.optjava.dz5.ga.Chromosome;
 import hr.fer.zemris.optjava.dz5.ga.crossover.ICrossover;
+import hr.fer.zemris.optjava.dz5.ga.crossover.OnePointCrossover;
+import hr.fer.zemris.optjava.dz5.ga.mutation.BitFlipMutation;
 import hr.fer.zemris.optjava.dz5.ga.mutation.IMutation;
 import hr.fer.zemris.optjava.dz5.ga.selection.ISelection;
 import hr.fer.zemris.optjava.dz5.ga.selection.RandomSelection;
+import hr.fer.zemris.optjava.dz5.ga.selection.TournamentSelection;
 
 import java.util.*;
 
@@ -185,6 +188,17 @@ public class GeneticAlgorithm {
      * @param args the command-line arguments, 1 expected - chromosome size
      */
     public static void main(String[] args) {
+        if (args.length != 1) {
+            System.out.println("Expected 1 argument, got " + args.length);
+        }
 
+        int chromosomeSize = Integer.parseInt(args[0]);
+
+        int tournamentSize = 2;
+        ISelection firstSelection = new TournamentSelection(tournamentSize);
+        ISelection secondSelection = new RandomSelection(); // OR = firstSelection
+
+        new GeneticAlgorithm(new OnePointCrossover(), new BitFlipMutation(),
+                firstSelection, secondSelection, chromosomeSize);
     }
 }
