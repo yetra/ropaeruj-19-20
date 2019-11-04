@@ -17,6 +17,11 @@ import java.util.Collection;
  */
 public class OnePointCrossover implements ICrossover {
 
+    /**
+     * The default crossover probability.
+     */
+    private static final double DEFAULT_PROBABILITY = 0.9;
+
     @Override
     public Collection<Chromosome> of(Chromosome firstParent, Chromosome secondParent) {
         return null;
