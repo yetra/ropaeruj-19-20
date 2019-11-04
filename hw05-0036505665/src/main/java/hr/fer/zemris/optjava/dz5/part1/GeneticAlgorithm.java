@@ -1,9 +1,12 @@
 package hr.fer.zemris.optjava.dz5.part1;
 
+import hr.fer.zemris.optjava.dz5.ga.Chromosome;
 import hr.fer.zemris.optjava.dz5.ga.crossover.ICrossover;
 import hr.fer.zemris.optjava.dz5.ga.mutation.IMutation;
 import hr.fer.zemris.optjava.dz5.ga.selection.ISelection;
 import hr.fer.zemris.optjava.dz5.ga.selection.RandomSelection;
+
+import java.util.Collection;
 
 /**
  * An implementation of Relevant Alleles Preserving Genetic Algorithm (RAPGA).
@@ -92,6 +95,17 @@ public class GeneticAlgorithm {
      */
     public void run() {
 
+    }
+
+    /**
+     * Initializes the given population with random chromosomes.
+     *
+     * @param population the population to initialize
+     */
+    private void initialize(Collection<Chromosome> population) {
+        for (int i = 0, size = population.size(); i < size; i++) {
+            population.add(new Chromosome(chromosomeSize, true));
+        }
     }
 
     /**
