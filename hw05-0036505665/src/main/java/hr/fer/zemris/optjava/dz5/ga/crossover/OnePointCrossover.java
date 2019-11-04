@@ -23,9 +23,24 @@ public class OnePointCrossover implements ICrossover {
     private static final double DEFAULT_PROBABILITY = 0.9;
 
     /**
+     * The crossover probability.
+     */
+    private double probability;
+
+    /**
      * Constructs a {@link OnePointCrossover} of the default probability.
      */
     public OnePointCrossover() {
+        this.probability = DEFAULT_PROBABILITY;
+    }
+
+    /**
+     * Constructs a {@link OnePointCrossover} of the given probability.
+     *
+     * @param probability the crossover probability (decimal number between 0 and 1)
+     */
+    public OnePointCrossover(double probability) {
+        this.probability = probability;
     }
 
     @Override
