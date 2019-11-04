@@ -8,6 +8,8 @@ import hr.fer.zemris.optjava.dz5.ga.mutation.IMutation;
 import hr.fer.zemris.optjava.dz5.ga.selection.ISelection;
 import hr.fer.zemris.optjava.dz5.ga.selection.RandomSelection;
 import hr.fer.zemris.optjava.dz5.ga.selection.TournamentSelection;
+import hr.fer.zemris.optjava.dz5.part1.factor.ConstantCompFactor;
+import hr.fer.zemris.optjava.dz5.part1.factor.ICompFactor;
 
 import java.util.*;
 
@@ -40,11 +42,6 @@ public class GeneticAlgorithm {
     private static final int MAX_EFFORT = 100;
 
     /**
-     * The comparison factor for determining if a child chromosome is successful.
-     */
-    private static final int COMP_FACTOR = 0;
-
-    /**
      * The crossover to use for combining parent chromosomes.
      */
     private ICrossover crossover;
@@ -70,6 +67,11 @@ public class GeneticAlgorithm {
     private ISelection randomSelection = new RandomSelection();
 
     /**
+     * The comparison factor for determining if a child chromosome is successful.
+     */
+    private ICompFactor compFactor;
+
+    /**
      * The size of the chromosomes.
      */
     private int chromosomeSize;
@@ -85,11 +87,12 @@ public class GeneticAlgorithm {
      */
     public GeneticAlgorithm(ICrossover crossover, IMutation mutation,
                             ISelection firstSelection, ISelection secondSelection,
-                            int chromosomeSize) {
+                            ICompFactor compFactor, int chromosomeSize) {
         this.crossover = crossover;
         this.mutation = mutation;
         this.firstSelection = firstSelection;
         this.secondSelection = secondSelection;
+        this.compFactor = compFactor;
         this.chromosomeSize = chromosomeSize;
     }
 
@@ -179,7 +182,7 @@ public class GeneticAlgorithm {
         double worseFitness = Math.min(firstParent.fitness, secondParent.fitness);
         double betterFitness = Math.max(firstParent.fitness, secondParent.fitness);
 
-        double thresholdFitness = worseFitness + COMP_FACTOR * (betterFitness - worseFitness);
+        double thresholdFitness = worseFitness + compFactor.getFactor() * (betterFitness - worseFitness);
 
         return child.fitness >= thresholdFitness;
     }
@@ -199,9 +202,13 @@ public class GeneticAlgorithm {
 
         int tournamentSize = 2;
         ISelection firstSelection = new TournamentSelection(tournamentSize);
-        ISelection secondSelection = new RandomSelection(); // OR = firstSelection
+        ISelection secondSelection = new RandomSelection();
+        // ISelection secondSelection = firstSelection;
+
+        ICompFactor compFactor = new ConstantCompFactor(0.7);
+        // ICompFactor compFactor = new LinearCompFactor();
 
         new GeneticAlgorithm(new OnePointCrossover(), new BitFlipMutation(),
-                firstSelection, secondSelection, chromosomeSize);
+                firstSelection, secondSelection, compFactor, chromosomeSize);
     }
 }
