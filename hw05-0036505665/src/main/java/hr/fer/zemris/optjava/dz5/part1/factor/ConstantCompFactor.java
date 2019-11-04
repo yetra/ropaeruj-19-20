@@ -1,4 +1,4 @@
-package hr.fer.zemris.optjava.dz5.part1;
+package hr.fer.zemris.optjava.dz5.part1.factor;
 
 /**
  * A comparison factor that remains constant throughout the genetic algorithm.

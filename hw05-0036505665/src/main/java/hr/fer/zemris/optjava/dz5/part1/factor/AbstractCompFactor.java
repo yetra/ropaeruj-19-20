@@ -1,4 +1,4 @@
-package hr.fer.zemris.optjava.dz5.part1;
+package hr.fer.zemris.optjava.dz5.part1.factor;
 
 /**
  * An abstract class to be implemented by various comparison factor change plans.
