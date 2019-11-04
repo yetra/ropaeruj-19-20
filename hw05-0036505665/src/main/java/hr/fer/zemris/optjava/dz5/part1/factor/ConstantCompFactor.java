@@ -6,7 +6,12 @@ package hr.fer.zemris.optjava.dz5.part1.factor;
  * @author Bruna Dujmović
  *
  */
-public class ConstantCompFactor extends AbstractCompFactor {
+public class ConstantCompFactor implements ICompFactor {
+
+    /**
+     * The constant value of the comparison factor.
+     */
+    private double factor;
 
     /**
      * Constructs a {@link ConstantCompFactor} of the given value.
@@ -14,6 +19,11 @@ public class ConstantCompFactor extends AbstractCompFactor {
      * @param factor the comparison factor (double between 0 and 1)
      */
     public ConstantCompFactor(double factor) {
-        super(factor);
+        this.factor = factor;
+    }
+
+    @Override
+    public double getFactor() {
+        return factor;
     }
 }
