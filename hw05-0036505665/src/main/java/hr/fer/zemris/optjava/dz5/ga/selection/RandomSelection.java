@@ -2,6 +2,8 @@ package hr.fer.zemris.optjava.dz5.ga.selection;
 
 import hr.fer.zemris.optjava.dz5.ga.Chromosome;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -14,9 +16,10 @@ import java.util.concurrent.ThreadLocalRandom;
 public class RandomSelection implements ISelection {
 
     @Override
-    public Chromosome from(List<Chromosome> population) {
+    public Chromosome from(Collection<Chromosome> population) {
+        List<Chromosome> populationList = new ArrayList<>(population);
         int randomIndex = ThreadLocalRandom.current().nextInt(population.size());
 
-        return population.get(randomIndex);
+        return populationList.get(randomIndex);
     }
 }

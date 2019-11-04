@@ -2,7 +2,7 @@ package hr.fer.zemris.optjava.dz5.ga.selection;
 
 import hr.fer.zemris.optjava.dz5.ga.Chromosome;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * An interface to be implemented by different types of GA selection.
@@ -21,5 +21,5 @@ public interface ISelection {
      * @param population the population to select from
      * @return the selected chromosome
      */
-    Chromosome from(List<Chromosome> population);
+    Chromosome from(Collection<Chromosome> population);
 }

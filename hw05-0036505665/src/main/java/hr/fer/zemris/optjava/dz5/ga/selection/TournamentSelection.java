@@ -44,12 +44,13 @@ public class TournamentSelection implements ISelection {
     }
 
     @Override
-    public Chromosome from(List<Chromosome> population) {
+    public Chromosome from(Collection<Chromosome> population) {
+        List<Chromosome> populationList = new ArrayList<>(population);
         List<Chromosome> tournament = new ArrayList<>();
 
         while (tournament.size() < tournamentSize) {
             int randomIndex = ThreadLocalRandom.current().nextInt(population.size());
-            tournament.add(population.get(randomIndex));
+            tournament.add(populationList.get(randomIndex));
         }
 
         return Collections.min(tournament);
