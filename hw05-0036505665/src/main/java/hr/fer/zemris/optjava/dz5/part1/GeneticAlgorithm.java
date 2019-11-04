@@ -6,7 +6,7 @@ import hr.fer.zemris.optjava.dz5.ga.mutation.IMutation;
 import hr.fer.zemris.optjava.dz5.ga.selection.ISelection;
 import hr.fer.zemris.optjava.dz5.ga.selection.RandomSelection;
 
-import java.util.Collection;
+import java.util.*;
 
 /**
  * An implementation of Relevant Alleles Preserving Genetic Algorithm (RAPGA).
@@ -94,6 +94,48 @@ public class GeneticAlgorithm {
      * Executes the algorithm.
      */
     public void run() {
+        Set<Chromosome> population = new HashSet<>(MAX_POP_SIZE);
+
+        initialize(population);
+        evaluate(population);
+
+        double actSelPress = 0.0;
+        while (actSelPress < MAX_SEL_PRESS) {
+            Set<Chromosome> newPopulation = new HashSet<>();
+            Set<Chromosome> pool = new HashSet<>();
+
+            int effort = 0;
+            while (effort < MAX_EFFORT) {
+                Chromosome firstParent = firstSelection.from(population);
+                Chromosome secondParent = secondSelection.from(population);
+
+                Collection<Chromosome> children = crossover.of(firstParent, secondParent);
+
+                for (Chromosome child : children) {
+                    mutation.mutate(child);
+                    child.calculateFitness();
+
+                    if (newPopulation.size() >= MAX_POP_SIZE) {
+                        break;
+                    }
+
+                    if (isSuccessful(child, firstParent, secondParent)) {
+                        newPopulation.add(child);
+                    } else {
+                        pool.add(child);
+                    }
+                }
+
+                effort++;
+            }
+
+            while (newPopulation.size() < MIN_POP_SIZE) {
+                newPopulation.add(randomSelection.from(pool));
+            }
+
+            actSelPress = (newPopulation.size() + pool.size()) / population.size();
+            population = newPopulation;
+        }
 
     }
 
