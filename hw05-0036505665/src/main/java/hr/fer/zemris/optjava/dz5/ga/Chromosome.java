@@ -66,6 +66,15 @@ public class Chromosome implements Comparable<Chromosome> {
         }
     }
 
+    /**
+     * Returns a copy of this chromosome.
+     *
+     * @return a copy of this chromosome
+     */
+    public Chromosome copy() {
+        return new Chromosome(Arrays.copyOf(values, values.length));
+    }
+
     @Override
     public int compareTo(Chromosome o) {
         return Double.compare(this.fitness, o.fitness);
