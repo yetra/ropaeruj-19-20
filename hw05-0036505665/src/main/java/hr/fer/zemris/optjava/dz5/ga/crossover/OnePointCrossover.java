@@ -2,7 +2,9 @@ package hr.fer.zemris.optjava.dz5.ga.crossover;
 
 import hr.fer.zemris.optjava.dz5.ga.Chromosome;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * An implementation of one-point crossover which results in two child chromosomes.
@@ -45,6 +47,27 @@ public class OnePointCrossover implements ICrossover {
 
     @Override
     public Collection<Chromosome> of(Chromosome firstParent, Chromosome secondParent) {
-        return null;
+        if (firstParent.values.length != secondParent.values.length) {
+            throw new IllegalArgumentException("Parent chromosomes are not of the same size!");
+        }
+
+        if (probability > ThreadLocalRandom.current().nextDouble()) {
+            return Arrays.asList(firstParent, secondParent);
+        }
+
+        Chromosome firstChild = new Chromosome(firstParent.values.length);
+        Chromosome secondChild = new Chromosome(firstParent.values.length);
+        int point = ThreadLocalRandom.current().nextInt(firstParent.values.length);
+
+        for (int i = 0; i < point; i++) {
+            firstChild.values[i] = firstParent.values[i];
+            secondChild.values[i] = secondParent.values[i];
+        }
+        for (int i = point; i < firstParent.values.length; i++) {
+            firstChild.values[i] = secondParent.values[i];
+            secondChild.values[i] = firstParent.values[i];
+        }
+
+        return Arrays.asList(firstChild, secondChild);
     }
 }
