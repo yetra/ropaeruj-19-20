@@ -115,4 +115,15 @@ public class Chromosome implements Comparable<Chromosome> {
     public int hashCode() {
         return Arrays.hashCode(values);
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        for (boolean value : values) {
+            sb.append(value ? "1" : "0");
+        }
+
+        return sb.toString();
+    }
 }
