@@ -120,6 +120,23 @@ public class GeneticAlgorithm {
     }
 
     /**
+     * Returns {@code true} if a given child is successful when compared to its parents.
+     *
+     * @param child the child to check
+     * @param firstParent the first parent of the child
+     * @param secondParent the second parent of the child
+     * @return {@code true} if a given child is successful
+     */
+    private boolean isSuccessful(Chromosome child, Chromosome firstParent, Chromosome secondParent) {
+        double worseFitness = Math.min(firstParent.fitness, secondParent.fitness);
+        double betterFitness = Math.max(firstParent.fitness, secondParent.fitness);
+
+        double thresholdFitness = worseFitness + COMP_FACTOR * (betterFitness - worseFitness);
+
+        return child.fitness >= thresholdFitness;
+    }
+
+    /**
      * The main method. Obtains the chromosome size from the command-line arguments,
      * instantiates the {@link GeneticAlgorithm} and runs it.
      *
