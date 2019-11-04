@@ -17,8 +17,13 @@ public class ConstantCompFactor implements ICompFactor {
      * Constructs a {@link ConstantCompFactor} of the given value.
      *
      * @param factor the comparison factor (double between 0 and 1)
+     * @throws IllegalArgumentException if the given factor is not between 0 and 1
      */
     public ConstantCompFactor(double factor) {
+        if (factor < 0 || factor > 1) {
+            throw new IllegalArgumentException("Comparison factor must be between 0 and 1!");
+        }
+        
         this.factor = factor;
     }
 
