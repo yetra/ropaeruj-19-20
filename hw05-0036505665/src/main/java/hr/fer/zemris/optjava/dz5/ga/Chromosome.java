@@ -34,6 +34,21 @@ public class Chromosome implements Comparable<Chromosome> {
     }
 
     /**
+     * Constructs a random {@link Chromosome} of the specified size if {@code randomize}
+     * is set to {@code true}. Otherwise, all chromosome values will be set to 0 ({@code false}).
+     *
+     * @param size the size of the chromosome
+     * @param randomize {@code true} if {@link #values} should be set to random values
+     */
+    public Chromosome(int size, boolean randomize) {
+        this(size);
+
+        if (randomize) {
+            randomize();
+        }
+    }
+
+    /**
      * Randomizes the values of this chromosome.
      */
     public void randomize() {
