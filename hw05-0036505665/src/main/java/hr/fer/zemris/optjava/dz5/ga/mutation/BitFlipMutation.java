@@ -16,6 +16,12 @@ public class BitFlipMutation implements IMutation {
      */
     private static final double DEFAULT_PROBABILITY = 0.005;
 
+    /**
+     * Constructs a {@link BitFlipMutation} of the default probability.
+     */
+    public BitFlipMutation() {
+    }
+
     @Override
     public Chromosome of(Chromosome chromosome) {
         return null;
