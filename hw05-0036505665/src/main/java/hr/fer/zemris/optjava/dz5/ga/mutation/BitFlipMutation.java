@@ -2,6 +2,8 @@ package hr.fer.zemris.optjava.dz5.ga.mutation;
 
 import hr.fer.zemris.optjava.dz5.ga.Chromosome;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 /**
  * An {@link IMutation} implementation that flips the bits of a given {@link Chromosome}
  * with the given probability.
@@ -39,11 +41,18 @@ public class BitFlipMutation implements IMutation {
 
     @Override
     public Chromosome of(Chromosome chromosome) {
-        return null;
+        Chromosome copy = chromosome.copy();
+        mutate(copy);
+
+        return copy;
     }
 
     @Override
     public void mutate(Chromosome chromosome) {
-
+        for (int i = 0; i < chromosome.values.length; i++) {
+            if (probability <= ThreadLocalRandom.current().nextDouble()) {
+                chromosome.values[i] = !chromosome.values[i];
+            }
+        }
     }
 }
