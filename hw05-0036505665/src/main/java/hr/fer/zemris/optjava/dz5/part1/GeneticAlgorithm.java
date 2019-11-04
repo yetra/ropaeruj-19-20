@@ -209,6 +209,6 @@ public class GeneticAlgorithm {
         // ICompFactor compFactor = new LinearCompFactor();
 
         new GeneticAlgorithm(new OnePointCrossover(), new BitFlipMutation(),
-                firstSelection, secondSelection, compFactor, chromosomeSize);
+                firstSelection, secondSelection, compFactor, chromosomeSize).run();
     }
 }
