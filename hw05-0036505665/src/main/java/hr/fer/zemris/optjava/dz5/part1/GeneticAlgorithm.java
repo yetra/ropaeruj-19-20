@@ -109,6 +109,17 @@ public class GeneticAlgorithm {
     }
 
     /**
+     * Evaluates the given population.
+     *
+     * @param population the population to evaluate
+     */
+    private void evaluate(Collection<Chromosome> population) {
+        for (Chromosome chromosome : population) {
+            chromosome.calculateFitness();
+        }
+    }
+
+    /**
      * The main method. Obtains the chromosome size from the command-line arguments,
      * instantiates the {@link GeneticAlgorithm} and runs it.
      *
