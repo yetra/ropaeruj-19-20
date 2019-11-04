@@ -3,13 +3,14 @@ package hr.fer.zemris.optjava.dz5.ga;
 import hr.fer.zemris.optjava.dz5.part1.GeneticAlgorithm;
 
 import java.util.Arrays;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * This class represents a chromosome to be used in {@link GeneticAlgorithm}
  * that is based on a bit vector.
  *
  * @author Bruna Dujmović
- * 
+ *
  */
 public class Chromosome implements Comparable<Chromosome> {
 
@@ -30,6 +31,15 @@ public class Chromosome implements Comparable<Chromosome> {
      */
     public Chromosome(int size) {
         values = new boolean[size];
+    }
+
+    /**
+     * Randomizes the values of this chromosome.
+     */
+    public void randomize() {
+        for (int i = 0; i < values.length; i++) {
+            values[i] = ThreadLocalRandom.current().nextBoolean();
+        }
     }
 
     @Override
