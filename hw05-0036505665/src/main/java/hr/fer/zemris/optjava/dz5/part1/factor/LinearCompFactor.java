@@ -22,14 +22,13 @@ public class LinearCompFactor implements ICompFactor {
      * Constructs a {@link LinearCompFactor}.
      */
     public LinearCompFactor() {
-        this.factor = 0.0;
+        this.factor = -FACTOR_INCREMENT;
     }
 
     @Override
     public double getFactor() {
-        double currentFactor = factor;
-        factor += FACTOR_INCREMENT;
+        factor = Math.min(factor + FACTOR_INCREMENT, 1);
 
-        return currentFactor;
+        return factor;
     }
 }
