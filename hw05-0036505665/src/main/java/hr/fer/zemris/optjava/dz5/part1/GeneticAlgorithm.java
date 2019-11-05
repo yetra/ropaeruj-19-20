@@ -45,27 +45,27 @@ public class GeneticAlgorithm {
     /**
      * The crossover to use for combining parent chromosomes.
      */
-    private ICrossover crossover;
+    private ICrossover<Boolean> crossover;
 
     /**
      * The mutation to use for modifying child chromosomes.
      */
-    private IMutation mutation;
+    private IMutation<Boolean> mutation;
 
     /**
      * The first type of GA selection to use.
      */
-    private ISelection firstSelection;
+    private ISelection<Boolean> firstSelection;
 
     /**
      * The second type of GA selection to use.
      */
-    private ISelection secondSelection;
+    private ISelection<Boolean> secondSelection;
 
     /**
      * An implementation of random selection.
      */
-    private ISelection randomSelection = new RandomSelection();
+    private ISelection<Boolean> randomSelection = new RandomSelection<>();
 
     /**
      * The comparison factor for determining if a child chromosome is successful.
@@ -86,8 +86,8 @@ public class GeneticAlgorithm {
      * @param secondSelection the second type of GA selection to use
      * @param chromosomeSize the size of the chromosomes
      */
-    public GeneticAlgorithm(ICrossover crossover, IMutation mutation,
-                            ISelection firstSelection, ISelection secondSelection,
+    public GeneticAlgorithm(ICrossover<Boolean> crossover, IMutation<Boolean> mutation,
+                            ISelection<Boolean> firstSelection, ISelection<Boolean> secondSelection,
                             ICompFactor compFactor, int chromosomeSize) {
         this.crossover = crossover;
         this.mutation = mutation;
@@ -101,27 +101,27 @@ public class GeneticAlgorithm {
      * Executes the algorithm.
      */
     public void run() {
-        Set<Chromosome> population = new HashSet<>(MAX_POP_SIZE);
+        Set<Chromosome<Boolean>> population = new HashSet<>(MAX_POP_SIZE);
 
         initialize(population);
         evaluate(population);
 
         double actSelPress = 0.0;
         while (actSelPress < MAX_SEL_PRESS) {
-            Chromosome best = Collections.max(population);
+            Chromosome<Boolean> best = Collections.max(population);
             System.out.println("Best: " + best + "- Fitness: " + best.fitness);
 
-            Set<Chromosome> newPopulation = new HashSet<>();
-            Set<Chromosome> pool = new HashSet<>();
+            Set<Chromosome<Boolean>> newPopulation = new HashSet<>();
+            Set<Chromosome<Boolean>> pool = new HashSet<>();
 
             int effort = 0;
             while (effort < MAX_EFFORT) {
-                Chromosome firstParent = firstSelection.from(population);
-                Chromosome secondParent = secondSelection.from(population);
+                Chromosome<Boolean> firstParent = firstSelection.from(population);
+                Chromosome<Boolean> secondParent = secondSelection.from(population);
 
-                Collection<Chromosome> children = crossover.of(firstParent, secondParent);
+                Collection<Chromosome<Boolean>> children = crossover.of(firstParent, secondParent);
 
-                for (Chromosome child : children) {
+                for (Chromosome<Boolean> child : children) {
                     mutation.mutate(child);
                     child.calculateFitness();
 
@@ -154,9 +154,9 @@ public class GeneticAlgorithm {
      *
      * @param population the population to initialize
      */
-    private void initialize(Collection<Chromosome> population) {
+    private void initialize(Collection<Chromosome<Boolean>> population) {
         for (int i = 0, size = population.size(); i < size; i++) {
-            population.add(new Chromosome(chromosomeSize, true));
+            population.add(new BitVectorChromosome(chromosomeSize, true));
         }
     }
 
@@ -165,8 +165,8 @@ public class GeneticAlgorithm {
      *
      * @param population the population to evaluate
      */
-    private void evaluate(Collection<Chromosome> population) {
-        for (Chromosome chromosome : population) {
+    private void evaluate(Collection<Chromosome<Boolean>> population) {
+        for (Chromosome<Boolean> chromosome : population) {
             chromosome.calculateFitness();
         }
     }
@@ -179,7 +179,8 @@ public class GeneticAlgorithm {
      * @param secondParent the second parent of the child
      * @return {@code true} if a given child is successful
      */
-    private boolean isSuccessful(Chromosome child, Chromosome firstParent, Chromosome secondParent) {
+    private boolean isSuccessful(Chromosome<Boolean> child, Chromosome<Boolean> firstParent,
+                                 Chromosome<Boolean> secondParent) {
         double worseFitness = Math.min(firstParent.fitness, secondParent.fitness);
         double betterFitness = Math.max(firstParent.fitness, secondParent.fitness);
 
@@ -202,14 +203,14 @@ public class GeneticAlgorithm {
         int chromosomeSize = Integer.parseInt(args[0]);
 
         int tournamentSize = 2;
-        ISelection firstSelection = new TournamentSelection(tournamentSize);
-        ISelection secondSelection = new RandomSelection();
-        // ISelection secondSelection = firstSelection;
+        ISelection<Boolean> firstSelection = new TournamentSelection<>(tournamentSize);
+        ISelection<Boolean> secondSelection = new RandomSelection<>();
+        // ISelection<Boolean> secondSelection = firstSelection;
 
         ICompFactor compFactor = new ConstantCompFactor(0.7);
         // ICompFactor compFactor = new LinearCompFactor();
 
-        new GeneticAlgorithm(new OnePointCrossover(), new BitFlipMutation(),
+        new GeneticAlgorithm(new OnePointCrossover<>(), new BitFlipMutation(),
                 firstSelection, secondSelection, compFactor, chromosomeSize).run();
     }
 }
