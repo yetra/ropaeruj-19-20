@@ -12,7 +12,7 @@ import java.util.Collection;
  * @author Bruna Dujmović
  *
  */
-public interface ISelection {
+public interface ISelection<T> {
 
     /**
      * Selects a single chromosome from the given population.
@@ -21,5 +21,5 @@ public interface ISelection {
      * @param population the population to select from
      * @return the selected chromosome
      */
-    Chromosome from(Collection<Chromosome> population);
+    Chromosome<T> from(Collection<Chromosome<T>> population);
 }

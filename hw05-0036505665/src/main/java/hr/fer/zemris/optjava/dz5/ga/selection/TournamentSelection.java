@@ -17,7 +17,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author Bruna Dujmović
  *
  */
-public class TournamentSelection implements ISelection {
+public class TournamentSelection<T> implements ISelection<T> {
 
     /**
      * The minimum tournament size.
@@ -44,9 +44,9 @@ public class TournamentSelection implements ISelection {
     }
 
     @Override
-    public Chromosome from(Collection<Chromosome> population) {
-        List<Chromosome> populationList = new ArrayList<>(population);
-        List<Chromosome> tournament = new ArrayList<>();
+    public Chromosome<T> from(Collection<Chromosome<T>> population) {
+        List<Chromosome<T>> populationList = new ArrayList<>(population);
+        List<Chromosome<T>> tournament = new ArrayList<>();
 
         while (tournament.size() < tournamentSize) {
             int randomIndex = ThreadLocalRandom.current().nextInt(population.size());

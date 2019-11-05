@@ -13,11 +13,11 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author Bruna Dujmović
  *
  */
-public class RandomSelection implements ISelection {
+public class RandomSelection<T> implements ISelection<T> {
 
     @Override
-    public Chromosome from(Collection<Chromosome> population) {
-        List<Chromosome> populationList = new ArrayList<>(population);
+    public Chromosome<T> from(Collection<Chromosome<T>> population) {
+        List<Chromosome<T>> populationList = new ArrayList<>(population);
         int randomIndex = ThreadLocalRandom.current().nextInt(population.size());
 
         return populationList.get(randomIndex);
