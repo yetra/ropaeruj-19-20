@@ -101,7 +101,7 @@ public class GeneticAlgorithm {
      * Executes the algorithm.
      */
     public void run() {
-        Set<Chromosome<Boolean>> population = new HashSet<>(MAX_POP_SIZE);
+        Set<Chromosome<Boolean>> population = new HashSet<>();
 
         initialize(population);
         evaluate(population);
@@ -155,7 +155,7 @@ public class GeneticAlgorithm {
      * @param population the population to initialize
      */
     private void initialize(Collection<Chromosome<Boolean>> population) {
-        for (int i = 0, size = population.size(); i < size; i++) {
+        while (population.size() < MAX_POP_SIZE) {
             population.add(new MaxOnesChromsome(chromosomeSize, true));
         }
     }
