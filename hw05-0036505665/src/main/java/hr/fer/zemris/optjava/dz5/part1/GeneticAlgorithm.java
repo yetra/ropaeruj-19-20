@@ -156,7 +156,7 @@ public class GeneticAlgorithm {
      */
     private void initialize(Collection<Chromosome<Boolean>> population) {
         for (int i = 0, size = population.size(); i < size; i++) {
-            population.add(new BitVectorChromosome(chromosomeSize, true));
+            population.add(new MaxOnesChromsome(chromosomeSize, true));
         }
     }
 

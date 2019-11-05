@@ -6,30 +6,30 @@ import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * This class represents a chromosome to be used in {@link GeneticAlgorithm} that is based on a bit vector.
+ * This class represents a chromosome based on a bit vector that will be used in solving the Max-Ones problem.
  *
  * @author Bruna Dujmović
  *
  */
-public class BitVectorChromosome extends Chromosome<Boolean> {
+public class MaxOnesChromsome extends Chromosome<Boolean> {
 
     /**
-     * Constructs a {@link BitVectorChromosome} of the specified size with all values set to 0 ({@code false}).
+     * Constructs a {@link MaxOnesChromsome} of the specified size with all values set to 0 ({@code false}).
      *
      * @param size the size of the chromosome
      */
-    public BitVectorChromosome(int size) {
+    public MaxOnesChromsome(int size) {
         values = new Boolean[size];
     }
 
     /**
-     * Constructs a random {@link BitVectorChromosome} of the specified size if {@code randomize}
+     * Constructs a random {@link MaxOnesChromsome} of the specified size if {@code randomize}
      * is set to {@code true}. Otherwise, all chromosome values will be set to 0 ({@code false}).
      *
      * @param size the size of the chromosome
      * @param randomize {@code true} if {@link #values} should be set to random values
      */
-    public BitVectorChromosome(int size, boolean randomize) {
+    public MaxOnesChromsome(int size, boolean randomize) {
         this(size);
 
         if (randomize) {
@@ -38,11 +38,11 @@ public class BitVectorChromosome extends Chromosome<Boolean> {
     }
 
     /**
-     * Constructs a {@link Chromosome} of the given values.
+     * Constructs a {@link MaxOnesChromsome} of the given values.
      *
      * @param values the values of the chromosome
      */
-    public BitVectorChromosome(Boolean[] values) {
+    public MaxOnesChromsome(Boolean[] values) {
         this.values = values;
     }
 
@@ -55,7 +55,7 @@ public class BitVectorChromosome extends Chromosome<Boolean> {
 
     @Override
     public Chromosome<Boolean> copy() {
-        return new BitVectorChromosome(Arrays.copyOf(values, values.length));
+        return new MaxOnesChromsome(Arrays.copyOf(values, values.length));
     }
 
     @Override
