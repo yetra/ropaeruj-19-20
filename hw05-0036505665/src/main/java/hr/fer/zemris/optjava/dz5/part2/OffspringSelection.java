@@ -74,7 +74,47 @@ public class OffspringSelection<T> {
      * Executes the algorithm.
      */
     public Set<Chromosome<T>> run(Set<Chromosome<T>> population) {
-        return null;
+        final int popSize = population.size();
+
+        double actSelPress = 0.0;
+        while (actSelPress < MAX_SEL_PRESS) {
+            Chromosome<T> best = Collections.max(population);
+            System.out.println("Best: " + best + "- Fitness: " + best.fitness);
+
+            Set<Chromosome<T>> newPopulation = new HashSet<>();
+            Set<Chromosome<T>> pool = new HashSet<>();
+
+            while (newPopulation.size() < SUCC_RATIO * popSize) {
+                Chromosome<T> firstParent = selection.from(population);
+                Chromosome<T> secondParent = selection.from(population);
+
+                Collection<Chromosome<T>> children = crossover.of(firstParent, secondParent);
+
+                for (Chromosome<T> child : children) {
+                    mutation.mutate(child);
+                    child.calculateFitness();
+
+                    if (newPopulation.size() >= SUCC_RATIO * popSize) {
+                        break;
+                    }
+
+                    if (isSuccessful(child, firstParent, secondParent)) {
+                        newPopulation.add(child);
+                    } else {
+                        pool.add(child);
+                    }
+                }
+            }
+
+            while (newPopulation.size() < popSize) {
+                newPopulation.add(randomSelection.from(pool));
+            }
+
+            actSelPress = (double) (newPopulation.size() + pool.size()) / population.size();
+            population = newPopulation;
+        }
+
+        return population;
     }
 
     /**
