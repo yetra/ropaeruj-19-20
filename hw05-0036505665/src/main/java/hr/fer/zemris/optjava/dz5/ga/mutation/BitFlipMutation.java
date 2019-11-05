@@ -11,7 +11,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author Bruna Dujmović
  *
  */
-public class BitFlipMutation implements IMutation {
+public class BitFlipMutation implements IMutation<Boolean> {
 
     /**
      * The default bit flip probability.
@@ -40,15 +40,15 @@ public class BitFlipMutation implements IMutation {
     }
 
     @Override
-    public Chromosome of(Chromosome chromosome) {
-        Chromosome copy = chromosome.copy();
+    public Chromosome<Boolean> of(Chromosome<Boolean> chromosome) {
+        Chromosome<Boolean> copy = chromosome.copy();
         mutate(copy);
 
         return copy;
     }
 
     @Override
-    public void mutate(Chromosome chromosome) {
+    public void mutate(Chromosome<Boolean> chromosome) {
         for (int i = 0; i < chromosome.values.length; i++) {
             if (probability <= ThreadLocalRandom.current().nextDouble()) {
                 chromosome.values[i] = !chromosome.values[i];
