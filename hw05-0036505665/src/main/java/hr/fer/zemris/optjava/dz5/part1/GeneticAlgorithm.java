@@ -143,7 +143,7 @@ public class GeneticAlgorithm {
                 newPopulation.add(randomSelection.from(pool));
             }
 
-            actSelPress = (newPopulation.size() + pool.size()) / population.size();
+            actSelPress = (double) (newPopulation.size() + pool.size()) / population.size();
             population = newPopulation;
         }
 
