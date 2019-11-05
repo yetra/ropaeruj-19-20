@@ -17,7 +17,7 @@ import java.util.concurrent.ThreadLocalRandom;
  *
  * @author Bruna Dujmović
  */
-public class OnePointCrossover implements ICrossover {
+public class OnePointCrossover<T> implements ICrossover<T> {
 
     /**
      * The default crossover probability.
@@ -46,7 +46,7 @@ public class OnePointCrossover implements ICrossover {
     }
 
     @Override
-    public Collection<Chromosome> of(Chromosome firstParent, Chromosome secondParent) {
+    public Collection<Chromosome<T>> of(Chromosome<T> firstParent, Chromosome<T> secondParent) {
         if (firstParent.values.length != secondParent.values.length) {
             throw new IllegalArgumentException("Parent chromosomes are not of the same size!");
         }
@@ -55,14 +55,10 @@ public class OnePointCrossover implements ICrossover {
             return Arrays.asList(firstParent, secondParent);
         }
 
-        Chromosome firstChild = new Chromosome(firstParent.values.length);
-        Chromosome secondChild = new Chromosome(firstParent.values.length);
+        Chromosome<T> firstChild = firstParent.copy();
+        Chromosome<T> secondChild = secondParent.copy();
         int point = ThreadLocalRandom.current().nextInt(firstParent.values.length);
 
-        for (int i = 0; i < point; i++) {
-            firstChild.values[i] = firstParent.values[i];
-            secondChild.values[i] = secondParent.values[i];
-        }
         for (int i = point; i < firstParent.values.length; i++) {
             firstChild.values[i] = secondParent.values[i];
             secondChild.values[i] = firstParent.values[i];

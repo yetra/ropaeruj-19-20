@@ -12,7 +12,7 @@ import java.util.Collection;
  * @author Bruna Dujmović
  *
  */
-public interface ICrossover {
+public interface ICrossover<T> {
 
     /**
      * Performs the crossover on two given parent chromosomes.
@@ -22,5 +22,5 @@ public interface ICrossover {
      * @return a collection of child chromosomes obtained by crossing the given parents
      * @throws IllegalArgumentException if the parent chromosomes are not the same size
      */
-    Collection<Chromosome> of(Chromosome firstParent, Chromosome secondParent);
+    Collection<Chromosome<T>> of(Chromosome<T> firstParent, Chromosome<T> secondParent);
 }
