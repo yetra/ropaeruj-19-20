@@ -9,7 +9,7 @@ import hr.fer.zemris.optjava.dz5.ga.Chromosome;
  * @author Bruna Dujmović
  *
  */
-public interface IMutation {
+public interface IMutation<T> {
 
     /**
      * Returns a mutated copy of the given chromosome.
@@ -17,12 +17,12 @@ public interface IMutation {
      * @param chromosome the chromosome to mutate
      * @return a mutated copy of the given chromosome
      */
-    Chromosome of(Chromosome chromosome);
+    Chromosome<T> of(Chromosome<T> chromosome);
 
     /**
      * Mutates the given chromosome.
      *
      * @param chromosome the chromosome to mutate
      */
-    void mutate(Chromosome chromosome);
+    void mutate(Chromosome<T> chromosome);
 }
