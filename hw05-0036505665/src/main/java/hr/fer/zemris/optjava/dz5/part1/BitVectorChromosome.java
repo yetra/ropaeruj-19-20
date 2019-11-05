@@ -6,8 +6,7 @@ import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * This class represents a chromosome to be used in {@link GeneticAlgorithm}
- * that is based on a bit vector.
+ * This class represents a chromosome to be used in {@link GeneticAlgorithm} that is based on a bit vector.
  *
  * @author Bruna Dujmović
  *
@@ -15,7 +14,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class BitVectorChromosome extends Chromosome<Boolean> {
 
     /**
-     * Constructs a {@link Chromosome} of the specified size with all values set to 0 ({@code false}).
+     * Constructs a {@link BitVectorChromosome} of the specified size with all values set to 0 ({@code false}).
      *
      * @param size the size of the chromosome
      */
@@ -24,7 +23,7 @@ public class BitVectorChromosome extends Chromosome<Boolean> {
     }
 
     /**
-     * Constructs a random {@link Chromosome} of the specified size if {@code randomize}
+     * Constructs a random {@link BitVectorChromosome} of the specified size if {@code randomize}
      * is set to {@code true}. Otherwise, all chromosome values will be set to 0 ({@code false}).
      *
      * @param size the size of the chromosome
