@@ -10,6 +10,7 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * An {@link ISelection} implementation that selects a random chromosome from the given population.
  *
+ * @param <T> the type of the chromosome's values
  * @author Bruna Dujmović
  *
  */

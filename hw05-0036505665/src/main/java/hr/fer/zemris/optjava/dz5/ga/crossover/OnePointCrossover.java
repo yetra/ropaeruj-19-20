@@ -15,6 +15,7 @@ import java.util.concurrent.ThreadLocalRandom;
  *
  * The crossover is performed with a given probability - if no crossover occurs, the parents will be returned.
  *
+ * @param <T> the type of the chromosome's values
  * @author Bruna Dujmović
  */
 public class OnePointCrossover<T> implements ICrossover<T> {

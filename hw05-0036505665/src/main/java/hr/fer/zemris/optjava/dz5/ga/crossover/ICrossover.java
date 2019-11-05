@@ -9,6 +9,7 @@ import java.util.Collection;
  * Each implementation should provide a method that returns a collection
  * of child chromosomes obtained by crossing two parent chromosomes.
  *
+ * @param <T> the type of the chromosome's values
  * @author Bruna Dujmović
  *
  */

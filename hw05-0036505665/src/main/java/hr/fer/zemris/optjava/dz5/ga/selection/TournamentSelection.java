@@ -14,6 +14,7 @@ import java.util.concurrent.ThreadLocalRandom;
  *
  * This implementation makes sure that all chromosomes in a tournament are unique.
  *
+ * @param <T> the type of the chromosome's values
  * @author Bruna Dujmović
  *
  */

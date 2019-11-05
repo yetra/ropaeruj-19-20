@@ -4,8 +4,9 @@ import hr.fer.zemris.optjava.dz5.ga.Chromosome;
 
 /**
  * An interface to be implemented by different types of GA mutation.
- * Each implementation should provide a method for mutating a signle chromosome.
+ * Each implementation should provide a method for mutating a single chromosome.
  *
+ * @param <T> the type of the chromosome's values
  * @author Bruna Dujmović
  *
  */

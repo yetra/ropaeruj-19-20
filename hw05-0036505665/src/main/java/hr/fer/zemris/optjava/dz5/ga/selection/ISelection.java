@@ -9,6 +9,7 @@ import java.util.Collection;
  * Each implementation should provide a method for selecting a single
  * chromosome from a given population.
  *
+ * @param <T> the type of the chromosome's values
  * @author Bruna Dujmović
  *
  */
