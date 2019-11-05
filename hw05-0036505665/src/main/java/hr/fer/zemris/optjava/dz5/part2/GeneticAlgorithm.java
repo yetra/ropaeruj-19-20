@@ -52,7 +52,23 @@ public class GeneticAlgorithm {
      * Executes the algorithm.
      */
     private void run() {
+        List<Chromosome<Integer>> population = getInitialPopulation();
 
+        while (popCount > 0) {
+            int popSize = totalPopSize / popCount;
+            List<Chromosome<Integer>> newPopulation = new ArrayList<>();
+
+            int start = 0;
+            for (int i = 0; i < popCount; i++) {
+                List<Chromosome<Integer>> subPopList = population.subList(start, start + popSize);
+                start += popSize;
+
+                newPopulation.addAll(os.run(new HashSet<>(subPopList)));
+            }
+
+            population = newPopulation;
+            popCount--;
+        }
     }
 
     /**
