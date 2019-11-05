@@ -33,7 +33,7 @@ public class PermutationChromosome extends Chromosome<Integer> {
      *
      * @param values the values of the chromosome
      */
-    public PermutationChromosome(Integer[] values) {
+    private PermutationChromosome(Integer[] values) {
         this.values = values;
     }
 
