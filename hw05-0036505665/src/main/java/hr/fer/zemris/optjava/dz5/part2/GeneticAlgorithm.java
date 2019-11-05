@@ -78,7 +78,10 @@ public class GeneticAlgorithm {
         Set<Chromosome<Integer>> populationSet = new HashSet<>(totalPopSize);
 
         while (populationSet.size() < totalPopSize) {
-            populationSet.add(new PermutationChromosome(chromosomeSize));
+            Chromosome<Integer> chromosome = new PermutationChromosome(chromosomeSize);
+            chromosome.calculateFitness();
+            
+            populationSet.add(chromosome);
         }
 
         return new ArrayList<>(populationSet);
