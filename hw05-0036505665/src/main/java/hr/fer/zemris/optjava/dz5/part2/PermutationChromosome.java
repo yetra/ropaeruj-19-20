@@ -40,7 +40,9 @@ public class PermutationChromosome extends Chromosome<Integer> {
     @Override
     public void randomize() {
         for (int i = 0; i < values.length; i++) {
-            values[i] = ThreadLocalRandom.current().nextInt();
+            int randomIndex = ThreadLocalRandom.current().nextInt(values.length);
+
+            values[randomIndex] = i;
         }
     }
 
