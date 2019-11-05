@@ -59,6 +59,12 @@ public class GeneticAlgorithm {
      * Returns a population initialized with random chromosomes.
      */
     private List<Chromosome<Integer>> getInitialPopulation() {
-        return null;
+        Set<Chromosome<Integer>> populationSet = new HashSet<>(totalPopSize);
+
+        while (populationSet.size() < totalPopSize) {
+            populationSet.add(new PermutationChromosome(chromosomeSize));
+        }
+
+        return new ArrayList<>(populationSet);
     }
 }
