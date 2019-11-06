@@ -153,7 +153,7 @@ public class GeneticAlgorithm {
         int[][] matrix = new int[size][size];
 
         for (int i = 0; i < size; i++) {
-            String[] rowElements = br.readLine().split("\\s");
+            String[] rowElements = br.readLine().trim().split("\\s+");
 
             for (int j = 0; j < size; j++) {
                 matrix[i][j] = Integer.parseInt(rowElements[j]);
