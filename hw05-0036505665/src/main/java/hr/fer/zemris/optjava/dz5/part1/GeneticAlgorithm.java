@@ -4,6 +4,7 @@ import hr.fer.zemris.optjava.dz5.ga.chromosome.Chromosome;
 import hr.fer.zemris.optjava.dz5.ga.chromosome.MaxOnesChromsome;
 import hr.fer.zemris.optjava.dz5.ga.crossover.ICrossover;
 import hr.fer.zemris.optjava.dz5.ga.crossover.OnePointCrossover;
+import hr.fer.zemris.optjava.dz5.ga.factor.LinearCompFactor;
 import hr.fer.zemris.optjava.dz5.ga.mutation.BitFlipMutation;
 import hr.fer.zemris.optjava.dz5.ga.mutation.IMutation;
 import hr.fer.zemris.optjava.dz5.ga.selection.ISelection;
@@ -34,11 +35,6 @@ public class GeneticAlgorithm {
     private static final int MAX_POP_SIZE = 100;
 
     /**
-     * The maximum selection pressure.
-     */
-    private static final double MAX_SEL_PRESS = 100;
-
-    /**
      * The maximum effort for creating a new population.
      */
     private static final int MAX_EFFORT = 100;
@@ -62,11 +58,6 @@ public class GeneticAlgorithm {
      * The second type of GA selection to use.
      */
     private ISelection<Boolean> secondSelection;
-
-    /**
-     * An implementation of random selection.
-     */
-    private ISelection<Boolean> randomSelection = new RandomSelection<>();
 
     /**
      * The comparison factor for determining if a child chromosome is successful.
@@ -107,13 +98,11 @@ public class GeneticAlgorithm {
         initialize(population);
         evaluate(population);
 
-        double actSelPress = 0.0;
-        while (actSelPress < MAX_SEL_PRESS) {
+        while (population.size() >= MIN_POP_SIZE) {
             Chromosome<Boolean> best = Collections.max(population);
             System.out.println(best + " - " + best.fitness);
 
             Set<Chromosome<Boolean>> newPopulation = new HashSet<>();
-            Set<Chromosome<Boolean>> pool = new HashSet<>();
 
             int effort = 0;
             while (effort < MAX_EFFORT) {
@@ -132,19 +121,12 @@ public class GeneticAlgorithm {
 
                     if (isSuccessful(child, firstParent, secondParent)) {
                         newPopulation.add(child);
-                    } else {
-                        pool.add(child);
                     }
                 }
 
                 effort += 2;
             }
 
-            while (newPopulation.size() < MIN_POP_SIZE) {
-                newPopulation.add(randomSelection.from(pool));
-            }
-
-            actSelPress = (double) (newPopulation.size() + pool.size()) / population.size();
             population = newPopulation;
         }
 
