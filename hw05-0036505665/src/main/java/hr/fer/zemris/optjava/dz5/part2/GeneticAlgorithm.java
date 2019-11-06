@@ -116,6 +116,7 @@ public class GeneticAlgorithm {
     public static void main(String[] args) {
         if (args.length != 3) {
             System.out.println("Expected 3 arguments, got " + args.length);
+            System.exit(1);
         }
 
         Path dataPath = Paths.get(args[0]);
