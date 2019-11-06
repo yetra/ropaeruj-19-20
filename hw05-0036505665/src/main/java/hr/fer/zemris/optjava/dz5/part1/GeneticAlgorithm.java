@@ -40,6 +40,11 @@ public class GeneticAlgorithm {
     private static final int MAX_EFFORT = 100;
 
     /**
+     * The maximum number of iterations before the algorithm terminates.
+     */
+    private static final int MAX_ITERATIONS = 10_000;
+
+    /**
      * The crossover to use for combining parent chromosomes.
      */
     private ICrossover<Boolean> crossover;
@@ -98,7 +103,8 @@ public class GeneticAlgorithm {
         initialize(population);
         evaluate(population);
 
-        while (population.size() >= MIN_POP_SIZE) {
+        int iteration = 0;
+        while (iteration < MAX_ITERATIONS && population.size() >= MIN_POP_SIZE) {
             Chromosome<Boolean> best = Collections.max(population);
             System.out.println(best + " - " + best.fitness);
 
@@ -128,6 +134,7 @@ public class GeneticAlgorithm {
             }
 
             population = newPopulation;
+            iteration++;
         }
 
     }
