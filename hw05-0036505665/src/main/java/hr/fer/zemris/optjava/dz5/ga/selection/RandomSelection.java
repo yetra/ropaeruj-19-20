@@ -1,6 +1,6 @@
 package hr.fer.zemris.optjava.dz5.ga.selection;
 
-import hr.fer.zemris.optjava.dz5.ga.Chromosome;
+import hr.fer.zemris.optjava.dz5.ga.chromosome.Chromosome;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -1,6 +1,6 @@
 package hr.fer.zemris.optjava.dz5.part2;
 
-import hr.fer.zemris.optjava.dz5.ga.Chromosome;
+import hr.fer.zemris.optjava.dz5.ga.chromosome.Chromosome;
 import hr.fer.zemris.optjava.dz5.ga.crossover.ICrossover;
 import hr.fer.zemris.optjava.dz5.ga.mutation.IMutation;
 import hr.fer.zemris.optjava.dz5.ga.selection.ISelection;

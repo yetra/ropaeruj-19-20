@@ -1,6 +1,4 @@
-package hr.fer.zemris.optjava.dz5.part2;
-
-import hr.fer.zemris.optjava.dz5.ga.Chromosome;
+package hr.fer.zemris.optjava.dz5.ga.chromosome;
 
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;

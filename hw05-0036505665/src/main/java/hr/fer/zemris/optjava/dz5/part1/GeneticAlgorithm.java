@@ -1,6 +1,7 @@
 package hr.fer.zemris.optjava.dz5.part1;
 
-import hr.fer.zemris.optjava.dz5.ga.Chromosome;
+import hr.fer.zemris.optjava.dz5.ga.chromosome.Chromosome;
+import hr.fer.zemris.optjava.dz5.ga.chromosome.MaxOnesChromsome;
 import hr.fer.zemris.optjava.dz5.ga.crossover.ICrossover;
 import hr.fer.zemris.optjava.dz5.ga.crossover.OnePointCrossover;
 import hr.fer.zemris.optjava.dz5.ga.mutation.BitFlipMutation;

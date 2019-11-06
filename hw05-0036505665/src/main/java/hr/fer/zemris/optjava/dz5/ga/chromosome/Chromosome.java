@@ -1,4 +1,4 @@
-package hr.fer.zemris.optjava.dz5.ga;
+package hr.fer.zemris.optjava.dz5.ga.chromosome;
 
 import java.util.Arrays;
 
