@@ -97,7 +97,7 @@ public class GeneticAlgorithm {
         Set<Chromosome<Integer>> populationSet = new HashSet<>(totalPopSize);
 
         while (populationSet.size() < totalPopSize) {
-            Chromosome<Integer> chromosome = new PermutationChromosome(chromosomeSize);
+            Chromosome<Integer> chromosome = new PermutationChromosome(chromosomeSize, distanceMatrix, flowMatrix);
             chromosome.calculateFitness();
             
             populationSet.add(chromosome);

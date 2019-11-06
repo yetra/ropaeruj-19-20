@@ -18,13 +18,25 @@ import java.util.concurrent.ThreadLocalRandom;
 public class PermutationChromosome extends Chromosome<Integer> {
 
     /**
+     * The QAP matrix of distances.
+     */
+    private int[][] distanceMatrix;
+
+    /**
+     * The QAP flow matrix.
+     */
+    private int[][] flowMatrix;
+
+    /**
      * Constructs a random {@link PermutationChromosome} of the specified size.
      *
      * @param size the size of the chromosome
      */
-    public PermutationChromosome(int size) {
-        values = new Integer[size];
+    public PermutationChromosome(int size, int[][] distanceMatrix, int[][] flowMatrix) {
+        this.distanceMatrix = distanceMatrix;
+        this.flowMatrix = flowMatrix;
 
+        values = new Integer[size];
         randomize();
     }
 
