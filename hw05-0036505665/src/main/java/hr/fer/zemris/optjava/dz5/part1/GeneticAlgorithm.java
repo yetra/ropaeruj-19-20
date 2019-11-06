@@ -109,7 +109,7 @@ public class GeneticAlgorithm {
         double actSelPress = 0.0;
         while (actSelPress < MAX_SEL_PRESS) {
             Chromosome<Boolean> best = Collections.max(population);
-            System.out.println("Best: " + best + "- Fitness: " + best.fitness);
+            System.out.println(best + " - " + best.fitness);
 
             Set<Chromosome<Boolean>> newPopulation = new HashSet<>();
             Set<Chromosome<Boolean>> pool = new HashSet<>();
