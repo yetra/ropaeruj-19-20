@@ -65,6 +65,12 @@ public class PermutationChromosome extends Chromosome<Integer> {
 
     @Override
     public void calculateFitness() {
+        for (int i = 0; i < values.length; i++) {
+            for (int j = 0; j < values.length; j++) {
+                fitness += flowMatrix[i][j] * distanceMatrix[values[i]][values[j]];
+            }
+        }
 
+        fitness = -fitness;
     }
 }
