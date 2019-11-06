@@ -109,6 +109,7 @@ public class GeneticAlgorithm {
             System.out.println(best + " - " + best.fitness);
 
             Set<Chromosome<Boolean>> newPopulation = new HashSet<>();
+            double factor = compFactor.getFactor();
 
             int effort = 0;
             while (effort < MAX_EFFORT) {
@@ -125,7 +126,7 @@ public class GeneticAlgorithm {
                         break;
                     }
 
-                    if (isSuccessful(child, firstParent, secondParent)) {
+                    if (isSuccessful(child, firstParent, secondParent, factor)) {
                         newPopulation.add(child);
                     }
                 }
@@ -167,14 +168,15 @@ public class GeneticAlgorithm {
      * @param child the child to check
      * @param firstParent the first parent of the child
      * @param secondParent the second parent of the child
+     * @param factor the current value of the {@link #compFactor}
      * @return {@code true} if a given child is successful
      */
     private boolean isSuccessful(Chromosome<Boolean> child, Chromosome<Boolean> firstParent,
-                                 Chromosome<Boolean> secondParent) {
+                                 Chromosome<Boolean> secondParent, double factor) {
         double worseFitness = Math.min(firstParent.fitness, secondParent.fitness);
         double betterFitness = Math.max(firstParent.fitness, secondParent.fitness);
 
-        double thresholdFitness = worseFitness + compFactor.getFactor() * (betterFitness - worseFitness);
+        double thresholdFitness = worseFitness + factor * (betterFitness - worseFitness);
 
         return child.fitness >= thresholdFitness;
     }

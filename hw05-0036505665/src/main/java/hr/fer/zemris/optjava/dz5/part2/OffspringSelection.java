@@ -83,6 +83,7 @@ public class OffspringSelection<T> {
 
             Set<Chromosome<T>> newPopulation = new HashSet<>();
             Set<Chromosome<T>> pool = new HashSet<>();
+            double factor = compFactor.getFactor();
 
             while (newPopulation.size() < SUCC_RATIO * popSize) {
                 Chromosome<T> firstParent = selection.from(population);
@@ -98,7 +99,7 @@ public class OffspringSelection<T> {
                         break;
                     }
 
-                    if (isSuccessful(child, firstParent, secondParent)) {
+                    if (isSuccessful(child, firstParent, secondParent, factor)) {
                         newPopulation.add(child);
                     } else {
                         pool.add(child);
@@ -123,13 +124,15 @@ public class OffspringSelection<T> {
      * @param child        the child to check
      * @param firstParent  the first parent of the child
      * @param secondParent the second parent of the child
+     * @param factor the current value of the {@link #compFactor}
      * @return {@code true} if a given child is successful
      */
-    private boolean isSuccessful(Chromosome<T> child, Chromosome<T> firstParent, Chromosome<T> secondParent) {
+    private boolean isSuccessful(Chromosome<T> child, Chromosome<T> firstParent,
+                                 Chromosome<T> secondParent, double factor) {
         double worseFitness = Math.min(firstParent.fitness, secondParent.fitness);
         double betterFitness = Math.max(firstParent.fitness, secondParent.fitness);
 
-        double thresholdFitness = worseFitness + compFactor.getFactor() * (betterFitness - worseFitness);
+        double thresholdFitness = worseFitness + factor * (betterFitness - worseFitness);
 
         return child.fitness >= thresholdFitness;
     }
