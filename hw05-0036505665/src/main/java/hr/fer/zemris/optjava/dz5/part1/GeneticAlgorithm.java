@@ -138,7 +138,7 @@ public class GeneticAlgorithm {
      * @param population the population to initialize
      */
     private void initialize(Collection<Chromosome<Boolean>> population) {
-        while (population.size() < MAX_POP_SIZE) {
+        while (population.size() < MIN_POP_SIZE) {
             population.add(new MaxOnesChromsome(chromosomeSize, true));
         }
     }
