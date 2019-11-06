@@ -31,6 +31,8 @@ public class PermutationChromosome extends Chromosome<Integer> {
      * Constructs a random {@link PermutationChromosome} of the specified size.
      *
      * @param size the size of the chromosome
+     * @param distanceMatrix the QAP distance matrix
+     * @param flowMatrix the QAP flow matrix
      */
     public PermutationChromosome(int size, int[][] distanceMatrix, int[][] flowMatrix) {
         this.distanceMatrix = distanceMatrix;
