@@ -198,6 +198,7 @@ public class GeneticAlgorithm {
     public static void main(String[] args) {
         if (args.length != 1) {
             System.out.println("Expected 1 argument, got " + args.length);
+            System.exit(1);
         }
 
         int chromosomeSize = Integer.parseInt(args[0]);
