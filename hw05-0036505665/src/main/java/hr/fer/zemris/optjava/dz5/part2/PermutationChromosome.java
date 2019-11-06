@@ -44,8 +44,10 @@ public class PermutationChromosome extends Chromosome<Integer> {
      * Constructs a {@link PermutationChromosome} of the given values.
      *
      * @param values the values of the chromosome
+     * @param distanceMatrix the QAP distance matrix
+     * @param flowMatrix the QAP flow matrix
      */
-    private PermutationChromosome(Integer[] values) {
+    private PermutationChromosome(Integer[] values, int[][] distanceMatrix, int[][] flowMatrix) {
         this.values = values;
     }
 
@@ -60,7 +62,7 @@ public class PermutationChromosome extends Chromosome<Integer> {
 
     @Override
     public Chromosome<Integer> copy() {
-        return new PermutationChromosome(Arrays.copyOf(values, values.length));
+        return new PermutationChromosome(Arrays.copyOf(values, values.length), distanceMatrix, flowMatrix);
     }
 
     @Override
