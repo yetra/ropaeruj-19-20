@@ -37,7 +37,7 @@ public class GeneticAlgorithm {
     /**
      * The maximum effort for creating a new population.
      */
-    private static final int MAX_EFFORT = 100;
+    private static final int MAX_EFFORT = 5000;
 
     /**
      * The maximum number of iterations before the algorithm terminates.
