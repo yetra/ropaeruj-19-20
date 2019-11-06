@@ -1,4 +1,4 @@
-package hr.fer.zemris.optjava.dz5.part1.factor;
+package hr.fer.zemris.optjava.dz5.ga.factor;
 
 /**
  * A comparison factor that changes linearly from 0 to 1 during GA execution.

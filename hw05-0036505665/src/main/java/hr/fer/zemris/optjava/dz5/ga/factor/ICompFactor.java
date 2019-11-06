@@ -1,4 +1,4 @@
-package hr.fer.zemris.optjava.dz5.part1.factor;
+package hr.fer.zemris.optjava.dz5.ga.factor;
 
 /**
  * An interface to be implemented by various comparison factor change plans.

@@ -8,8 +8,8 @@ import hr.fer.zemris.optjava.dz5.ga.mutation.IMutation;
 import hr.fer.zemris.optjava.dz5.ga.selection.ISelection;
 import hr.fer.zemris.optjava.dz5.ga.selection.RandomSelection;
 import hr.fer.zemris.optjava.dz5.ga.selection.TournamentSelection;
-import hr.fer.zemris.optjava.dz5.part1.factor.ConstantCompFactor;
-import hr.fer.zemris.optjava.dz5.part1.factor.ICompFactor;
+import hr.fer.zemris.optjava.dz5.ga.factor.ConstantCompFactor;
+import hr.fer.zemris.optjava.dz5.ga.factor.ICompFactor;
 
 import java.util.*;
 

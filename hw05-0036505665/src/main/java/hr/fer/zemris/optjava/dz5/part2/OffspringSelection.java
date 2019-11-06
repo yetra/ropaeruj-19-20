@@ -5,7 +5,7 @@ import hr.fer.zemris.optjava.dz5.ga.crossover.ICrossover;
 import hr.fer.zemris.optjava.dz5.ga.mutation.IMutation;
 import hr.fer.zemris.optjava.dz5.ga.selection.ISelection;
 import hr.fer.zemris.optjava.dz5.ga.selection.RandomSelection;
-import hr.fer.zemris.optjava.dz5.part1.factor.ICompFactor;
+import hr.fer.zemris.optjava.dz5.ga.factor.ICompFactor;
 
 import java.util.Collection;
 import java.util.Collections;

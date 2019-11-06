@@ -4,7 +4,7 @@ import hr.fer.zemris.optjava.dz5.ga.Chromosome;
 import hr.fer.zemris.optjava.dz5.ga.crossover.OrderBasedCrossover;
 import hr.fer.zemris.optjava.dz5.ga.mutation.ExchangeMutation;
 import hr.fer.zemris.optjava.dz5.ga.selection.TournamentSelection;
-import hr.fer.zemris.optjava.dz5.part1.factor.ConstantCompFactor;
+import hr.fer.zemris.optjava.dz5.ga.factor.ConstantCompFactor;
 
 import java.io.BufferedReader;
 import java.io.IOException;
