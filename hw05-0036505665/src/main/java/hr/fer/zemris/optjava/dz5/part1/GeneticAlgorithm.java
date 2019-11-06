@@ -136,7 +136,7 @@ public class GeneticAlgorithm {
                     }
                 }
 
-                effort++;
+                effort += 2;
             }
 
             while (newPopulation.size() < MIN_POP_SIZE) {
