@@ -1,7 +1,16 @@
 package hr.fer.zemris.optjava.dz5.part2;
 
 import hr.fer.zemris.optjava.dz5.ga.Chromosome;
+import hr.fer.zemris.optjava.dz5.ga.crossover.OrderBasedCrossover;
+import hr.fer.zemris.optjava.dz5.ga.mutation.ExchangeMutation;
+import hr.fer.zemris.optjava.dz5.ga.selection.TournamentSelection;
+import hr.fer.zemris.optjava.dz5.part1.factor.ConstantCompFactor;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 /**
@@ -11,6 +20,16 @@ import java.util.*;
  *
  */
 public class GeneticAlgorithm {
+
+    /**
+     * The QAP matrix of distances.
+     */
+    private static int[][] distanceMatrix;
+
+    /**
+     * The QAP flow matrix.
+     */
+    private static int[][] flowMatrix;
 
     /**
      * An instance of {@link OffspringSelection} used in SASEGASA.
@@ -85,5 +104,52 @@ public class GeneticAlgorithm {
         }
 
         return new ArrayList<>(populationSet);
+    }
+
+    /**
+     * The main method. Reads the QAP data file and executes the algorithm.
+     *
+     * @param args the command-line arguments, 3 expected - path to data,
+     *             total population size, initial number of populations
+     */
+    public static void main(String[] args) {
+        if (args.length != 3) {
+            System.out.println("Expected 3 arguments, got " + args.length);
+        }
+
+        Path dataPath = Paths.get(args[0]);
+        int totalPopSize = Integer.parseInt(args[1]);
+        int initialPopCount = Integer.parseInt(args[2]);
+
+        int size = 0;
+        try (BufferedReader br = Files.newBufferedReader(dataPath)) {
+            size = Integer.parseInt(br.readLine());
+            br.readLine();
+            distanceMatrix = parseMatrix(br, size);
+            br.readLine();
+            flowMatrix = parseMatrix(br, size);
+
+        } catch (IOException e) {
+            System.out.println("I/O error occured!");
+            System.exit(1);
+        }
+
+        OffspringSelection<Integer> os = new OffspringSelection<>(
+                new OrderBasedCrossover<>(), new ExchangeMutation<>(),
+                new TournamentSelection<>(2), new ConstantCompFactor(0.7));
+
+        new GeneticAlgorithm(os, size, totalPopSize, initialPopCount).run();
+    }
+
+    /**
+     * Parses a square matrix of the specified size using the given {@link BufferedReader}.
+     *
+     * @param br the {@link BufferedReader} to use
+     * @param size the size of the matrix
+     * @return the parsed matrix
+     * @throws IOException if an I/O error occurs
+     */
+    private static int[][] parseMatrix(BufferedReader br, int size) throws IOException {
+        return null;
     }
 }
