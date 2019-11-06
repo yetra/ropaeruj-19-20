@@ -150,6 +150,16 @@ public class GeneticAlgorithm {
      * @throws IOException if an I/O error occurs
      */
     private static int[][] parseMatrix(BufferedReader br, int size) throws IOException {
-        return null;
+        int[][] matrix = new int[size][size];
+
+        for (int i = 0; i < size; i++) {
+            String[] rowElements = br.readLine().split("\\s");
+
+            for (int j = 0; j < size; j++) {
+                matrix[i][j] = Integer.parseInt(rowElements[j]);
+            }
+        }
+
+        return matrix;
     }
 }
