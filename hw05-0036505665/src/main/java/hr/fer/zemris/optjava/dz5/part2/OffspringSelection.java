@@ -31,6 +31,11 @@ public class OffspringSelection<T> {
     private static final double SUCC_RATIO = 0.7;
 
     /**
+     * The maximum number of iterations before the algorithm terminates.
+     */
+    private static final int MAX_ITERATIONS = 1000;
+
+    /**
      * The crossover to use for combining parent chromosomes.
      */
     private ICrossover<T> crossover;
@@ -76,8 +81,9 @@ public class OffspringSelection<T> {
     public Set<Chromosome<T>> run(Set<Chromosome<T>> population) {
         final int popSize = population.size();
 
+        int i = 0;
         double actSelPress = 0.0;
-        while (actSelPress < MAX_SEL_PRESS) {
+        while (i < MAX_ITERATIONS && actSelPress < MAX_SEL_PRESS) {
             Chromosome<T> best = Collections.max(population);
             System.out.println("Best: " + best + "- Fitness: " + best.fitness);
 
@@ -113,6 +119,7 @@ public class OffspringSelection<T> {
 
             actSelPress = (double) (newPopulation.size() + pool.size()) / population.size();
             population = newPopulation;
+            i++;
         }
 
         return population;
