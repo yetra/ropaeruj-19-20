@@ -51,6 +51,8 @@ public class PermutationChromosome extends Chromosome<Integer> {
      * @param flowMatrix the QAP flow matrix
      */
     private PermutationChromosome(Integer[] values, int[][] distanceMatrix, int[][] flowMatrix) {
+        this.distanceMatrix = distanceMatrix;
+        this.flowMatrix = flowMatrix;
         this.values = values;
     }
 
