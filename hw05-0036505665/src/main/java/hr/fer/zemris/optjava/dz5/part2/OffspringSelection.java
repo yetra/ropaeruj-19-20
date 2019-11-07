@@ -88,7 +88,8 @@ public class OffspringSelection<T> {
             Set<Chromosome<T>> pool = new HashSet<>();
             double factor = compFactor.getFactor();
 
-            while (newPopulation.size() < SUCC_RATIO * popSize) {
+            while (newPopulation.size() < SUCC_RATIO * popSize
+                    && (newPopulation.size() + pool.size()) < population.size() * MAX_SEL_PRESS) {
                 Chromosome<T> firstParent = selection.from(population);
                 Chromosome<T> secondParent = selection.from(population);
 
