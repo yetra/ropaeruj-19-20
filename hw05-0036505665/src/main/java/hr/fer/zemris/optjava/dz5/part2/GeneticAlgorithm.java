@@ -35,7 +35,7 @@ public class GeneticAlgorithm {
     /**
      * An instance of {@link OffspringSelection} used in SASEGASA.
      */
-    private OffspringSelection<Integer> os;
+    private OffspringSelection os;
 
     /**
      * The size of the chromosomes.
@@ -60,7 +60,7 @@ public class GeneticAlgorithm {
      * @param totalPopSize the total size of the population
      * @param popCount the initial number of populations
      */
-    public GeneticAlgorithm(OffspringSelection<Integer> os, int chromosomeSize,
+    public GeneticAlgorithm(OffspringSelection os, int chromosomeSize,
                             int totalPopSize, int popCount) {
         this.os = os;
         this.chromosomeSize = chromosomeSize;
@@ -145,8 +145,8 @@ public class GeneticAlgorithm {
             System.exit(1);
         }
 
-        OffspringSelection<Integer> os = new OffspringSelection<>(
-                new OrderBasedCrossover<>(), new ExchangeMutation<>(),
+        OffspringSelection os = new OffspringSelection(
+                new OrderBasedCrossover(), new ExchangeMutation<>(),
                 new TournamentSelection<>(2), new ConstantCompFactor(0.7));
 
         new GeneticAlgorithm(os, size, totalPopSize, initialPopCount).run();

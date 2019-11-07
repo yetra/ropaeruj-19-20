@@ -18,7 +18,7 @@ import java.util.Set;
  * @author Bruna Dujmović
  *
  */
-public class OffspringSelection<T> {
+public class OffspringSelection {
 
     /**
      * The maximum selection pressure.
@@ -38,22 +38,22 @@ public class OffspringSelection<T> {
     /**
      * The crossover to use for combining parent chromosomes.
      */
-    private ICrossover<T> crossover;
+    private ICrossover<Integer> crossover;
 
     /**
      * The mutation to use for modifying child chromosomes.
      */
-    private IMutation<T> mutation;
+    private IMutation<Integer> mutation;
 
     /**
      * The type of GA selection to use.
      */
-    private ISelection<T> selection;
+    private ISelection<Integer> selection;
 
     /**
      * An implementation of random selection.
      */
-    private ISelection<T> randomSelection = new RandomSelection<>();
+    private ISelection<Integer> randomSelection = new RandomSelection<>();
 
     /**
      * The comparison factor for determining if a child chromosome is successful.
@@ -67,8 +67,8 @@ public class OffspringSelection<T> {
      * @param mutation the mutation to use for modifying child chromosomes
      * @param selection the type of GA selection to use
      */
-    public OffspringSelection(ICrossover<T> crossover, IMutation<T> mutation,
-                              ISelection<T> selection, ICompFactor compFactor) {
+    public OffspringSelection(ICrossover<Integer> crossover, IMutation<Integer> mutation,
+                              ISelection<Integer> selection, ICompFactor compFactor) {
         this.crossover = crossover;
         this.mutation = mutation;
         this.selection = selection;
@@ -78,24 +78,24 @@ public class OffspringSelection<T> {
     /**
      * Executes the algorithm.
      */
-    public Set<Chromosome<T>> run(Set<Chromosome<T>> population) {
+    public Set<Chromosome<Integer>> run(Set<Chromosome<Integer>> population) {
         final int popSize = population.size();
 
         int i = 0;
         double actSelPress = 0.0;
         while (i < MAX_ITERATIONS && actSelPress < MAX_SEL_PRESS) {
-            Set<Chromosome<T>> newPopulation = new HashSet<>();
-            Set<Chromosome<T>> pool = new HashSet<>();
+            Set<Chromosome<Integer>> newPopulation = new HashSet<>();
+            Set<Chromosome<Integer>> pool = new HashSet<>();
             double factor = compFactor.getFactor();
 
             while (newPopulation.size() < SUCC_RATIO * popSize
                     && (newPopulation.size() + pool.size()) < population.size() * MAX_SEL_PRESS) {
-                Chromosome<T> firstParent = selection.from(population);
-                Chromosome<T> secondParent = selection.from(population);
+                Chromosome<Integer> firstParent = selection.from(population);
+                Chromosome<Integer> secondParent = selection.from(population);
 
-                Collection<Chromosome<T>> children = crossover.of(firstParent, secondParent);
+                Collection<Chromosome<Integer>> children = crossover.of(firstParent, secondParent);
 
-                for (Chromosome<T> child : children) {
+                for (Chromosome<Integer> child : children) {
                     mutation.mutate(child);
                     child.calculateFitness();
 
@@ -133,8 +133,8 @@ public class OffspringSelection<T> {
      * @param factor the current value of the {@link #compFactor}
      * @return {@code true} if a given child is successful
      */
-    private boolean isSuccessful(Chromosome<T> child, Chromosome<T> firstParent,
-                                 Chromosome<T> secondParent, double factor) {
+    private boolean isSuccessful(Chromosome<Integer> child, Chromosome<Integer> firstParent,
+                                 Chromosome<Integer> secondParent, double factor) {
         double worseFitness = Math.min(firstParent.fitness, secondParent.fitness);
         double betterFitness = Math.max(firstParent.fitness, secondParent.fitness);
 
