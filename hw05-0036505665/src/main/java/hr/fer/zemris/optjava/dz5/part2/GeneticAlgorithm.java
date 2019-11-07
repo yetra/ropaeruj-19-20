@@ -80,10 +80,16 @@ public class GeneticAlgorithm {
 
             int start = 0;
             for (int i = 0; i < popCount; i++) {
-                List<Chromosome<Integer>> subPopList = population.subList(start, start + popSize);
-                start += popSize;
+                List<Chromosome<Integer>> subPopList;
+
+                if (i == popCount - 1) {
+                    subPopList = population.subList(start, population.size());
+                } else {
+                    subPopList = population.subList(start, start + popSize);
+                }
 
                 newPopulation.addAll(os.run(new HashSet<>(subPopList)));
+                start += popSize;
             }
 
             population = newPopulation;
