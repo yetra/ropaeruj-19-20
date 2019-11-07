@@ -1,6 +1,9 @@
 package hr.fer.zemris.optjava.dz5.ga.chromosome;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -53,11 +56,13 @@ public class PermutationChromosome extends Chromosome<Integer> {
 
     @Override
     public void randomize() {
+        List<Integer> valuesList = new ArrayList<>(values.length);
         for (int i = 0; i < values.length; i++) {
-            int randomIndex = ThreadLocalRandom.current().nextInt(values.length);
-
-            values[randomIndex] = i;
+            valuesList.add(i);
         }
+
+        Collections.shuffle(valuesList);
+        values = valuesList.toArray(values);
     }
 
     @Override
