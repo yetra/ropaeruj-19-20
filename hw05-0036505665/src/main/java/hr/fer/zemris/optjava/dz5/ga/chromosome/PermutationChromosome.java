@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * This class represents a chromosome based on an array of integers that will be used in solving
@@ -81,5 +80,10 @@ public class PermutationChromosome extends Chromosome<Integer> {
         }
 
         fitness = -fitness;
+    }
+
+    @Override
+    public String toString() {
+        return Arrays.toString(values);
     }
 }
