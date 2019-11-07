@@ -84,9 +84,6 @@ public class OffspringSelection<T> {
         int i = 0;
         double actSelPress = 0.0;
         while (i < MAX_ITERATIONS && actSelPress < MAX_SEL_PRESS) {
-            Chromosome<T> best = Collections.max(population);
-            System.out.println("Best: " + best + "- Fitness: " + best.fitness);
-
             Set<Chromosome<T>> newPopulation = new HashSet<>();
             Set<Chromosome<T>> pool = new HashSet<>();
             double factor = compFactor.getFactor();

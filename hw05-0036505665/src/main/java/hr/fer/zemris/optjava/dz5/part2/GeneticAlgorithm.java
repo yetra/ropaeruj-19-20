@@ -75,6 +75,9 @@ public class GeneticAlgorithm {
         List<Chromosome<Integer>> population = getInitialPopulation();
 
         while (popCount > 0) {
+            Chromosome<Integer> best = Collections.max(population);
+            System.out.println(best + " - " + -best.fitness);
+
             int popSize = totalPopSize / popCount;
             List<Chromosome<Integer>> newPopulation = new ArrayList<>();
 
