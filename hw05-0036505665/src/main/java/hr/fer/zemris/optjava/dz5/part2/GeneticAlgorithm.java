@@ -134,7 +134,7 @@ public class GeneticAlgorithm {
 
         int size = 0;
         try (BufferedReader br = Files.newBufferedReader(dataPath)) {
-            size = Integer.parseInt(br.readLine());
+            size = Integer.parseInt(br.readLine().trim());
             br.readLine();
             distanceMatrix = parseMatrix(br, size);
             br.readLine();
