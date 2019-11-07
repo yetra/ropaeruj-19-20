@@ -28,7 +28,7 @@ public class OffspringSelection<T> {
     /**
      * The ratio of successful children that need to exist in each population.
      */
-    private static final double SUCC_RATIO = 0.7;
+    private static final double SUCC_RATIO = 0.9;
 
     /**
      * The maximum number of iterations before the algorithm terminates.
@@ -110,11 +110,12 @@ public class OffspringSelection<T> {
                 }
             }
 
+            actSelPress = (double) (newPopulation.size() + pool.size()) / popSize;
+
             while (newPopulation.size() < popSize) {
                 newPopulation.add(randomSelection.from(pool));
             }
 
-            actSelPress = (double) (newPopulation.size() + pool.size()) / population.size();
             population = newPopulation;
             i++;
         }
