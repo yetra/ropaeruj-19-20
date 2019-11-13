@@ -1,7 +1,6 @@
 package hr.fer.zemris.optjava.dz6;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -266,9 +265,9 @@ public class AntSystem {
     private void updateTrails(TSPSolution ant) {
         double delta = 1.0 / ant.tourLength;
 
-        for(int i = 0; i < ant.cityIndexes.length - 1; i++) {
-            int a = ant.cityIndexes[i];
-            int b = ant.cityIndexes[i + 1];
+        for(int i = 0; i < cityCount - 1; i++) {
+            int a = ant.tour.get(i).index;
+            int b = ant.tour.get(i + 1).index;
 
             trails[a][b] = Math.min(trails[a][b] + delta, tauMax);
             trails[b][a] = trails[a][b];
@@ -292,11 +291,11 @@ public class AntSystem {
      * prethodno najboljeg.
      */
     private void checkBestSolution() {
-        // Nadi najbolju rutu
         if (!haveBest) {
             haveBest = true;
+
             TSPSolution ant = ants[0];
-            System.arraycopy(ant.cityIndexes, 0, best.cityIndexes, 0, ant.cityIndexes.length);
+            best.tour = new ArrayList<>(ant.tour);
             best.tourLength = ant.tourLength;
         }
 
@@ -313,7 +312,7 @@ public class AntSystem {
 
         if (bestIndex != -1) {
             TSPSolution ant = ants[bestIndex];
-            System.arraycopy(ant.cityIndexes, 0, best.cityIndexes, 0, ant.cityIndexes.length);
+            best.tour = new ArrayList<>(ant.tour);
             best.tourLength = ant.tourLength;
         }
     }
