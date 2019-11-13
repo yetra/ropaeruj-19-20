@@ -259,15 +259,4 @@ public class AntSystem {
             best.tourLength = ant.tourLength;
         }
     }
-    /**
-     * Ulazna točka u program.
-     *
-     * @param args argumenti komandne linije
-     */
-    public static void main(String[] args) throws IOException {
-        String fileName = args.length<1 ? "data/gradovi01.txt" : args[0];
-        List<City> cities = TSPUtil.loadCities(fileName);
-        if(cities==null) return;
-        new AntSystem(cities).go();
-    }
 }
