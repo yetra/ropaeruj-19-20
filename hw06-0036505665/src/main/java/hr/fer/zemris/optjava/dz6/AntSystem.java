@@ -4,10 +4,16 @@ import java.util.List;
 import java.util.Random;
 
 public class AntSystem {
+
     /**
-     * An array of cities for solving the TSP.
+     * The number of cities in this TSP.
      */
-    private City[] cities;
+    private final int cityCount;
+
+    /**
+     * A list of cities for solving the TSP.
+     */
+    private List<City> cities;
 
     /**
      * The random number generator.
@@ -102,8 +108,8 @@ public class AntSystem {
      */
     public AntSystem(List<City> cities, int closestCount, int antsCount, int maxIterations,
                      double rho, double alpha, double beta) {
-        this.cities = new City[cities.size()];
-        cities.toArray(this.cities);
+        this.cities = cities;
+        this.cityCount = cities.size();
 
         this.ro = rho;
         this.alpha = alpha;
@@ -111,37 +117,37 @@ public class AntSystem {
         rand = new Random();
 
         this.maxIterations = maxIterations;
-
-        indexes = new int[this.cities.length];
+        
+        indexes = new int[cityCount];
         ArraysUtil.linearFillArray(indexes);
 
-        probabilities = new double[this.cities.length];
-        reachable = new int[this.cities.length];
+        probabilities = new double[cityCount];
+        reachable = new int[cityCount];
 
         initializeMatrices();
 
         ants = new TSPSolution[antsCount];
         for(int i = 0; i < antsCount; i++) {
-            ants[i] = new TSPSolution(this.cities.length);
+            ants[i] = new TSPSolution(cityCount);
         }
 
-        best = new TSPSolution(this.cities.length);
+        best = new TSPSolution(cityCount);
     }
 
     /**
      * Initializes the {@link #distances}, {@link #heuristics} and {@link #trails} matrices.
      */
     private void initializeMatrices() {
-        distances = new double[cities.length][cities.length];
-        heuristics = new double[cities.length][cities.length];
-        trails = new double[cities.length][cities.length];
+        distances = new double[cityCount][cityCount];
+        heuristics = new double[cityCount][cityCount];
+        trails = new double[cityCount][cityCount];
 
-        for(int i = 0; i < cities.length; i++) {
+        for(int i = 0; i < cityCount; i++) {
             distances[i][i] = 0;
             trails[i][i] = tauMax;
 
-            for(int j = i + 1; j < cities.length; j++) {
-                double distance = cities[i].distanceTo(cities[j]);
+            for(int j = i + 1; j < cityCount; j++) {
+                double distance = cities.get(i).distanceTo(cities.get(j));
                 distances[i][j] = distance;
                 distances[j][i] = distance;
 
@@ -190,14 +196,14 @@ public class AntSystem {
         ant.cityIndexes[0] = reachable[0];
 
         // reb t amo utvrditi kamo iz drugoga pa na dalje:
-        for (int step = 1; step < cities.length - 1; step++) {
+        for (int step = 1; step < cityCount - 1; step++) {
             int previousCityIndex = ant.cityIndexes[step - 1];
 
             // Koji grad biram u koraku "step"?
-            // Mogu ici u sve gradove od step do cities.length-1
+            // Mogu ici u sve gradove od step do cityCount-1
 
             double probSum = 0.0;
-            for (int candidate = step; candidate < cities.length; candidate++) {
+            for (int candidate = step; candidate < cityCount; candidate++) {
                 int cityIndex = reachable[candidate];
 
                 probabilities[cityIndex] = Math.pow(trails[previousCityIndex][cityIndex],alpha) *
@@ -207,7 +213,7 @@ public class AntSystem {
             }
 
             // Normalizacija vjerojatnosti:
-            for(int candidate = step; candidate < cities.length; candidate++) {
+            for(int candidate = step; candidate < cityCount; candidate++) {
                 int cityIndex = reachable[candidate];
                 probabilities[cityIndex] = probabilities[cityIndex] / probSum;
             }
@@ -217,7 +223,7 @@ public class AntSystem {
 
             probSum = 0.0;
             int selectedCandidate = -1;
-            for (int candidate = step; candidate < cities.length; candidate++) {
+            for (int candidate = step; candidate < cityCount; candidate++) {
                 int cityIndex = reachable[candidate];
                 probSum += probabilities[cityIndex];
 
@@ -228,7 +234,7 @@ public class AntSystem {
             }
 
             if (selectedCandidate == -1) {
-                selectedCandidate = cities.length - 1;
+                selectedCandidate = cityCount - 1;
             }
 
             int tmp = reachable[step];
@@ -259,8 +265,8 @@ public class AntSystem {
      * Metoda koja obavlja isparavanje feromonskih tragova.
      */
     private void evaporateTrails() {
-        for(int i = 0; i < this.cities.length; i++) {
-            for(int j = i + 1; j < this.cities.length; j++) {
+        for(int i = 0; i < cityCount; i++) {
+            for(int j = i + 1; j < cityCount; j++) {
                 trails[i][j] = Math.max(trails[i][j] * (1 - ro), tauMin);
                 trails[j][i] = trails[i][j];
             }
