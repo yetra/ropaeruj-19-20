@@ -2,7 +2,6 @@ package hr.fer.zemris.optjava.dz6;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class AntSystem {
@@ -16,16 +15,6 @@ public class AntSystem {
      * A list of cities for solving the TSP.
      */
     private List<City> cities;
-
-    /**
-     * The random number generator.
-     */
-    private Random rand;
-
-    /**
-     * An array of city indexes (always 0, 1, 2, 3, ...).
-     */
-    private int[] indexes;
 
     /**
      * A symmetric matrix of pheromone trails.
@@ -46,11 +35,6 @@ public class AntSystem {
      * The ant population for solving the TSP.
      */
     private TSPSolution[] ants;
-
-    /**
-     * A helper array of indexes of an ant's reachable cities.
-     */
-    private int[] reachable;
 
     /**
      * A helper array of an ant's probabilities for choosing each city.
@@ -116,15 +100,10 @@ public class AntSystem {
         this.rho = rho;
         this.alpha = alpha;
         this.beta = beta;
-        rand = new Random();
 
         this.maxIterations = maxIterations;
 
-        indexes = new int[cityCount];
-        ArraysUtil.linearFillArray(indexes);
-
         probabilities = new double[cityCount];
-        reachable = new int[cityCount];
 
         initializeMatrices();
         cities.forEach(city -> city.findClosest(closestCount, cities, distances[city.index]));
