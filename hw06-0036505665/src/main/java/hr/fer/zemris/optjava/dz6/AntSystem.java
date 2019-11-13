@@ -187,65 +187,45 @@ public class AntSystem {
      * @param ant mrav
      */
     private void doWalk(TSPSolution ant) {
-        // Svi su gradovi dostupni
-        System.arraycopy(indexes, 0, reachable, 0, indexes.length);
-        // Permutirajmo redosljed gradova tako da krenemo iz slučajnog
-        ArraysUtil.shuffleArray(reachable, rand);
+        City currentCity = ant.getInitialCity();
 
-        // Neka je prvi grad fiksiran
-        ant.cityIndexes[0] = reachable[0];
+        for (int i = 0; i < cityCount - 1; i++) {
+            City nextCity;
 
-        // reb t amo utvrditi kamo iz drugoga pa na dalje:
-        for (int step = 1; step < cityCount - 1; step++) {
-            int previousCityIndex = ant.cityIndexes[step - 1];
-
-            // Koji grad biram u koraku "step"?
-            // Mogu ici u sve gradove od step do cityCount-1
-
-            double probSum = 0.0;
-            for (int candidate = step; candidate < cityCount; candidate++) {
-                int cityIndex = reachable[candidate];
-
-                probabilities[cityIndex] = Math.pow(trails[previousCityIndex][cityIndex],alpha) *
-                        heuristics[previousCityIndex][cityIndex];
-
-                probSum += probabilities[cityIndex];
+            if (!ant.visitedAll(currentCity.closestCities)) {
+                nextCity = pickNextCity(currentCity, currentCity.closestCities, ant);
+            } else {
+                nextCity = pickNextCity(currentCity, cities, ant);
             }
 
-            // Normalizacija vjerojatnosti:
-            for(int candidate = step; candidate < cityCount; candidate++) {
-                int cityIndex = reachable[candidate];
-                probabilities[cityIndex] = probabilities[cityIndex] / probSum;
-            }
-
-            // Odluka kuda dalje?
-            double number = rand.nextDouble();
-
-            probSum = 0.0;
-            int selectedCandidate = -1;
-            for (int candidate = step; candidate < cityCount; candidate++) {
-                int cityIndex = reachable[candidate];
-                probSum += probabilities[cityIndex];
-
-                if (number <= probSum) {
-                    selectedCandidate = candidate;
-                    break;
-                }
-            }
-
-            if (selectedCandidate == -1) {
-                selectedCandidate = cityCount - 1;
-            }
-
-            int tmp = reachable[step];
-            reachable[step] = reachable[selectedCandidate];
-            reachable[selectedCandidate] = tmp;
-            ant.cityIndexes[step] = reachable[step];
+            ant.visit(nextCity);
+            currentCity = nextCity;
         }
 
-        ant.cityIndexes[ant.cityIndexes.length-1] = reachable[ant.cityIndexes.length-1];
-        TSPUtil.evaluate(ant, distances);
+        evaluate(ant);
     }
+
+    /**
+     * Picks an ant's next city from a given list of cities.
+     *
+     * @param currentCity the current city
+     * @param cities the list of cities
+     * @param ant the ant whose next city should be found
+     * @return the ant's next city
+     */
+    private City pickNextCity(City currentCity, List<City> cities, TSPSolution ant) {
+        return null;
+    }
+
+    /**
+     * Evaluates the given ant.
+     *
+     * @param ant the ant to evaluate.
+     */
+    private void evaluate(TSPSolution ant) {
+
+    }
+
     /**
      * Metoda koja obavlja ažuriranje feromonskih tragova
      */
