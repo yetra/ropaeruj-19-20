@@ -22,4 +22,12 @@ public class TSPSolution {
         route.add(city);
         visited.add(city);
     }
+
+    public boolean visited(City city) {
+        return visited.contains(city);
+    }
+
+    public boolean visitedAll(List<City> cities) {
+        return visited.containsAll(cities);
+    }
 }
