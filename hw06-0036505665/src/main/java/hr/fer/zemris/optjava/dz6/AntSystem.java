@@ -42,6 +42,9 @@ public class AntSystem {
     private TSPSolution best;
     private boolean haveBest = false;
 
+    private double tauMin;
+    private double tauMax;
+
     /**
      * Konstruktor.
      *
