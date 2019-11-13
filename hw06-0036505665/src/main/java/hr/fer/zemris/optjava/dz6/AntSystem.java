@@ -122,12 +122,10 @@ public class AntSystem {
 
         ants = new TSPSolution[antsCount];
         for(int i = 0; i < antsCount; i++) {
-            ants[i] = new TSPSolution();
-            ants[i].cityIndexes = new int[this.cities.length];
+            ants[i] = new TSPSolution(this.cities.length);
         }
 
-        best = new TSPSolution();
-        best.cityIndexes = new int[this.cities.length];
+        best = new TSPSolution(this.cities.length);
     }
 
     /**
