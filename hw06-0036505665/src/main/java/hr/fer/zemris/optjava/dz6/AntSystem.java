@@ -85,18 +85,32 @@ public class AntSystem {
     private double tauMax;
 
     /**
-     * Konstruktor.
-     *
-     * @param cities lista gradova
+     * The maximum number of iterations before tha algorithm terminates.
      */
-    public AntSystem(List<City> cities) {
+    private final int maxIterations;
+
+    /**
+     * Constructs an {@link AntSystem} of the given parameters.
+     *
+     * @param cities a list of TSP cities
+     * @param closestCount the number of closest city neighbors to find
+     * @param antsCount the size of the ant population
+     * @param maxIterations he maximum number of iterations before tha algorithm terminates
+     * @param rho the evaporation constant
+     * @param alpha the alpha constant
+     * @param beta the beta constant
+     */
+    public AntSystem(List<City> cities, int closestCount, int antsCount, int maxIterations,
+                     double rho, double alpha, double beta) {
         this.cities = new City[cities.size()];
         cities.toArray(this.cities);
 
-        ro = 0.2;
-        alpha = 3;
-        beta = 2;
+        this.ro = rho;
+        this.alpha = alpha;
+        this.beta = beta;
         rand = new Random();
+
+        this.maxIterations = maxIterations;
 
         indexes = new int[this.cities.length];
         ArraysUtil.linearFillArray(indexes);
@@ -106,9 +120,8 @@ public class AntSystem {
 
         initializeMatrices();
 
-        int m = 30;
-        ants = new TSPSolution[m];
-        for(int i = 0; i < ants.length; i++) {
+        ants = new TSPSolution[antsCount];
+        for(int i = 0; i < antsCount; i++) {
             ants[i] = new TSPSolution();
             ants[i].cityIndexes = new int[this.cities.length];
         }
