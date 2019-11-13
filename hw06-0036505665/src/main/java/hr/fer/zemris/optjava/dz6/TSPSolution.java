@@ -9,17 +9,17 @@ public class TSPSolution {
 
     public int tourLength;
 
-    public List<City> route;
+    public List<City> tour;
 
     public Set<City> visited;
 
     public TSPSolution(int cityCount) {
-        route = new ArrayList<>(cityCount);
+        tour = new ArrayList<>(cityCount);
         visited = new HashSet<>();
     }
 
     public void visit(City city) {
-        route.add(city);
+        tour.add(city);
         visited.add(city);
     }
 
@@ -32,6 +32,6 @@ public class TSPSolution {
     }
 
     public City getInitialCity() {
-        return route.get(0);
+        return tour.get(0);
     }
 }
