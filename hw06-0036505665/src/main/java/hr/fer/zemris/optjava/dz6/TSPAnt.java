@@ -11,7 +11,7 @@ import java.util.Set;
  * @author Bruna Dujmović
  *
  */
-public class TSPSolution {
+public class TSPAnt {
 
     /**
      * The length of this ant's tour.
@@ -29,11 +29,11 @@ public class TSPSolution {
     public Set<City> visited;
 
     /**
-     * Constructs an {@link TSPSolution}.
+     * Constructs a {@link TSPAnt}.
      *
      * @param cityCount the number of TSP cities
      */
-    public TSPSolution(int cityCount) {
+    public TSPAnt(int cityCount) {
         tour = new ArrayList<>(cityCount);
         visited = new HashSet<>();
     }

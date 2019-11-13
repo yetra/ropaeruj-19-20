@@ -1,6 +1,5 @@
 package hr.fer.zemris.optjava.dz6;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -34,7 +33,7 @@ public class AntSystem {
     /**
      * The ant population for solving the TSP.
      */
-    private TSPSolution[] ants;
+    private TSPAnt[] ants;
 
     /**
      * A helper array of an ant's probabilities for choosing each city.
@@ -98,9 +97,9 @@ public class AntSystem {
         initializeMatrices();
         cities.forEach(city -> city.findClosest(closestCount, cities, distances[city.index]));
 
-        ants = new TSPSolution[antsCount];
+        ants = new TSPAnt[antsCount];
         for(int i = 0; i < antsCount; i++) {
-            ants[i] = new TSPSolution(cityCount);
+            ants[i] = new TSPAnt(cityCount);
         }
     }
 
@@ -134,13 +133,13 @@ public class AntSystem {
      * Glavna metoda algoritma.
      */
     public void go() {
-        TSPSolution bestSoFar = null;
+        TSPAnt bestSoFar = null;
 
         int iteration = 0;
         while(iteration < maxIterations) {
-            TSPSolution iterationBest = null;
+            TSPAnt iterationBest = null;
 
-            for (TSPSolution ant : ants) {
+            for (TSPAnt ant : ants) {
                 doWalk(ant);
 
                 if (iterationBest == null || ant.tourLength < iterationBest.tourLength) {
@@ -169,7 +168,7 @@ public class AntSystem {
      *
      * @param ant mrav
      */
-    private void doWalk(TSPSolution ant) {
+    private void doWalk(TSPAnt ant) {
         City currentCity = ant.getInitialCity();
 
         for (int i = 0; i < cityCount - 1; i++) {
@@ -196,7 +195,7 @@ public class AntSystem {
      * @param ant the ant whose next city should be found
      * @return the ant's next city
      */
-    private City pickNextCity(City currentCity, List<City> cities, TSPSolution ant) {
+    private City pickNextCity(City currentCity, List<City> cities, TSPAnt ant) {
         City nextCity = null;
         double probabilitiesSum = 0;
 
@@ -235,7 +234,7 @@ public class AntSystem {
      *
      * @param ant the ant to evaluate.
      */
-    private void evaluate(TSPSolution ant) {
+    private void evaluate(TSPAnt ant) {
         ant.tourLength = 0;
 
         for (int i = 0; i < cityCount - 1; i++) {
@@ -247,7 +246,7 @@ public class AntSystem {
     /**
      * Metoda koja obavlja ažuriranje feromonskih tragova
      */
-    private void updateTrails(TSPSolution ant) {
+    private void updateTrails(TSPAnt ant) {
         double delta = 1.0 / ant.tourLength;
 
         for(int i = 0; i < cityCount - 1; i++) {
