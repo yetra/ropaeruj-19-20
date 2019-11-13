@@ -224,14 +224,14 @@ public class AntSystem {
      * Metoda koja obavlja isparavanje feromonskih tragova.
      */
     private void evaporateTrails() {
-        // Isparavanje feromonskog traga
         for(int i = 0; i < this.cities.length; i++) {
-            for(int j = i+1; j < this.cities.length; j++) {
-                trails[i][j] = trails[i][j]*(1-ro);
+            for(int j = i + 1; j < this.cities.length; j++) {
+                trails[i][j] = Math.max(trails[i][j] * (1 - ro), tauMin);
                 trails[j][i] = trails[i][j];
             }
         }
     }
+
     /**
      * Metoda provjerava je li pronađeno bolje rješenje od
      * prethodno najboljeg.
