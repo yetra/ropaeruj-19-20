@@ -148,8 +148,14 @@ public class AntSystem {
     public void go() {
         int iteration = 0;
         while(iteration < maxIterations) {
+            TSPSolution iterationBest = null;
+
             for (TSPSolution ant : ants) {
                 doWalk(ant);
+
+                if (iterationBest == null || ant.tourLength < iterationBest.tourLength) {
+                    iterationBest = ant;
+                }
             }
 
             updateTrails(best);
@@ -278,9 +284,7 @@ public class AntSystem {
         if (!haveBest) {
             haveBest = true;
 
-            TSPSolution ant = ants[0];
-            best.tour = new ArrayList<>(ant.tour);
-            best.tourLength = ant.tourLength;
+            best = ants[0];
         }
 
         double currentBest = best.tourLength;
@@ -295,9 +299,7 @@ public class AntSystem {
         }
 
         if (bestIndex != -1) {
-            TSPSolution ant = ants[bestIndex];
-            best.tour = new ArrayList<>(ant.tour);
-            best.tourLength = ant.tourLength;
+            best = ants[bestIndex];
         }
     }
 }
