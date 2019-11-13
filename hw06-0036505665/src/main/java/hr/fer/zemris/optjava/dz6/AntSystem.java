@@ -166,8 +166,6 @@ public class AntSystem {
 
         System.out.println("Best length: "+best.tourLength);
         System.out.println(best);
-
-        PrepareTSP.visualize(TSPUtil.reorderCities(cities, best.cityIndexes));
     }
 
     /**
