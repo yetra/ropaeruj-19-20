@@ -94,6 +94,8 @@ public class AntSystem {
         cities.toArray(this.cities);
 
         ro = 0.2;
+        alpha = 3;
+        beta = 2;
         rand = new Random();
 
         indexes = new int[this.cities.length];
@@ -106,26 +108,28 @@ public class AntSystem {
         trails = new double[this.cities.length][this.cities.length];
 
         double tauInitial = tauMax;
-        int m = 30;
-        alpha = 3;
-        beta = 2;
 
         for(int i = 0; i < this.cities.length; i++) {
             City a = this.cities[i];
             distances[i][i] = 0;
             trails[i][i] = tauInitial;
 
-            for(int j = i+1; j < this.cities.length; j++) {
+            for(int j = i + 1; j < this.cities.length; j++) {
                 City b = this.cities[j];
-                double dist = Math.sqrt((a.x-b.x)*(a.x-b.x)+(a.y-b.y)*(a.y-b.y));
-                distances[i][j] = dist;
-                distances[j][i] = dist;
+
+                double distance = Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
+                distances[i][j] = distance;
+                distances[j][i] = distance;
+
                 trails[i][j] = tauInitial;
                 trails[j][i] = tauInitial;
-                heuristics[i][j] = Math.pow(1.0 / dist, beta);
+
+                heuristics[i][j] = Math.pow(1.0 / distance, beta);
                 heuristics[j][i] = heuristics[i][j];
             }
         }
+
+        int m = 30;
         ants = new TSPSolution[m];
         for(int i = 0; i < ants.length; i++) {
             ants[i] = new TSPSolution();
