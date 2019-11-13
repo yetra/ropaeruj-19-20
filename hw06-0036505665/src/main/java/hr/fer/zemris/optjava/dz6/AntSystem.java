@@ -137,14 +137,11 @@ public class AntSystem {
         trails = new double[cities.length][cities.length];
 
         for(int i = 0; i < cities.length; i++) {
-            City a = cities[i];
             distances[i][i] = 0;
             trails[i][i] = tauMax;
 
             for(int j = i + 1; j < cities.length; j++) {
-                City b = cities[j];
-
-                double distance = Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
+                double distance = cities[i].distanceTo(cities[j]);
                 distances[i][j] = distance;
                 distances[j][i] = distance;
 
