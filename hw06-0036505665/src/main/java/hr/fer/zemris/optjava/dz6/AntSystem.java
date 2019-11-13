@@ -158,9 +158,13 @@ public class AntSystem {
                 }
             }
 
+            assert iterationBest != null;
+            if (best == null || iterationBest.tourLength < best.tourLength) {
+                best = iterationBest;
+            }
+
             updateTrails(best);
             evaporateTrails();
-            checkBestSolution();
 
             iteration++;
         }
@@ -273,33 +277,6 @@ public class AntSystem {
                 trails[i][j] = Math.max(trails[i][j] * (1 - rho), tauMin);
                 trails[j][i] = trails[i][j];
             }
-        }
-    }
-
-    /**
-     * Metoda provjerava je li pronađeno bolje rješenje od
-     * prethodno najboljeg.
-     */
-    private void checkBestSolution() {
-        if (!haveBest) {
-            haveBest = true;
-
-            best = ants[0];
-        }
-
-        double currentBest = best.tourLength;
-        int bestIndex = -1;
-        for (int antIndex = 0; antIndex < ants.length; antIndex++) {
-            TSPSolution ant = ants[antIndex];
-
-            if (ant.tourLength < currentBest) {
-                currentBest = ant.tourLength;
-                bestIndex = antIndex;
-            }
-        }
-
-        if (bestIndex != -1) {
-            best = ants[bestIndex];
         }
     }
 }
