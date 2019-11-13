@@ -1,7 +1,10 @@
 package hr.fer.zemris.optjava.dz6;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class AntSystem {
 
@@ -215,7 +218,37 @@ public class AntSystem {
      * @return the ant's next city
      */
     private City pickNextCity(City currentCity, List<City> cities, TSPSolution ant) {
-        return null;
+        City nextCity = null;
+        double probabilitiesSum = 0;
+
+        for (City city : cities) {
+            probabilities[city.index] = Math.pow(trails[currentCity.index][city.index], alpha)
+                    * heuristics[currentCity.index][city.index];
+
+            probabilitiesSum += probabilities[city.index];
+        }
+
+        double sum = 0;
+        double number = ThreadLocalRandom.current().nextDouble();
+        for (City city : cities) {
+            sum += probabilities[city.index] / probabilitiesSum;
+
+            if (number <= sum && !ant.visited(city)) {
+                nextCity = city;
+                break;
+            }
+        }
+
+        if (nextCity == null) {
+            for (City city : cities) {
+                if (!ant.visited(city)) {
+                    nextCity = city;
+                    break;
+                }
+            }
+        }
+
+        return nextCity;
     }
 
     /**
