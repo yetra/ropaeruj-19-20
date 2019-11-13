@@ -144,24 +144,19 @@ public class AntSystem {
      * Glavna metoda algoritma.
      */
     public void go() {
-        System.out.println("Zapocinjem s populacijom:");
-        System.out.println("=========================");
-        int iter = 0;
-        int iterLimit = 500;
+        int maxIterations = 500;
 
-        // ponavljaj dozvoljeni broj puta
-        while(iter < iterLimit) {
-            iter++;
-
-            for (int antIndex = 0; antIndex < ants.length; antIndex++) {
-                // S kojim mravom radim?
-                TSPSolution ant = ants[antIndex];
+        int iteration = 0;
+        while(iteration < maxIterations) {
+            for (TSPSolution ant : ants) {
                 doWalk(ant);
             }
 
             updateTrails(best);
             evaporateTrails();
             checkBestSolution();
+
+            iteration++;
         }
 
         System.out.println("Best length: "+best.tourLength);
