@@ -30,4 +30,8 @@ public class TSPSolution {
     public boolean visitedAll(List<City> cities) {
         return visited.containsAll(cities);
     }
+
+    public City getInitialCity() {
+        return route.get(0);
+    }
 }
