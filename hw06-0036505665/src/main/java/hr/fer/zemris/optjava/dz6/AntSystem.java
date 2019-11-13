@@ -125,6 +125,7 @@ public class AntSystem {
         reachable = new int[cityCount];
 
         initializeMatrices();
+        cities.forEach(city -> city.findClosest(closestCount, cities, distances[city.index]));
 
         ants = new TSPSolution[antsCount];
         for(int i = 0; i < antsCount; i++) {
