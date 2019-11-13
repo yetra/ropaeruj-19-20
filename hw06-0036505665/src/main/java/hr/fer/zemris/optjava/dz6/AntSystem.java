@@ -202,7 +202,7 @@ public class AntSystem {
             int a = ant.cityIndexes[i];
             int b = ant.cityIndexes[i + 1];
 
-            trails[a][b] += delta;
+            trails[a][b] = Math.min(trails[a][b] + delta, tauMax);
             trails[b][a] = trails[a][b];
         }
     }
