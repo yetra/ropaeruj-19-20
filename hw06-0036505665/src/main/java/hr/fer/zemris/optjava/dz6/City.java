@@ -15,12 +15,12 @@ public class City {
     /**
      * The x-coordinate of this city.
      */
-    public int x;
+    public double x;
 
     /**
      * The y-coordinate of this city.
      */
-    public int y;
+    public double y;
 
     /**
      * Constructs a {@link City} of the given arguments.
@@ -29,7 +29,7 @@ public class City {
      * @param x the x-coordinate of this city
      * @param y the y-coordinate of this city
      */
-    public City(int index, int x, int y) {
+    public City(int index, double x, double y) {
         this.index = index;
         this.x = x;
         this.y = y;
