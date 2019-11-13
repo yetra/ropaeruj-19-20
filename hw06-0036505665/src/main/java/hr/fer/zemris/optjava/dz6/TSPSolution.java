@@ -17,4 +17,9 @@ public class TSPSolution {
         route = new ArrayList<>(cityCount);
         visited = new HashSet<>();
     }
+
+    public void visit(City city) {
+        route.add(city);
+        visited.add(city);
+    }
 }
