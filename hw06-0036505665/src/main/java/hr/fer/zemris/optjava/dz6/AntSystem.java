@@ -235,7 +235,12 @@ public class AntSystem {
      * @param ant the ant to evaluate.
      */
     private void evaluate(TSPSolution ant) {
+        ant.tourLength = 0;
 
+        for (int i = 0; i < cityCount - 1; i++) {
+            ant.tourLength += distances[ant.tour.get(i).index][ant.tour.get(i + 1).index];
+        }
+        ant.tourLength += distances[ant.tour.get(0).index][ant.tour.get(cityCount - 1).index];
     }
 
     /**
