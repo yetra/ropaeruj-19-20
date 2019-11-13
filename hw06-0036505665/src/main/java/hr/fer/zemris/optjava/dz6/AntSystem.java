@@ -103,31 +103,8 @@ public class AntSystem {
 
         probabilities = new double[this.cities.length];
         reachable = new int[this.cities.length];
-        distances = new double[this.cities.length][this.cities.length];
-        heuristics = new double[this.cities.length][this.cities.length];
-        trails = new double[this.cities.length][this.cities.length];
 
-        double tauInitial = tauMax;
-
-        for(int i = 0; i < this.cities.length; i++) {
-            City a = this.cities[i];
-            distances[i][i] = 0;
-            trails[i][i] = tauInitial;
-
-            for(int j = i + 1; j < this.cities.length; j++) {
-                City b = this.cities[j];
-
-                double distance = Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
-                distances[i][j] = distance;
-                distances[j][i] = distance;
-
-                trails[i][j] = tauInitial;
-                trails[j][i] = tauInitial;
-
-                heuristics[i][j] = Math.pow(1.0 / distance, beta);
-                heuristics[j][i] = heuristics[i][j];
-            }
-        }
+        initializeMatrices();
 
         int m = 30;
         ants = new TSPSolution[m];
@@ -138,6 +115,35 @@ public class AntSystem {
 
         best = new TSPSolution();
         best.cityIndexes = new int[this.cities.length];
+    }
+
+    /**
+     * Initializes the {@link #distances}, {@link #heuristics} and {@link #trails} matrices.
+     */
+    private void initializeMatrices() {
+        distances = new double[cities.length][cities.length];
+        heuristics = new double[cities.length][cities.length];
+        trails = new double[cities.length][cities.length];
+
+        for(int i = 0; i < cities.length; i++) {
+            City a = cities[i];
+            distances[i][i] = 0;
+            trails[i][i] = tauMax;
+
+            for(int j = i + 1; j < cities.length; j++) {
+                City b = cities[j];
+
+                double distance = Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
+                distances[i][j] = distance;
+                distances[j][i] = distance;
+
+                trails[i][j] = tauMax;
+                trails[j][i] = tauMax;
+
+                heuristics[i][j] = Math.pow(1.0 / distance, beta);
+                heuristics[j][i] = heuristics[i][j];
+            }
+        }
     }
 
     /**
