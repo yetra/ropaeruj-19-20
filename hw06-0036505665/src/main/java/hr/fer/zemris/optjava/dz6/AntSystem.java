@@ -116,7 +116,7 @@ public class AntSystem {
                 doWalk(ant);
             }
 
-            updateTrails();
+            updateTrails(best);
             evaporateTrails();
             checkBestSolution();
         }
@@ -195,28 +195,15 @@ public class AntSystem {
     /**
      * Metoda koja obavlja ažuriranje feromonskih tragova
      */
-    private void updateTrails() {
-        // Koliko mrava radi ažuriranje?
-        int updates = ants.length;
+    private void updateTrails(TSPSolution ant) {
+        double delta = 1.0 / ant.tourLength;
 
-        // Ako z elim samo da najbolji rade ažuriranje...
-        if(false) {
-            updates = 5;
-            //ili updates = ants.length / 10;
-            TSPUtil.partialSort(ants, updates);
-        }
+        for(int i = 0; i < ant.cityIndexes.length - 1; i++) {
+            int a = ant.cityIndexes[i];
+            int b = ant.cityIndexes[i + 1];
 
-        // Azuriranje feromonskog traga:
-        for(int antIndex = 0; antIndex < updates; antIndex++) {
-            // S kojim mravom radim?
-            TSPSolution ant = ants[antIndex];
-            double delta = 1.0 / ant.tourLength;
-            for(int i = 0; i < ant.cityIndexes.length-1; i++) {
-                int a = ant.cityIndexes[i];
-                int b = ant.cityIndexes[i+1];
-                trails[a][b] += delta;
-                trails[b][a] = trails[a][b];
-            }
+            trails[a][b] += delta;
+            trails[b][a] = trails[a][b];
         }
     }
 
