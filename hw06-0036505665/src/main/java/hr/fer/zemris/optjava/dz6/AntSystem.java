@@ -57,16 +57,6 @@ public class AntSystem {
     private double beta;
 
     /**
-     * The best so far ant.
-     */
-    private TSPSolution best;
-
-    /**
-     * {@code} true if a best ant exists.
-     */
-    private boolean haveBest = false;
-
-    /**
      * The lower bound for pheromone values.
      */
     private double tauMin;
@@ -112,8 +102,6 @@ public class AntSystem {
         for(int i = 0; i < antsCount; i++) {
             ants[i] = new TSPSolution(cityCount);
         }
-
-        best = new TSPSolution(cityCount);
     }
 
     /**
@@ -146,6 +134,8 @@ public class AntSystem {
      * Glavna metoda algoritma.
      */
     public void go() {
+        TSPSolution bestSoFar = null;
+
         int iteration = 0;
         while(iteration < maxIterations) {
             TSPSolution iterationBest = null;
@@ -159,18 +149,19 @@ public class AntSystem {
             }
 
             assert iterationBest != null;
-            if (best == null || iterationBest.tourLength < best.tourLength) {
-                best = iterationBest;
+            if (bestSoFar == null || iterationBest.tourLength < bestSoFar.tourLength) {
+                bestSoFar = iterationBest;
             }
 
-            updateTrails(best);
+            updateTrails(bestSoFar);
             evaporateTrails();
 
             iteration++;
         }
 
-        System.out.println("Best length: " + best.tourLength);
-        System.out.println(best);
+        assert bestSoFar != null;
+        System.out.println("Best length: " + bestSoFar.tourLength);
+        System.out.println(bestSoFar);
     }
 
     /**
