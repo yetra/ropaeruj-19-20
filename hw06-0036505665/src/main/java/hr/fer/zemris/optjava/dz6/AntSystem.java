@@ -58,7 +58,7 @@ public class AntSystem {
     /**
      * The evaporation constant.
      */
-    private double ro;
+    private double rho;
 
     /**
      * The alpha constant.
@@ -111,13 +111,13 @@ public class AntSystem {
         this.cities = cities;
         this.cityCount = cities.size();
 
-        this.ro = rho;
+        this.rho = rho;
         this.alpha = alpha;
         this.beta = beta;
         rand = new Random();
 
         this.maxIterations = maxIterations;
-        
+
         indexes = new int[cityCount];
         ArraysUtil.linearFillArray(indexes);
 
@@ -267,7 +267,7 @@ public class AntSystem {
     private void evaporateTrails() {
         for(int i = 0; i < cityCount; i++) {
             for(int j = i + 1; j < cityCount; j++) {
-                trails[i][j] = Math.max(trails[i][j] * (1 - ro), tauMin);
+                trails[i][j] = Math.max(trails[i][j] * (1 - rho), tauMin);
                 trails[j][i] = trails[i][j];
             }
         }
