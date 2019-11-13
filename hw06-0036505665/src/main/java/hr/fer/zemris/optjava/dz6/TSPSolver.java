@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -49,6 +50,22 @@ public class TSPSolver {
      * @throws IOException if an I/O error occurs
      */
     private static List<City> parseCities(BufferedReader br) throws IOException {
-        return null;
+        List<City> cities = new ArrayList<>();
+
+        String line;
+        while (!(line = br.readLine().trim()).startsWith("EOF")) {
+            if (!Character.isDigit(line.charAt(0))) {
+                continue;
+            }
+
+            String[] parts = line.split("\\s+");
+            int index = Integer.parseInt(parts[0]) - 1;
+            double x = Double.parseDouble(parts[1]);
+            double y = Double.parseDouble(parts[1]);
+
+            cities.add(new City(index, x, y));
+        }
+
+        return cities;
     }
 }
