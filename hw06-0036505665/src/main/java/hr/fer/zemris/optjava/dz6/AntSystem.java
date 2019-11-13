@@ -1,48 +1,87 @@
 package hr.fer.zemris.optjava.dz6;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
 public class AntSystem {
-    // Polje gradova
+    /**
+     * An array of cities for solving the TSP.
+     */
     private City[] cities;
 
-    // Generator slučajnih brojeva
+    /**
+     * The random number generator.
+     */
     private Random rand;
 
-    // Polj in e deksa radova (uvijek oblika 0, 1, 2, 3, ...).
+    /**
+     * An array of city indexes (always 0, 1, 2, 3, ...).
+     */
     private int[] indexes;
 
-    // Fero onski m tragovi - simetrična matrica
+    /**
+     * A symmetric matrix of pheromone trails.
+     */
     private double[][] trails;
 
-    // Udaljenosti između gradova - simetrična matrica
+    /**
+     * A symmetric matrix of distances between cities.
+     */
     private double[][] distances;
 
-    // Heurističke vrijednosti
+    /**
+     * The heuristics matrix.
+     */
     private double[][] heuristics;
 
-    // Populacija mrava koji rješavaju problem
+    /**
+     * The ant population for solving the TSP.
+     */
     private TSPSolution[] ants;
 
-    // Pomo no ć polje indeksa mravu dostupnih gradova
+    /**
+     * A helper array of indexes of an ant's reachable cities.
+     */
     private int[] reachable;
 
-    // Pomoćno polje vjerojatnosti odabira grada
+    /**
+     * A helper array of an ant's probabilities for choosing each city.
+     */
     private double[] probabilities;
-    // Konstanta isparavanja
+
+    /**
+     * The evaporation constant.
+     */
     private double ro;
 
-    // Kons anta a t lfa
+    /**
+     * The alpha constant.
+     */
     private double alpha;
-    // Kons anta b t eta
+
+    /**
+     * The beta constant.
+     */
     private double beta;
-    // Pomoćno rješenje koje pamti najbolju pronađenu turu - ikada.
+
+    /**
+     * The best so far ant.
+     */
     private TSPSolution best;
+
+    /**
+     * {@code} true if a best ant exists.
+     */
     private boolean haveBest = false;
 
+    /**
+     * The lower bound for pheromone values.
+     */
     private double tauMin;
+
+    /**
+     * The upper bound for pheromone values.
+     */
     private double tauMax;
 
     /**
