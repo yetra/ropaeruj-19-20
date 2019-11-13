@@ -158,8 +158,6 @@ public class AntSystem {
      * Glavna metoda algoritma.
      */
     public void go() {
-        int maxIterations = 500;
-
         int iteration = 0;
         while(iteration < maxIterations) {
             for (TSPSolution ant : ants) {
@@ -173,7 +171,7 @@ public class AntSystem {
             iteration++;
         }
 
-        System.out.println("Best length: "+best.tourLength);
+        System.out.println("Best length: " + best.tourLength);
         System.out.println(best);
     }
 
