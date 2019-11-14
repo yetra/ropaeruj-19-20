@@ -191,7 +191,7 @@ public class TSPMaxMinAntSystem {
                 City nextCity = currentCity.closestCities.get(0);
 
                 ant.visit(nextCity);
-                nextCity = currentCity;
+                currentCity = nextCity;
             }
 
             evaluate(ant);
