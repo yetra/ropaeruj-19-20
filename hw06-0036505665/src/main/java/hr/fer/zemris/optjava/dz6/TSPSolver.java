@@ -86,7 +86,7 @@ public class TSPSolver {
             String[] parts = line.split("\\s+");
             int index = Integer.parseInt(parts[0]) - 1;
             double x = Double.parseDouble(parts[1]);
-            double y = Double.parseDouble(parts[1]);
+            double y = Double.parseDouble(parts[2]);
 
             cities.add(new City(index, x, y));
         }
