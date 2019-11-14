@@ -216,11 +216,11 @@ public class TSPMaxMinAntSystem {
 
             initializeAnts(ants.length);
             iteration++;
+
+            System.out.println("Best tour length so far: " + bestSoFar.tourLength);
         }
 
-        assert bestSoFar != null;
         System.out.println(bestSoFar);
-        System.out.println("Best tour length: " + bestSoFar.tourLength);
     }
 
     /**
