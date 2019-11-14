@@ -140,8 +140,6 @@ public class TSPMMAS {
                 heuristics[j][i] = heuristics[i][j];
             }
         }
-
-        initializeTrails();
     }
 
     /**
