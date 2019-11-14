@@ -184,20 +184,20 @@ public class TSPMaxMinAntSystem {
     private double getTauInitial() {
         TSPAnt best = null;
 
-        for (int i = 0; i < ants.length; i++) {
-            City currentCity = ants[i].getInitialCity();
+        for (TSPAnt ant : ants) {
+            City currentCity = ant.getInitialCity();
 
             for (int j = 0; j < cityCount - 1; j++) {
                 City nextCity = currentCity.closestCities.get(0);
 
-                ants[i].visit(nextCity);
+                ant.visit(nextCity);
                 nextCity = currentCity;
             }
 
-            evaluate(ants[i]);
+            evaluate(ant);
 
-            if (best == null || ants[i].tourLength < best.tourLength) {
-                best = ants[i];
+            if (best == null || ant.tourLength < best.tourLength) {
+                best = ant;
             }
         }
 
