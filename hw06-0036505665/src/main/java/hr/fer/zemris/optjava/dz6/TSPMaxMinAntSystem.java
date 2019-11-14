@@ -221,9 +221,9 @@ public class TSPMaxMinAntSystem {
     }
 
     /**
-     * Metoda koja obavlja hod jednog mrava.
+     * Makes the given ant visit all cities.
      *
-     * @param ant mrav
+     * @param ant the and to walk
      */
     private void walk(TSPAnt ant) {
         City currentCity = ant.getInitialCity();
