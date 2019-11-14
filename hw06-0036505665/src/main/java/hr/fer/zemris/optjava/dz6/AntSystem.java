@@ -105,12 +105,8 @@ public class AntSystem {
         probabilities = new double[cityCount];
 
         initializeMatrices();
+        initializeAnts(antsCount);
         cities.forEach(city -> city.findClosest(closestCount, cities, distances[city.index]));
-
-        ants = new TSPAnt[antsCount];
-        for(int i = 0; i < antsCount; i++) {
-            ants[i] = new TSPAnt(cityCount);
-        }
     }
 
     /**
@@ -136,6 +132,22 @@ public class AntSystem {
                 heuristics[i][j] = Math.pow(1.0 / distance, beta);
                 heuristics[j][i] = heuristics[i][j];
             }
+        }
+    }
+
+    /**
+     * Initializes the ant population for solving the TSP.
+     *
+     * @param antsCount the size of the ant population
+     */
+    private void initializeAnts(int antsCount) {
+        ants = new TSPAnt[antsCount];
+
+        for(int i = 0; i < antsCount; i++) {
+            int initialCityIndex = ThreadLocalRandom.current().nextInt(cityCount);
+
+            ants[i] = new TSPAnt(cityCount);
+            ants[i].visit(cities.get(initialCityIndex));
         }
     }
 
