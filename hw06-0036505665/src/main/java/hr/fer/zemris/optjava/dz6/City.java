@@ -1,7 +1,6 @@
 package hr.fer.zemris.optjava.dz6;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -67,5 +66,10 @@ public class City {
         copy.sort(Comparator.comparingDouble(c -> distances[c.index]));
 
         closestCities = copy.subList(1, closestCount + 1);
+    }
+
+    @Override
+    public String toString() {
+        return Integer.toString(index);
     }
 }
