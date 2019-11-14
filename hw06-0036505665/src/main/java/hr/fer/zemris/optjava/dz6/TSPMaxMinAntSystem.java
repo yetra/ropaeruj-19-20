@@ -164,7 +164,9 @@ public class TSPMaxMinAntSystem {
      * @param antsCount the size of the ant population
      */
     private void initializeAnts(int antsCount) {
-        ants = new TSPAnt[antsCount];
+        if (ants == null) {
+            ants = new TSPAnt[antsCount];
+        }
 
         for(int i = 0; i < antsCount; i++) {
             int initialCityIndex = ThreadLocalRandom.current().nextInt(cityCount);
@@ -212,6 +214,7 @@ public class TSPMaxMinAntSystem {
                 updateTrails(bestSoFar);
             }
 
+            initializeAnts(ants.length);
             iteration++;
         }
 
