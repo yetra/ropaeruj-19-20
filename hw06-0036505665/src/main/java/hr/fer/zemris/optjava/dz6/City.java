@@ -70,6 +70,6 @@ public class City {
 
     @Override
     public String toString() {
-        return Integer.toString(index);
+        return Integer.toString(index + 1);
     }
 }
