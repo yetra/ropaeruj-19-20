@@ -43,17 +43,17 @@ public class AntSystem {
     /**
      * The evaporation constant.
      */
-    private double rho;
+    private final double rho;
 
     /**
      * The alpha constant.
      */
-    private double alpha;
+    private final double alpha;
 
     /**
      * The beta constant.
      */
-    private double beta;
+    private final double beta;
 
     /**
      * The a parameter for calculating {@link #tauMin}.
