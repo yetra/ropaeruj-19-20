@@ -75,6 +75,15 @@ public class TSPAnt {
     }
 
     @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        tour.forEach(city -> sb.append(city).append("\n"));
+
+        return sb.toString();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
