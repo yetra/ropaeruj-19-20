@@ -14,7 +14,7 @@ public class TSPMMAS {
     /**
      * The maximum allowed number of iterations where the best solution stagnates.
      */
-    private static final int MAX_STAGNATION_COUNT = 30;
+    private static final int MAX_STAGNATION_COUNT = 100;
 
     /**
      * The number of cities in this TSP.
