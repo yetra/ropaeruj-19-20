@@ -33,7 +33,7 @@ public class TSPSolver {
     /**
      * The probability of reconstructing the optimal TSP tour.
      */
-    private static final double P = 0.8;
+    private static final double P = 0.9;
 
     /**
      * The main method. Reads TSP data and runs the MMAS algorithm.
