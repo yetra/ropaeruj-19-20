@@ -65,6 +65,9 @@ public class TSPSolver {
             System.out.println("An I/O exception occured!");
             System.exit(1);
         }
+
+        new TSPMaxMinAntSystem(cities, closestCount, antsCount, maxIterations,
+                RHO, ALPHA, BETA, TAU_MAX, getA(cities.size())).run();
     }
 
     /**
