@@ -93,4 +93,16 @@ public class TSPSolver {
 
         return cities;
     }
+
+    /**
+     * Calculates the a parameter.
+     *
+     * @param cityCount the number of TSP cities
+     * @return the a parameter
+     */
+    private static double getA(int cityCount) {
+        double mu = (cityCount - 1) / ((Math.pow(P, -1.0 / cityCount) - 1) * cityCount);
+
+        return mu * cityCount;
+    }
 }
