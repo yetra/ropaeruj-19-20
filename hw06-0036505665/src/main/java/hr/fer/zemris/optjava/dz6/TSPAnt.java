@@ -1,9 +1,6 @@
 package hr.fer.zemris.optjava.dz6;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Models an ant for solving the TSP.
@@ -75,5 +72,18 @@ public class TSPAnt {
      */
     public City getInitialCity() {
         return tour.get(0);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TSPAnt tspAnt = (TSPAnt) o;
+        return tour.equals(tspAnt.tour);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(tour);
     }
 }
