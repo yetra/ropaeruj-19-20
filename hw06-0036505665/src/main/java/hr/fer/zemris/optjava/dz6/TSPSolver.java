@@ -16,6 +16,31 @@ import java.util.List;
 public class TSPSolver {
 
     /**
+     * The evaporation constant.
+     */
+    private static final double RHO = 0.02;
+
+    /**
+     * The alpha constant.
+     */
+    private static final double ALPHA = 0.995;
+
+    /**
+     * The beta constant.
+     */
+    private static final double BETA = 3.5;
+
+    /**
+     * The upper bound for pheromone values.
+     */
+    private static final double TAU_MAX = 80;
+
+    /**
+     * The probability of reconstructing the optimal TSP tour.
+     */
+    private static final double P = 0.8;
+
+    /**
      * The main method. Reads TSP data and runs the MMAS algorithm.
      *
      * @param args the command-line arguments, 4 expected - a path to the TSP data file,
