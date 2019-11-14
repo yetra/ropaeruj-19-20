@@ -160,7 +160,7 @@ public class TSPMaxMinAntSystem {
     /**
      * Glavna metoda algoritma.
      */
-    public void go() {
+    public void run() {
         TSPAnt bestSoFar = null;
 
         int iteration = 0;
@@ -168,7 +168,7 @@ public class TSPMaxMinAntSystem {
             TSPAnt iterationBest = null;
 
             for (TSPAnt ant : ants) {
-                doWalk(ant);
+                walk(ant);
 
                 if (iterationBest == null || ant.tourLength < iterationBest.tourLength) {
                     iterationBest = ant;
@@ -196,7 +196,7 @@ public class TSPMaxMinAntSystem {
      *
      * @param ant mrav
      */
-    private void doWalk(TSPAnt ant) {
+    private void walk(TSPAnt ant) {
         City currentCity = ant.getInitialCity();
 
         for (int i = 0; i < cityCount - 1; i++) {
