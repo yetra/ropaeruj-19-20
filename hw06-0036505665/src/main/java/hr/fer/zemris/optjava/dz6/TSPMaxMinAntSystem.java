@@ -187,8 +187,8 @@ public class TSPMaxMinAntSystem {
         }
 
         assert bestSoFar != null;
-        System.out.println("Best length: " + bestSoFar.tourLength);
         System.out.println(bestSoFar);
+        System.out.println("Best tour length: " + bestSoFar.tourLength);
     }
 
     /**
