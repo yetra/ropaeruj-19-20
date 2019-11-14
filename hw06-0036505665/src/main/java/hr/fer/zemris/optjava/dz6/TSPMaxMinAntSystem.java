@@ -12,6 +12,11 @@ import java.util.concurrent.ThreadLocalRandom;
 public class TSPMaxMinAntSystem {
 
     /**
+     * The maximum allowed number of iterations where the best solution stagnates.
+     */
+    private static final int MAX_STAGNATION_COUNT = 30;
+
+    /**
      * The number of cities in this TSP.
      */
     private final int cityCount;
@@ -174,6 +179,7 @@ public class TSPMaxMinAntSystem {
      */
     public void run() {
         TSPAnt bestSoFar = null;
+        int stagnationCount = 0;
 
         int iteration = 0;
         while(iteration < maxIterations) {
@@ -190,10 +196,21 @@ public class TSPMaxMinAntSystem {
             assert iterationBest != null;
             if (bestSoFar == null || iterationBest.tourLength < bestSoFar.tourLength) {
                 bestSoFar = iterationBest;
+                stagnationCount = 0;
+            } else {
+                stagnationCount++;
             }
 
-            updateTrails(bestSoFar);
             evaporateTrails();
+
+            if (stagnationCount >= MAX_STAGNATION_COUNT) {
+                tauMax = 1.0 / (rho * bestSoFar.tourLength);
+                tauMin = tauMax / a;
+                initializeTrails();
+                stagnationCount = 0;
+            } else {
+                updateTrails(bestSoFar);
+            }
 
             iteration++;
         }
