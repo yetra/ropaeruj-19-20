@@ -13,7 +13,7 @@ public class TSPAnt {
     /**
      * The length of this ant's tour.
      */
-    public int tourLength;
+    public double tourLength;
 
     /**
      * The tour of cities.
