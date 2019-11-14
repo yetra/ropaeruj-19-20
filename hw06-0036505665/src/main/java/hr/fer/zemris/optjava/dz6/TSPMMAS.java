@@ -240,7 +240,7 @@ public class TSPMMAS {
                 initializeTrails();
                 stagnationCount = 0;
             } else {
-                updateTrails(bestSoFar);
+                updateTrails((iteration < maxIterations / 2) ? iterationBest : bestSoFar);
             }
 
             initializeAnts(ants.length);
