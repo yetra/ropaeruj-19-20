@@ -56,6 +56,11 @@ public class AntSystem {
     private double beta;
 
     /**
+     * The a parameter for calculating {@link #tauMin}.
+     */
+    private final double a;
+
+    /**
      * The lower bound for pheromone values.
      */
     private double tauMin;
@@ -80,17 +85,22 @@ public class AntSystem {
      * @param rho the evaporation constant
      * @param alpha the alpha constant
      * @param beta the beta constant
+     * @param tauMax the upper bound for pheromone values
+     * @param a the a parameter for calculating {@link #tauMin}
      */
     public AntSystem(List<City> cities, int closestCount, int antsCount, int maxIterations,
-                     double rho, double alpha, double beta) {
+                     double rho, double alpha, double beta, double tauMax, double a) {
         this.cities = cities;
         this.cityCount = cities.size();
 
+        this.maxIterations = maxIterations;
         this.rho = rho;
         this.alpha = alpha;
         this.beta = beta;
+        this.a = a;
 
-        this.maxIterations = maxIterations;
+        this.tauMax = tauMax;
+        this.tauMin = tauMax / a;
 
         probabilities = new double[cityCount];
 
