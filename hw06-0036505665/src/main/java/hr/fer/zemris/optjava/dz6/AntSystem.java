@@ -3,6 +3,12 @@ package hr.fer.zemris.optjava.dz6;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * An implementation of Max-Min Ant System for solving the Travelling Salesman Problem (TSP).
+ *
+ * @author Bruna Dujmović
+ * 
+ */
 public class AntSystem {
 
     /**
@@ -266,7 +272,9 @@ public class AntSystem {
     }
 
     /**
-     * Metoda koja obavlja ažuriranje feromonskih tragova
+     * Updates the pheromone trails using the given ant.
+     *
+     * @param ant the ant for updating the pheromone trails
      */
     private void updateTrails(TSPAnt ant) {
         double delta = 1.0 / ant.tourLength;
@@ -281,7 +289,7 @@ public class AntSystem {
     }
 
     /**
-     * Metoda koja obavlja isparavanje feromonskih tragova.
+     * Evaporates the pheromone trails.
      */
     private void evaporateTrails() {
         for(int i = 0; i < cityCount; i++) {
