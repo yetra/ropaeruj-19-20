@@ -125,18 +125,30 @@ public class TSPMaxMinAntSystem {
 
         for(int i = 0; i < cityCount; i++) {
             distances[i][i] = 0;
-            trails[i][i] = tauMax;
 
             for(int j = i + 1; j < cityCount; j++) {
                 double distance = cities.get(i).distanceTo(cities.get(j));
                 distances[i][j] = distance;
                 distances[j][i] = distance;
 
-                trails[i][j] = tauMax;
-                trails[j][i] = tauMax;
-
                 heuristics[i][j] = Math.pow(1.0 / distance, beta);
                 heuristics[j][i] = heuristics[i][j];
+            }
+        }
+
+        initializeTrails();
+    }
+
+    /**
+     * Initializes the matrix of pheromone trails.
+     */
+    private void initializeTrails() {
+        for(int i = 0; i < cityCount; i++) {
+            trails[i][i] = tauMax;
+
+            for(int j = i + 1; j < cityCount; j++) {
+                trails[i][j] = tauMax;
+                trails[j][i] = tauMax;
             }
         }
     }
