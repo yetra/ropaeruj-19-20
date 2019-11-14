@@ -118,6 +118,7 @@ public class TSPMMAS {
         this.tauMax = getTauInitial();
         this.tauMin = tauMax / a;
         initializeAnts(antsCount);
+        initializeTrails();
     }
 
     /**
@@ -126,7 +127,6 @@ public class TSPMMAS {
     private void initializeMatrices() {
         distances = new double[cityCount][cityCount];
         heuristics = new double[cityCount][cityCount];
-        trails = new double[cityCount][cityCount];
 
         for(int i = 0; i < cityCount; i++) {
             distances[i][i] = 0;
@@ -148,6 +148,8 @@ public class TSPMMAS {
      * Initializes the matrix of pheromone trails.
      */
     private void initializeTrails() {
+        trails = new double[cityCount][cityCount];
+
         for(int i = 0; i < cityCount; i++) {
             trails[i][i] = tauMax;
 
