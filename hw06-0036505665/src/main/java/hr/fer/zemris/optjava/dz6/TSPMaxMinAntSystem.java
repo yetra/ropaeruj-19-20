@@ -7,9 +7,9 @@ import java.util.concurrent.ThreadLocalRandom;
  * An implementation of Max-Min Ant System for solving the Travelling Salesman Problem (TSP).
  *
  * @author Bruna Dujmović
- * 
+ *
  */
-public class AntSystem {
+public class TSPMaxMinAntSystem {
 
     /**
      * The number of cities in this TSP.
@@ -82,7 +82,7 @@ public class AntSystem {
     private final int maxIterations;
 
     /**
-     * Constructs an {@link AntSystem} of the given parameters.
+     * Constructs a {@link TSPMaxMinAntSystem} of the given parameters.
      *
      * @param cities a list of TSP cities
      * @param closestCount the number of closest city neighbors to find
@@ -94,8 +94,8 @@ public class AntSystem {
      * @param tauMax the upper bound for pheromone values
      * @param a the a parameter for calculating {@link #tauMin}
      */
-    public AntSystem(List<City> cities, int closestCount, int antsCount, int maxIterations,
-                     double rho, double alpha, double beta, double tauMax, double a) {
+    public TSPMaxMinAntSystem(List<City> cities, int closestCount, int antsCount, int maxIterations,
+                              double rho, double alpha, double beta, double tauMax, double a) {
         this.cities = cities;
         this.cityCount = cities.size();
 
