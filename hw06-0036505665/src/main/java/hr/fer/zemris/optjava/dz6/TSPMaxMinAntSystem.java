@@ -206,7 +206,7 @@ public class TSPMaxMinAntSystem {
     }
 
     /**
-     * Glavna metoda algoritma.
+     * Executes the algorithm.
      */
     public void run() {
         TSPAnt bestSoFar = null;
