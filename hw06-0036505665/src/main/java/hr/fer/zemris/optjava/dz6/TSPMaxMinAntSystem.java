@@ -96,11 +96,10 @@ public class TSPMaxMinAntSystem {
      * @param rho the evaporation constant
      * @param alpha the alpha constant
      * @param beta the beta constant
-     * @param tauMax the upper bound for pheromone values
      * @param a the a parameter for calculating {@link #tauMin}
      */
     public TSPMaxMinAntSystem(List<City> cities, int closestCount, int antsCount, int maxIterations,
-                              double rho, double alpha, double beta, double tauMax, double a) {
+                              double rho, double alpha, double beta, double a) {
         this.cities = cities;
         this.cityCount = cities.size();
 
@@ -110,14 +109,15 @@ public class TSPMaxMinAntSystem {
         this.beta = beta;
         this.a = a;
 
-        this.tauMax = tauMax;
-        this.tauMin = tauMax / a;
-
         probabilities = new double[cityCount];
 
         initializeMatrices();
         initializeAnts(antsCount);
         cities.forEach(city -> city.findClosest(closestCount, cities, distances[city.index]));
+        
+        this.tauMax = getTauInitial();
+        this.tauMin = tauMax / a;
+        initializeAnts(antsCount);
     }
 
     /**
@@ -174,6 +174,35 @@ public class TSPMaxMinAntSystem {
             ants[i] = new TSPAnt(cityCount);
             ants[i].visit(cities.get(initialCityIndex));
         }
+    }
+
+    /**
+     * Calculates the initial {@link #tauMax}.
+     *
+     * @return the initial {@link #tauMax}
+     */
+    private double getTauInitial() {
+        TSPAnt best = null;
+
+        for (int i = 0; i < ants.length; i++) {
+            City currentCity = ants[i].getInitialCity();
+
+            for (int j = 0; j < cityCount - 1; j++) {
+                City nextCity = currentCity.closestCities.get(0);
+
+                ants[i].visit(nextCity);
+                nextCity = currentCity;
+            }
+
+            evaluate(ants[i]);
+
+            if (best == null || ants[i].tourLength < best.tourLength) {
+                best = ants[i];
+            }
+        }
+
+        assert best != null;
+        return 1.0 / (rho * best.tourLength);
     }
 
     /**

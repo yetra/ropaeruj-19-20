@@ -31,11 +31,6 @@ public class TSPSolver {
     private static final double BETA = 3.5;
 
     /**
-     * The upper bound for pheromone values.
-     */
-    private static final double TAU_MAX = 80;
-
-    /**
      * The probability of reconstructing the optimal TSP tour.
      */
     private static final double P = 0.8;
@@ -67,7 +62,7 @@ public class TSPSolver {
         }
 
         new TSPMaxMinAntSystem(cities, closestCount, antsCount, maxIterations,
-                RHO, ALPHA, BETA, TAU_MAX, getA(cities.size())).run();
+                RHO, ALPHA, BETA, getA(cities.size())).run();
     }
 
     /**
