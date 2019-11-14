@@ -9,7 +9,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author Bruna Dujmović
  *
  */
-public class TSPMaxMinAntSystem {
+public class TSPMMAS {
 
     /**
      * The maximum allowed number of iterations where the best solution stagnates.
@@ -87,7 +87,7 @@ public class TSPMaxMinAntSystem {
     private final int maxIterations;
 
     /**
-     * Constructs a {@link TSPMaxMinAntSystem} of the given parameters.
+     * Constructs a {@link TSPMMAS} of the given parameters.
      *
      * @param cities a list of TSP cities
      * @param closestCount the number of closest city neighbors to find
@@ -98,8 +98,8 @@ public class TSPMaxMinAntSystem {
      * @param beta the beta constant
      * @param a the a parameter for calculating {@link #tauMin}
      */
-    public TSPMaxMinAntSystem(List<City> cities, int closestCount, int antsCount, int maxIterations,
-                              double rho, double alpha, double beta, double a) {
+    public TSPMMAS(List<City> cities, int closestCount, int antsCount, int maxIterations,
+                   double rho, double alpha, double beta, double a) {
         this.cities = cities;
         this.cityCount = cities.size();
 

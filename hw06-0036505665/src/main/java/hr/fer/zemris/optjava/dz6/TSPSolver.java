@@ -61,7 +61,7 @@ public class TSPSolver {
             System.exit(1);
         }
 
-        new TSPMaxMinAntSystem(cities, closestCount, antsCount, maxIterations,
+        new TSPMMAS(cities, closestCount, antsCount, maxIterations,
                 RHO, ALPHA, BETA, getA(cities.size())).run();
     }
 
