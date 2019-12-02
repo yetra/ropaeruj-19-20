@@ -51,6 +51,16 @@ public class Neuron {
     }
 
     /**
+     * Calculates this neuron's output and writes it to the {@code inputs} using the {@link #outputIndex}.
+     *
+     * @param inputs the inputs array
+     * @param weights the {@link FFANN} weights array
+     */
+    public void calculateOutput(double[] inputs, double[] weights) {
+        inputs[outputIndex] = transferFunction.map(getNet(inputs, weights));
+    }
+
+    /**
      * Calculates this neuron's net input.
      *
      * @param inputs the inputs array
