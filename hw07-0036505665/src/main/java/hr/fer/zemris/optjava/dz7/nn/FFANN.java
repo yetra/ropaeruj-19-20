@@ -30,6 +30,11 @@ public class FFANN {
     private ReadOnlyDataset dataset;
 
     /**
+     * The layers of this neural network.
+     */
+    private Neuron[][] layers;
+
+    /**
      * Constructs a {@link FFANN}.
      *
      * @param dimensions the dimensions of this {@link FFANN}
@@ -40,5 +45,37 @@ public class FFANN {
         this.dimensions = dimensions;
         this.transferFunctions = transferFunctions;
         this.dataset = dataset;
+
+        buildLayers();
+    }
+
+    /**
+     * Builds the layers of this neural network.
+     */
+    private void buildLayers() {
+        int inputIndex = 0;
+        int outputIndex = dimensions[0];
+        int weightIndex = 0;
+
+        layers = new Neuron[dimensions.length - 1][];
+
+        for (int i = 1; i < dimensions.length; i++) {
+            layers[i] = new Neuron[dimensions[i]];
+
+            int[] inputIndexes = new int[dimensions[i - 1]];
+            for (int j = 0; j < dimensions[i - 1]; j++) {
+                inputIndexes[j] = inputIndex++;
+            }
+
+            for (int j = 0; j < dimensions[i]; ++j) {
+                int[] weightIndexes = new int[dimensions[i - 1]];
+                for (int k = 0; k < weightIndexes.length; k++) {
+                    weightIndexes[k] = weightIndex++;
+                }
+
+                layers[i][j] = new Neuron(inputIndexes, outputIndex++, weightIndexes, transferFunctions[i - 1]);
+            }
+        }
+
     }
 }
