@@ -53,11 +53,11 @@ public class Neuron {
     /**
      * Calculates this neuron's net input.
      *
-     * @param inputs the input array
-     * @param weights the weights array
+     * @param inputs the inputs array
+     * @param weights the {@link FFANN} weights array
      * @return this neuron's net input
      */
-    private double getNet(int[] inputs, int[] weights) {
+    private double getNet(double[] inputs, double[] weights) {
         double net = 0;
 
         for (int i = 0; i < inputIndexes.length; i++) {
