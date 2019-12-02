@@ -49,4 +49,21 @@ public class Neuron {
         this.weightIndexes = weightIndexes;
         this.transferFunction = transferFunction;
     }
+
+    /**
+     * Calculates this neuron's net input.
+     *
+     * @param inputs the input array
+     * @param weights the weights array
+     * @return this neuron's net input
+     */
+    private double getNet(int[] inputs, int[] weights) {
+        double net = 0;
+
+        for (int i = 0; i < inputIndexes.length; i++) {
+            net += inputs[inputIndexes[i]] * weights[weightIndexes[i]];
+        }
+
+        return net;
+    }
 }
