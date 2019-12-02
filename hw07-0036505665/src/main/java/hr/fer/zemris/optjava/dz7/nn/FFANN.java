@@ -3,6 +3,8 @@ package hr.fer.zemris.optjava.dz7.nn;
 import hr.fer.zemris.optjava.dz7.ReadOnlyDataset;
 import hr.fer.zemris.optjava.dz7.nn.transfer.TransferFunction;
 
+import java.util.Arrays;
+
 /**
  * Models a feed-forward artificial neural network.
  *
@@ -50,6 +52,25 @@ public class FFANN {
     }
 
     /**
+     * Calculates the outputs of this {@link FFANN} and stores them in the given {@code outputs} array.
+     *
+     * @param inputs the inputs of this {@link FFANN}
+     * @param outputs the outputs array to use for storing the calculated values
+     * @param weights the {@link FFANN} weights to use
+     */
+    public void calculateOutputs(double[] inputs, double[] outputs, double[] weights) {
+        double[] inputsCopy = Arrays.copyOf(inputs, inputs.length);
+
+        for (Neuron[] layer : layers) {
+            for (Neuron neuron : layer) {
+                neuron.calculateOutput(inputsCopy, weights);
+            }
+        }
+
+        System.arraycopy(inputsCopy, inputs.length - outputs.length, outputs, 0, outputs.length);
+    }
+
+    /**
      * Builds the layers of this neural network.
      */
     private void buildLayers() {
@@ -76,6 +97,5 @@ public class FFANN {
                 layers[i][j] = new Neuron(inputIndexes, outputIndex++, weightIndexes, transferFunctions[i - 1]);
             }
         }
-
     }
 }
