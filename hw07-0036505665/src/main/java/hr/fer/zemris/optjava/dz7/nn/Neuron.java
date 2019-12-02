@@ -5,8 +5,8 @@ import hr.fer.zemris.optjava.dz7.nn.transfer.TransferFunction;
 /**
  * Models a neuron in a neural network.
  *
- * Each neuron knows which {@code inputs}, {@code outputs} and {@code weights} array elements belong to it
- * by keeping track of their respective indexes.
+ * Each neuron knows which input/output and NN weights array elements belong to it by keeping track of
+ * their respective indexes.
  *
  * To map the net input to an output, a {@link TransferFunction} specified in the constructor is used.
  *
@@ -16,17 +16,17 @@ import hr.fer.zemris.optjava.dz7.nn.transfer.TransferFunction;
 public class Neuron {
 
     /**
-     * The indexes determining which inputs belong to this neuron in a given {@code inputs} array.
+     * The indexes of inputs belonging to this neuron in a given array of inputs.
      */
     private int[] inputIndexes;
 
     /**
-     * The index of the {@code outputs} array element that this neuron should write to.
+     * The array element index that this neuron should write its output to.
      */
     private int outputIndex;
 
     /**
-     * The indexes of {@link FFANN} weights belonging to this neuron in a given {@code weights} array.
+     * The indexes of NN weights belonging to this neuron in a given array of weights.
      */
     private int[] weightIndexes;
 
@@ -38,9 +38,9 @@ public class Neuron {
     /**
      * Constructs a {@link Neuron}.
      *
-     * @param inputIndexes this neuron's indexes in a given {@code inputs} array
-     * @param outputIndex this neuron's index in a given {@code outputs} array
-     * @param weightIndexes the indexes of this neuron's {@link FFANN} weights
+     * @param inputIndexes this neuron's indexes in a given array of inputs
+     * @param outputIndex this neuron's index in a given array of outputs
+     * @param weightIndexes the indexes of this neuron's NN weights
      * @param transferFunction the transfer function to use for transforming the net input to an output
      */
     public Neuron(int[] inputIndexes, int outputIndex, int[] weightIndexes, TransferFunction transferFunction) {
@@ -54,7 +54,7 @@ public class Neuron {
      * Calculates this neuron's output and writes it to the {@code inputs} using the {@link #outputIndex}.
      *
      * @param inputs the inputs array
-     * @param weights the {@link FFANN} weights array
+     * @param weights the NN weights array
      */
     public void calculateOutput(double[] inputs, double[] weights) {
         inputs[outputIndex] = transferFunction.map(getNet(inputs, weights));
@@ -64,7 +64,7 @@ public class Neuron {
      * Calculates this neuron's net input.
      *
      * @param inputs the inputs array
-     * @param weights the {@link FFANN} weights array
+     * @param weights the NN weights array
      * @return this neuron's net input
      */
     private double getNet(double[] inputs, double[] weights) {
