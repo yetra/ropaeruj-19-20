@@ -72,7 +72,25 @@ public class FFANN {
 
         return weightsCount;
     }
-    
+
+    /**
+     * Returns the number of inputs of this {@link FFANN}.
+     *
+     * @return the number of inputs of this {@link FFANN}
+     */
+    public int getInputsCount() {
+        return dimensions[0];
+    }
+
+    /**
+     * Returns the number of outputs of this {@link FFANN}.
+     *
+     * @return the number of outputs of this {@link FFANN}
+     */
+    public int getOutputsCount() {
+        return dimensions[dimensions.length - 1];
+    }
+
     /**
      * Calculates the outputs of this {@link FFANN} and stores them in the given {@code outputs} array.
      *
