@@ -37,6 +37,11 @@ public class FFANN {
     private Neuron[][] layers;
 
     /**
+     * The number of weights that this {@link FFANN} requires.
+     */
+    private int weightsCount = -1;
+
+    /**
      * Constructs a {@link FFANN}.
      *
      * @param dimensions the dimensions of this {@link FFANN}
@@ -51,6 +56,23 @@ public class FFANN {
         buildLayers();
     }
 
+    /**
+     * Returns the number of weights that this {@link FFANN} requires.
+     *
+     * @return the number of weights that this {@link FFANN} requires
+     */
+    public int getWeightsCount() {
+        if (weightsCount == -1) {
+            weightsCount = dimensions[0];
+
+            for (int i = 0; i < dimensions.length - 1; i++) {
+                weightsCount += dimensions[i] * dimensions[i + 1];
+            }
+        }
+
+        return weightsCount;
+    }
+    
     /**
      * Calculates the outputs of this {@link FFANN} and stores them in the given {@code outputs} array.
      *
