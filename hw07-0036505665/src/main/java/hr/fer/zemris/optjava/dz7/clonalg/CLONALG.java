@@ -2,6 +2,9 @@ package hr.fer.zemris.optjava.dz7.clonalg;
 
 import hr.fer.zemris.optjava.dz7.function.Function;
 
+import java.util.Arrays;
+import java.util.concurrent.ThreadLocalRandom;
+
 /**
  * An implementation of the CLONALG clonal selection algorithm.
  *
@@ -128,6 +131,27 @@ public class CLONALG {
         }
 
         return clones;
+    }
+
+    /**
+     * Hypermutates the given population of clones.
+     * The number of mutations of each antibody is proportional to its affinity.
+     * In each mutation a randomly selected antibody variable is incremented by a double in range [0, 1).
+     *
+     * @param clones the population of clones to hypermutate
+     */
+    private void hypermutate(Antibody[] clones) {
+        double minAffinity = clones[clonesSize - 1].affinity;
+
+        for (int i = 1; i < clones.length; i++) {
+            int maxMutations = (int) (clones[i].affinity - minAffinity) * c * function.getDimensions();
+
+            for (int mutation = 0; mutation < maxMutations; mutation++) {
+                int randomIndex = ThreadLocalRandom.current().nextInt(clonesSize);
+
+                clones[i].variables[randomIndex] += ThreadLocalRandom.current().nextDouble();
+            }
+        }
     }
 }
 
