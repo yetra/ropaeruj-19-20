@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * An implementation of the CLONALG clonal selection algorithm.
+ * An implementation of the CLONALG clonal selection algorithm to be used for function minimization.
  *
  * @author Bruna Dujmović
  *
