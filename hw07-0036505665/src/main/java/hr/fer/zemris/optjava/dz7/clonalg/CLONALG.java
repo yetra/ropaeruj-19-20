@@ -88,6 +88,28 @@ public class CLONALG {
     }
 
     /**
+     * Executes the algorithm.
+     */
+    public void run() {
+        Antibody[] population = new Antibody[populationSize];
+        initialize(population);
+
+        int iteration = 0;
+        while(iteration < maxIterations) {
+            evaluate(population);
+
+            Antibody[] clones = clone(population);
+            hypermutate(clones);
+            evaluate(clones);
+
+            select(clones, population);
+            replace(population);
+
+            iteration++;
+        }
+    }
+
+    /**
      * Initializes the given population with {@link #populationSize} random antibodies.
      *
      * @param population the population to initialize.
