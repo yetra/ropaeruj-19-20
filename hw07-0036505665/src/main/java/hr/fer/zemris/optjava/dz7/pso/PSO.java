@@ -120,4 +120,22 @@ public class PSO {
             swarm[i] = new Particle(dimensions, mins, maxs, velocityBounds);
         }
     }
+
+    /**
+     * Evaluates the particles in the given swarm and updates their personal best, if needed.
+     *
+     * @param swarm the swarm to evaluate
+     */
+    private void evaluate(Particle[] swarm) {
+        for (Particle particle : swarm) {
+            particle.value = function.valueAt(particle.position);
+
+            if ((minimize && particle.value < particle.bestValue)
+                    || (!minimize && particle.value > particle.bestValue)) {
+                particle.bestValue = particle.value;
+
+                System.arraycopy(particle.position, 0, particle.bestPosition, 0, dimensions);
+            }
+        }
+    }
 }
