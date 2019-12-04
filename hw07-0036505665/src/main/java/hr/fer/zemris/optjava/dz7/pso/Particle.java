@@ -52,6 +52,7 @@ public class Particle {
         this(dimensions);
 
         randomize(dimensions, mins, maxs, velocityBounds);
+        System.arraycopy(position, 0, bestPosition, 0, dimensions);
     }
 
     /**
@@ -65,8 +66,6 @@ public class Particle {
     public void randomize(int dimensions, double[] mins, double[] maxs, double[] velocityBounds) {
         for (int d = 0; d < dimensions; d++) {
             position[d] = ThreadLocalRandom.current().nextDouble() * (maxs[d] - mins[d]) + mins[d];
-            bestPosition[d] = position[d];
-
             velocity[d] = ThreadLocalRandom.current().nextDouble() * (2 * velocityBounds[d]) - velocityBounds[d];
         }
     }
