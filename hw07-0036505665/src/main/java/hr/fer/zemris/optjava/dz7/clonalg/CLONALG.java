@@ -164,6 +164,19 @@ public class CLONALG {
         Arrays.sort(clones);
         System.arraycopy(clones, 0, population, 0, population.length);
     }
+
+    /**
+     * Replaces the {@link #numberToReplace} worst antibodies in a given population with random antibodies.
+     *
+     * @param population the population whose worst antibodies will be replaced
+     */
+    private void replace(Antibody[] population) {
+        int offset = populationSize - numberToReplace;
+
+        for (int i = 0; i < numberToReplace; i++) {
+            population[offset + i].randomize(mins, maxs);
+        }
+    }
 }
 
 
