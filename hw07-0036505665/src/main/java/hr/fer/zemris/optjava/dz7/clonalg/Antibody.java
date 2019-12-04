@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * Models a {@link ClonAlg} antibody.
+ * Models a {@link CLONALG} antibody.
  *
  * @author Bruna Dujmović
  * 
@@ -19,7 +19,7 @@ public class Antibody implements Comparable<Antibody> {
     /**
      * The value (fitness/error) of this antibody.
      */
-    double value;
+    double affinity;
 
     /**
      * Constructs an {@link Antibody} of the given dimensions with all its variables set to zero.
@@ -47,11 +47,11 @@ public class Antibody implements Comparable<Antibody> {
      * Constructs an {@link Antibody} of the given variables and value.
      *
      * @param variables the variables of this antibody
-     * @param value the value (fitness/error) of this antibody
+     * @param affinity the value (fitness/error) of this antibody
      */
-    private Antibody(double[] variables, double value) {
+    private Antibody(double[] variables, double affinity) {
         this.variables = variables;
-        this.value = value;
+        this.affinity = affinity;
     }
 
     /**
@@ -72,11 +72,11 @@ public class Antibody implements Comparable<Antibody> {
      * @return a deep copy of this antibody
      */
     public Antibody copy() {
-        return new Antibody(Arrays.copyOf(variables, variables.length), value);
+        return new Antibody(Arrays.copyOf(variables, variables.length), affinity);
     }
 
     @Override
     public int compareTo(Antibody o) {
-        return Double.compare(value, o.value);
+        return Double.compare(affinity, o.affinity);
     }
 }
