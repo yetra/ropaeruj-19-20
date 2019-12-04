@@ -83,6 +83,17 @@ public class CLONALG {
         this.mins = mins;
         this.maxs = maxs;
     }
+
+    /**
+     * Initializes the given population with {@link #populationSize} random antibodies.
+     *
+     * @param population the population to initialize.
+     */
+    private void initialize(Antibody[] population) {
+        for (int i = 0; i < populationSize; i++) {
+            population[i] = new Antibody(function.getDimensions(), mins, maxs);
+        }
+    }
 }
 
 
