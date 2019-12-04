@@ -9,7 +9,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author Bruna Dujmović
  * 
  */
-public class Antibody {
+public class Antibody implements Comparable<Antibody> {
 
     /**
      * The variables of this antibody.
@@ -73,5 +73,10 @@ public class Antibody {
      */
     public Antibody copy() {
         return new Antibody(Arrays.copyOf(variables, variables.length), value);
+    }
+
+    @Override
+    public int compareTo(Antibody o) {
+        return Double.compare(value, o.value);
     }
 }
