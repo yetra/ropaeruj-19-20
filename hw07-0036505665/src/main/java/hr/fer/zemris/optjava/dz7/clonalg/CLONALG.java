@@ -105,6 +105,30 @@ public class CLONALG {
             antibody.affinity = function.valueAt(antibody.variables);
         }
     }
+
+    /**
+     * Creates {@link #clonesSize} clones of the given population.
+     * The number of clones for each antibody is proportional to its affinity.
+     *
+     * @param population the population to clone
+     * @return a population of clones
+     */
+    private Antibody[] clone(Antibody[] population) {
+        Antibody[] clones = new Antibody[clonesSize];
+        Arrays.sort(population);
+
+        int index = 0;
+        for (int i = 1; i <= population.length; i++) {
+            int numberOfCopies = (int) ((beta * populationSize) / ((double) i) + 0.5);
+
+            for (int j = 0; j < numberOfCopies; j++) {
+                clones[index] = population[i - 1].copy();
+                index++;
+            }
+        }
+
+        return clones;
+    }
 }
 
 
