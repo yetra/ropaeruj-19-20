@@ -39,4 +39,21 @@ public class Particle {
         velocity = new double[dimensions];
         bestPosition = new double[dimensions];
     }
+
+    /**
+     * Randomizes this particle's {@link #position} and {@link #velocity} vectors.
+     *
+     * @param dimensions the dimensions of the solution
+     * @param mins the lowest allowed value for each {@link #position} vector component
+     * @param maxs the highest allowed value for each {@link #position} vector component
+     * @param velocityBounds the bounds for velocity vector components
+     */
+    public void randomize(int dimensions, double[] mins, double[] maxs, double[] velocityBounds) {
+        for (int d = 0; d < dimensions; d++) {
+            position[d] = ThreadLocalRandom.current().nextDouble() * (maxs[d] - mins[d]) + mins[d];
+            bestPosition[d] = position[d];
+
+            velocity[d] = ThreadLocalRandom.current().nextDouble() * (2 * velocityBounds[d]) - velocityBounds[d];
+        }
+    }
 }
