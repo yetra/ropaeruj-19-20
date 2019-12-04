@@ -154,14 +154,14 @@ public class PSO {
      * Updates the positions and velocities of all particles in the given swarm.
      *
      * @param swarm the swarm to update
-     * @param w the inertia weight used for calculating the new velocities
+     * @param weight the inertia weight used for calculating the new velocities
      */
-    private void update(Particle[] swarm, double w) {
+    private void update(Particle[] swarm, double weight) {
         for(int i = 0; i < swarm.length; i++) {
             double[] neighborhoodBest = neighborhood.getBestFor(i);
 
             for (int d = 0; d < dimensions; d++) {
-                swarm[i].velocity[d] = w * swarm[i].velocity[d]
+                swarm[i].velocity[d] = weight * swarm[i].velocity[d]
                         + c1 * ThreadLocalRandom.current().nextDouble()
                         * (swarm[i].bestPosition[d] - swarm[i].position[d])
                         + c2 * ThreadLocalRandom.current().nextDouble()
