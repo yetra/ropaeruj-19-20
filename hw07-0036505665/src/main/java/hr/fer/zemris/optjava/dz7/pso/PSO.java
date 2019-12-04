@@ -109,4 +109,15 @@ public class PSO {
         this.c1 = c1;
         this.c2 = c2;
     }
+
+    /**
+     * Initializes the given swarm with {@link #swarmSize} particles of random positions and velocities.
+     *
+     * @param swarm the swarm to initialize.
+     */
+    private void initialize(Particle[] swarm) {
+        for(int i = 0; i < swarmSize; i++) {
+            swarm[i] = new Particle(dimensions, mins, maxs, velocityBounds);
+        }
+    }
 }
