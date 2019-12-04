@@ -41,6 +41,20 @@ public class Particle {
     }
 
     /**
+     * Constructs a {@link Particle} of the given dimensions with randomized vector values.
+     *
+     * @param dimensions the dimensions of the solution
+     * @param mins the lowest allowed value for each {@link #position} vector component
+     * @param maxs the highest allowed value for each {@link #position} vector component
+     * @param velocityBounds the bounds for velocity vector components
+     */
+    public Particle(int dimensions, double[] mins, double[] maxs, double[] velocityBounds) {
+        this(dimensions);
+
+        randomize(dimensions, mins, maxs, velocityBounds);
+    }
+
+    /**
      * Randomizes this particle's {@link #position} and {@link #velocity} vectors.
      *
      * @param dimensions the dimensions of the solution
