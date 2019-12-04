@@ -4,6 +4,12 @@ import hr.fer.zemris.optjava.dz7.function.Function;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * An implementation of the Particle Swarm Optimization algorithm.
+ *
+ * @author Bruna Dujmović
+ * 
+ */
 public class PSO {
 
     /**
@@ -82,7 +88,7 @@ public class PSO {
      *
      * @param function the function to optimize
      * @param neighborhood the object used for finding the social best solution for a given particle
-     * @param minimize {@code true} minimization, {@code false} if maximization
+     * @param minimize {@code true} if minimization, {@code false} if maximization
      * @param mins the lowest allowed value for each position vector component
      * @param maxs the highest allowed value for each position vector component
      * @param velocityBoundsPercentage the percentage of the search space used for calculating {@link #velocityBounds}
