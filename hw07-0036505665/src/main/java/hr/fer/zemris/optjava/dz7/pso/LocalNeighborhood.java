@@ -1,7 +1,8 @@
 package hr.fer.zemris.optjava.dz7.pso;
 
 /**
- * Models a local neighborhood of a specified size.
+ * Models a local neighborhood of a specified size that stores the best solutions for each swarm particle.
+ * The best solution for a particle can only be found in its neighborhood - locally.
  *
  * @author Bruna Dujmović
  *
@@ -29,7 +30,7 @@ public class LocalNeighborhood implements Neighborhood {
     private double[][] best;
 
     /**
-     * Konstruktor.
+     * Constructs a {@link LocalNeighborhood}.
      *
      * @param neighborhoodSize the size of the neighborhood
      * @param swarmSize the size of the particle swarm
