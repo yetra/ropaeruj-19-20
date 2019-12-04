@@ -2,6 +2,8 @@ package hr.fer.zemris.optjava.dz7.pso;
 
 import hr.fer.zemris.optjava.dz7.function.Function;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class PSO {
 
     /**
@@ -118,6 +120,35 @@ public class PSO {
     private void initialize(Particle[] swarm) {
         for(int i = 0; i < swarmSize; i++) {
             swarm[i] = new Particle(dimensions, mins, maxs, velocityBounds);
+        }
+    }
+
+    /**
+     * Updates the positions and velocities of all particles in the given swarm.
+     *
+     * @param swarm the swarm to update
+     * @param w the inertia weight used for calculating the new velocities
+     */
+    private void update(Particle[] swarm, double w) {
+        for(int i = 0; i < swarm.length; i++) {
+            double[] neighborhoodBest = neighborhood.getBestFor(i);
+
+            for (int d = 0; d < dimensions; d++) {
+                swarm[i].velocity[d] = w * swarm[i].velocity[d]
+                        + c1 * ThreadLocalRandom.current().nextDouble()
+                        * (swarm[i].bestPosition[d] - swarm[i].position[d])
+                        + c2 * ThreadLocalRandom.current().nextDouble()
+                        * (neighborhoodBest[d] - swarm[i].position[d]);
+
+                if (swarm[i].velocity[d] < -velocityBounds[d]) {
+                    swarm[i].velocity[d] = -velocityBounds[d];
+
+                } else if (swarm[i].velocity[d] > velocityBounds[d]) {
+                    swarm[i].velocity[d] = velocityBounds[d];
+                }
+
+                swarm[i].position[d] = swarm[i].position[d] + swarm[i].velocity[d];
+            }
         }
     }
 
