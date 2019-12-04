@@ -113,6 +113,33 @@ public class PSO {
     }
 
     /**
+     * Executes the algorithm.
+     */
+    public void run() {
+        Particle[] swarm = new Particle[swarmSize];
+        initialize(swarm);
+        evaluate(swarm);
+
+        int iteration = 0;
+        while (iteration < maxIterations) {
+            // linear inertia weight
+            double weight;
+            if (iteration < linearWeightThreshold) {
+                weight = iteration * (WEIGHT_MIN - WEIGHT_MAX) / maxIterations + WEIGHT_MAX;
+            } else {
+                weight = WEIGHT_MIN;
+            }
+
+            neighborhood.scan(swarm);
+
+            update(swarm, weight);
+            evaluate(swarm);
+
+            iteration++;
+        }
+    }
+
+    /**
      * Initializes the given swarm with {@link #swarmSize} particles of random positions and velocities.
      *
      * @param swarm the swarm to initialize.
