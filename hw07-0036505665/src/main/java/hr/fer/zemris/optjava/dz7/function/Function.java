@@ -9,6 +9,13 @@ package hr.fer.zemris.optjava.dz7.function;
 public interface Function {
 
     /**
+     * Returns the number of dimensions of this function.
+     *
+     * @return the number of dimensions of this function
+     */
+    int getDimensions();
+
+    /**
      * Returns the value of this function at the specified point.
      *
      * @param point the point for calculating the value
