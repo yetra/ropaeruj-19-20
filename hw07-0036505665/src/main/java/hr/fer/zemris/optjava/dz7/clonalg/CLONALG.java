@@ -153,6 +153,17 @@ public class CLONALG {
             }
         }
     }
+
+    /**
+     * Selects the {@link #populationSize} best clones and adds them to the specified population.
+     *
+     * @param clones the population of clones to select from
+     * @param population the population in which the best clones will be inserted
+     */
+    private void select(Antibody[] clones, Antibody[] population) {
+        Arrays.sort(clones);
+        System.arraycopy(clones, 0, population, 0, population.length);
+    }
 }
 
 
