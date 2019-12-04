@@ -94,6 +94,17 @@ public class CLONALG {
             population[i] = new Antibody(function.getDimensions(), mins, maxs);
         }
     }
+
+    /**
+     * Evaluates the antibodies in the given population.
+     *
+     * @param population the population to evaluate
+     */
+    private void evaluate(Antibody[] population) {
+        for (Antibody antibody : population) {
+            antibody.affinity = function.valueAt(antibody.variables);
+        }
+    }
 }
 
 
