@@ -43,6 +43,11 @@ public class FFANN {
     private int weightsCount = -1;
 
     /**
+     * The number of neurons in this {@link FFANN}.
+     */
+    private int neuronCount = -1;
+
+    /**
      * Constructs a {@link FFANN}.
      *
      * @param dimensions the dimensions of this {@link FFANN}
@@ -91,6 +96,23 @@ public class FFANN {
      */
     public int getOutputsCount() {
         return dimensions[dimensions.length - 1];
+    }
+
+    /**
+     * Returns the number of neurons in this {@link FFANN}.
+     *
+     * @return the number of neurons in this {@link FFANN}
+     */
+    public int getNeuronCount() {
+        if (neuronCount == -1) {
+            neuronCount = 0;
+
+            for (int dimension : dimensions) {
+                neuronCount += dimension;
+            }
+        }
+
+        return neuronCount;
     }
 
     /**
