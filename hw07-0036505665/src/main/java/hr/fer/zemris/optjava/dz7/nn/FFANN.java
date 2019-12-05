@@ -99,8 +99,14 @@ public class FFANN {
      * @param inputs the inputs of this {@link FFANN}
      * @param outputs the outputs array to use for storing the calculated values
      * @param weights the {@link FFANN} weights to use
+     * @throws IllegalArgumentException if the given arrays are of invalid length
      */
     public void calculateOutputs(double[] inputs, double[] outputs, double[] weights) {
+        if (inputs.length != getInputsCount() || outputs.length != getOutputsCount()
+                || weights.length != getWeightsCount()) {
+            throw new IllegalArgumentException("Invalid array length(s) given!");
+        }
+
         double[] inputsCopy = Arrays.copyOf(inputs, inputs.length);
 
         for (Neuron[] layer : layers) {
