@@ -64,6 +64,11 @@ public class CLONALG {
     private double[] maxs;
 
     /**
+     * The best antibody found by the algorithm.
+     */
+    private Antibody best;
+
+    /**
      * Constructs a {@link CLONALG} instance of the given parameters.
      *
      * @param function the function to optimize
@@ -102,7 +107,7 @@ public class CLONALG {
         initialize(population);
 
         int iteration = 0;
-        while(iteration < maxIterations) {
+        while(iteration < maxIterations && (best == null || minError > best.affinity)) {
             evaluate(population);
 
             Antibody[] clones = clone(population);
@@ -112,10 +117,11 @@ public class CLONALG {
             select(clones, population);
             replace(population);
 
+            best = population[0]; // sorted!
             iteration++;
         }
 
-        return null;
+        return best.variables;
     }
 
     /**
