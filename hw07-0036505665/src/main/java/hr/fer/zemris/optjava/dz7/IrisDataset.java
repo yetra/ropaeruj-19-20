@@ -1,6 +1,10 @@
 package hr.fer.zemris.optjava.dz7;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * A dataset of Iris flower measurements.
@@ -70,5 +74,37 @@ public class IrisDataset implements ReadOnlyDataset {
     @Override
     public boolean[] getOutput(int index) {
         return Arrays.copyOf(outputs[index], getOutputsCount());
+    }
+
+    /**
+     * Constructs an {@link IrisDataset} from the given file.
+     *
+     * @param filePath the path to the file containing Iris data
+     * @return an {@link IrisDataset} constructed from the given file
+     * @throws IOException if an I/O error occurs
+     */
+    public static IrisDataset fromFile(Path filePath) throws IOException {
+        List<String> lines = Files.readAllLines(filePath);
+
+        int samplesCount = lines.size();
+        double[][] inputs = new double[samplesCount][INPUTS_COUNT];
+        boolean[][] outputs = new boolean[samplesCount][OUTPUTS_COUNT];
+
+        for (int i = 0; i < samplesCount; i++) {
+            String line = lines.get(i);
+            String[] parts = line.trim().substring(1, line.length() - 1).split("\\):\\(");
+
+            String[] inputParts = parts[0].split(",");
+            for (int j = 0; j < INPUTS_COUNT; j++) {
+                inputs[i][j] = Double.parseDouble(inputParts[j]);
+            }
+
+            String[] outputParts = parts[1].split(",");
+            for (int j = 0; j < OUTPUTS_COUNT; j++) {
+                outputs[i][j] = outputParts[i].equals("1");
+            }
+        }
+
+        return new IrisDataset(inputs, outputs);
     }
 }
