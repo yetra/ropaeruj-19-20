@@ -143,7 +143,6 @@ public class PSO {
     public double[] run() {
         Particle[] swarm = new Particle[swarmSize];
         initialize(swarm);
-        evaluate(swarm);
 
         int iteration = 0;
         while (iteration < maxIterations && !thresholdReached()) {
@@ -187,6 +186,9 @@ public class PSO {
     private void initialize(Particle[] swarm) {
         for(int i = 0; i < swarmSize; i++) {
             swarm[i] = new Particle(dimensions, mins, maxs, velocityBounds);
+
+            swarm[i].value = function.valueAt(swarm[i].position);
+            swarm[i].bestValue = swarm[i].value;
         }
     }
 
