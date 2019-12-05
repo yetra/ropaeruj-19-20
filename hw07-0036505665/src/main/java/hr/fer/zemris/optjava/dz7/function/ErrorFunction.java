@@ -44,7 +44,7 @@ public class ErrorFunction implements Function {
 
         for (int s = 0, samplesCount = dataset.getSamplesCount(); s < samplesCount; s++) {
             double[] sampleOutputs = dataset.getOutput(s);
-            double[] nnOutputs = new double[getDimensions()];
+            double[] nnOutputs = new double[dataset.getOutputsCount()];
             neuralNetwork.calculateOutputs(dataset.getInput(s), nnOutputs, point);
 
             for (int o = 0, outputsCount = dataset.getOutputsCount(); o < outputsCount; o++) {
