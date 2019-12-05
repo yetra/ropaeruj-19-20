@@ -22,7 +22,8 @@ public class FFANN {
     private int[] dimensions;
 
     /**
-     * An array of transfer functions per neural network layer.
+     * An array of transfer functions per neural network layer
+     * (excluding the input layer as it only forwards to the first hidden layer).
      */
     private TransferFunction[] transferFunctions;
 
@@ -32,7 +33,7 @@ public class FFANN {
     private ReadOnlyDataset dataset;
 
     /**
-     * The layers of this neural network.
+     * The layers of this neural network (excluding the input layer).
      */
     private Neuron[][] layers;
 
@@ -45,7 +46,7 @@ public class FFANN {
      * Constructs a {@link FFANN}.
      *
      * @param dimensions the dimensions of this {@link FFANN}
-     * @param transferFunctions an array of transfer functions per neural network layer
+     * @param transferFunctions an array of transfer functions per neural network layer (excluding the input layer)
      * @param dataset the dataset to use for learning
      */
     public FFANN(int[] dimensions, TransferFunction[] transferFunctions, ReadOnlyDataset dataset) {
