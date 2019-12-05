@@ -2,6 +2,7 @@ package hr.fer.zemris.optjava.dz7.pso;
 
 import hr.fer.zemris.optjava.dz7.function.Function;
 
+import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -84,6 +85,16 @@ public class PSO {
     private double c2;
 
     /**
+     * The best position found by the algorithm.
+     */
+    private double[] globalBest;
+
+    /**
+     * The value (fitness/error) of the best position found by the algorithm
+     */
+    private double globalBestValue;
+
+    /**
      * Constructs a {@link PSO} instance of the given parameters.
      *
      * @param function the function to optimize
@@ -121,7 +132,7 @@ public class PSO {
     /**
      * Executes the algorithm.
      */
-    public void run() {
+    public double[] run() {
         Particle[] swarm = new Particle[swarmSize];
         initialize(swarm);
         evaluate(swarm);
@@ -143,6 +154,8 @@ public class PSO {
 
             iteration++;
         }
+
+        return globalBest;
     }
 
     /**
@@ -194,11 +207,18 @@ public class PSO {
         for (Particle particle : swarm) {
             particle.value = function.valueAt(particle.position);
 
-            if ((minimize && particle.value < particle.bestValue)
-                    || (!minimize && particle.value > particle.bestValue)) {
+            if (minimize && particle.value < particle.bestValue
+                    || !minimize && particle.value > particle.bestValue) {
                 particle.bestValue = particle.value;
 
                 System.arraycopy(particle.position, 0, particle.bestPosition, 0, dimensions);
+
+                // update global best
+                if (globalBest == null || minimize && particle.bestValue < globalBestValue
+                        || !minimize && particle.bestValue > globalBestValue) {
+                    globalBestValue = particle.bestValue;
+                    globalBest = Arrays.copyOf(particle.bestPosition, particle.bestPosition.length);
+                }
             }
         }
     }
