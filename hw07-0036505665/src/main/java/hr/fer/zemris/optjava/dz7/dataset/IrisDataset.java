@@ -1,4 +1,4 @@
-package hr.fer.zemris.optjava.dz7;
+package hr.fer.zemris.optjava.dz7.dataset;
 
 import java.io.IOException;
 import java.nio.file.Files;

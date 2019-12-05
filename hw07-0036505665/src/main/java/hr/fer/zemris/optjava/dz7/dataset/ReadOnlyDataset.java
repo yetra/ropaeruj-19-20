@@ -1,4 +1,4 @@
-package hr.fer.zemris.optjava.dz7;
+package hr.fer.zemris.optjava.dz7.dataset;
 
 /**
  * An interface representing a read-only dataset.

@@ -1,7 +1,7 @@
 package hr.fer.zemris.optjava.dz7.nn;
 
-import hr.fer.zemris.optjava.dz7.IrisDataset;
-import hr.fer.zemris.optjava.dz7.ReadOnlyDataset;
+import hr.fer.zemris.optjava.dz7.dataset.IrisDataset;
+import hr.fer.zemris.optjava.dz7.dataset.ReadOnlyDataset;
 import hr.fer.zemris.optjava.dz7.function.ErrorFunction;
 import hr.fer.zemris.optjava.dz7.function.Function;
 import hr.fer.zemris.optjava.dz7.nn.transfer.SigmoidFunction;

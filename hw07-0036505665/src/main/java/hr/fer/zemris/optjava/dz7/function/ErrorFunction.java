@@ -1,6 +1,6 @@
 package hr.fer.zemris.optjava.dz7.function;
 
-import hr.fer.zemris.optjava.dz7.ReadOnlyDataset;
+import hr.fer.zemris.optjava.dz7.dataset.ReadOnlyDataset;
 import hr.fer.zemris.optjava.dz7.nn.FFANN;
 
 /**

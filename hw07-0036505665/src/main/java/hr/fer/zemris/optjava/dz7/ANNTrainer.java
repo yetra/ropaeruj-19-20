@@ -1,6 +1,8 @@
 package hr.fer.zemris.optjava.dz7;
 
 import hr.fer.zemris.optjava.dz7.clonalg.CLONALG;
+import hr.fer.zemris.optjava.dz7.dataset.IrisDataset;
+import hr.fer.zemris.optjava.dz7.dataset.ReadOnlyDataset;
 import hr.fer.zemris.optjava.dz7.function.ErrorFunction;
 import hr.fer.zemris.optjava.dz7.function.Function;
 import hr.fer.zemris.optjava.dz7.nn.FFANN;
