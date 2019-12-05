@@ -112,6 +112,9 @@ public class FFANN {
 
     /**
      * Builds the layers of this neural network.
+     *
+     * Since the input layer only forwards inputs without changing them to the first hidden layer,
+     * it is not added to the {@link #layers}. The indexes are shifted accordingly.
      */
     private void buildLayers() {
         int inputIndex = 0;
