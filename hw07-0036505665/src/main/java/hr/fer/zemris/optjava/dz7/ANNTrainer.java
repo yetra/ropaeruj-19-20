@@ -18,6 +18,11 @@ import java.util.Arrays;
 /**
  * {@link ANNTrainer} is a program that trains an instance of {@link FFANN} on the Iris dataset.
  *
+ * Usage examples:
+ * 07-iris-formatirano.data pso-a 20 0.01 1000
+ * 07-iris-formatirano.data pso-b-1 50 0.01 1000
+ * 07-iris-formatirano.data clonalg 30 0.01 1000
+ *
  * @author Bruna Dujmović
  */
 public class ANNTrainer {
