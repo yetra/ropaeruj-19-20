@@ -68,10 +68,10 @@ public class Neuron {
      * @return this neuron's net input
      */
     private double getNet(double[] inputs, double[] weights) {
-        double net = 0;
+        double net = weights[weightIndexes[0]]; // bias
 
         for (int i = 0; i < inputIndexes.length; i++) {
-            net += inputs[inputIndexes[i]] * weights[weightIndexes[i]];
+            net += inputs[inputIndexes[i]] * weights[weightIndexes[i + 1]];
         }
 
         return net;

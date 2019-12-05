@@ -128,8 +128,8 @@ public class FFANN {
                 inputIndexes[j] = inputIndex++;
             }
 
-            for (int j = 0; j < dimensions[i]; ++j) {
-                int[] weightIndexes = new int[dimensions[i - 1]];
+            for (int j = 0; j < dimensions[i]; j++) {
+                int[] weightIndexes = new int[dimensions[i - 1] + 1]; // + 1 for the bias
                 for (int k = 0; k < weightIndexes.length; k++) {
                     weightIndexes[k] = weightIndex++;
                 }
