@@ -24,6 +24,11 @@ public class CLONALG {
     private int maxIterations;
 
     /**
+     * The minimum error value necessary for algorithm termination before {@link #maxIterations} is reached.
+     */
+    private double minError;
+
+    /**
      * The number of antibodies in the population.
      */
     private int populationSize;
@@ -63,6 +68,7 @@ public class CLONALG {
      *
      * @param function the function to optimize
      * @param maxIterations the maximum number of algorithm iterations
+     * @param minError the minimum error value necessary for premature algorithm termination
      * @param populationSize the number of antibodies in the population
      * @param beta a parameter used to determine the clones population size
      * @param numberToReplace the number of worst antibodies to replace iteration
@@ -70,11 +76,12 @@ public class CLONALG {
      * @param mins the lowest allowed value for each antibody variable
      * @param maxs the highest allowed value for each antibody variable
      */
-    public CLONALG(Function function, int maxIterations, int populationSize, int beta,
+    public CLONALG(Function function, int maxIterations, double minError, int populationSize, int beta,
                    int numberToReplace, double[] mins, double[] maxs, int c) {
         this.function = function;
 
         this.maxIterations = maxIterations;
+        this.minError = minError;
         this.populationSize = populationSize;
         this.beta = beta;
         for (int i = 1; i <= populationSize; i++) {
@@ -108,7 +115,7 @@ public class CLONALG {
             iteration++;
         }
 
-        return population[0].variables;
+        return null;
     }
 
     /**
