@@ -159,6 +159,7 @@ public class PSO {
             update(swarm, weight);
             evaluate(swarm);
 
+            System.out.println(Arrays.toString(globalBest) + " - " + globalBestValue);
             iteration++;
         }
 
