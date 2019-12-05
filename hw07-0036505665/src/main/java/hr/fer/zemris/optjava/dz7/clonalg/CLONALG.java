@@ -107,7 +107,7 @@ public class CLONALG {
         initialize(population);
 
         int iteration = 0;
-        while(iteration < maxIterations && (best == null || minError > best.affinity)) {
+        while(iteration < maxIterations && (best == null || minError < best.affinity)) {
             evaluate(population);
 
             Antibody[] clones = clone(population);
