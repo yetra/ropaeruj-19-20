@@ -179,13 +179,14 @@ public class CLONALG {
      * @param clones the population of clones to hypermutate
      */
     private void hypermutate(Antibody[] clones) {
-        double minAffinity = clones[clonesSize - 1].affinity;
+        double worstAffinity = clones[clonesSize - 1].affinity;
+        int dimensions = function.getDimensions();
 
         for (int i = 1; i < clones.length; i++) {
-            int maxMutations = (int) (clones[i].affinity - minAffinity) * c * function.getDimensions();
+            double maxMutations = (int) ((worstAffinity - clones[i].affinity) * c * dimensions);
 
             for (int mutation = 0; mutation < maxMutations; mutation++) {
-                int randomIndex = ThreadLocalRandom.current().nextInt(clonesSize);
+                int randomIndex = ThreadLocalRandom.current().nextInt(dimensions);
 
                 clones[i].variables[randomIndex] += ThreadLocalRandom.current().nextDouble();
             }
