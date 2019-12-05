@@ -63,10 +63,11 @@ public class FFANN {
      */
     public int getWeightsCount() {
         if (weightsCount == -1) {
-            weightsCount = dimensions[0];
+            weightsCount = 0;
 
             for (int i = 0; i < dimensions.length - 1; i++) {
                 weightsCount += dimensions[i] * dimensions[i + 1];
+                weightsCount += dimensions[i + 1]; // bias weights
             }
         }
 
