@@ -172,6 +172,10 @@ public class PSO {
      * @return {@code true} if the {@link #valueThreshold} has been reached
      */
     private boolean thresholdReached() {
+        if (globalBest == null) {
+            return false;
+        }
+
         return minimize && globalBestValue <= valueThreshold || !minimize && globalBestValue >= valueThreshold;
     }
 
