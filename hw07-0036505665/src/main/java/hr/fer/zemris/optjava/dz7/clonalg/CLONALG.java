@@ -90,7 +90,7 @@ public class CLONALG {
     /**
      * Executes the algorithm.
      */
-    public void run() {
+    public double[] run() {
         Antibody[] population = new Antibody[populationSize];
         initialize(population);
 
@@ -107,6 +107,8 @@ public class CLONALG {
 
             iteration++;
         }
+
+        return population[0].variables;
     }
 
     /**
