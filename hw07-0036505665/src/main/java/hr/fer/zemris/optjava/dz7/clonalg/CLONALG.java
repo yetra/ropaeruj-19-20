@@ -118,6 +118,7 @@ public class CLONALG {
             replace(population);
 
             best = population[0]; // sorted!
+            System.out.println(Arrays.toString(best.variables) + " - " + best.affinity);
             iteration++;
         }
 
