@@ -3,8 +3,6 @@ package hr.fer.zemris.optjava.dz7.nn;
 import hr.fer.zemris.optjava.dz7.ReadOnlyDataset;
 import hr.fer.zemris.optjava.dz7.nn.transfer.TransferFunction;
 
-import java.util.Arrays;
-
 /**
  * Models a feed-forward artificial neural network.
  *
@@ -129,15 +127,16 @@ public class FFANN {
             throw new IllegalArgumentException("Invalid array length(s) given!");
         }
 
-        double[] inputsCopy = Arrays.copyOf(inputs, inputs.length);
+        double[] values = new double[getNeuronCount()];
+        System.arraycopy(inputs, 0, values, 0, inputs.length);
 
         for (Neuron[] layer : layers) {
             for (Neuron neuron : layer) {
-                neuron.calculateOutput(inputsCopy, weights);
+                neuron.calculateOutput(values, weights);
             }
         }
 
-        System.arraycopy(inputsCopy, inputs.length - outputs.length, outputs, 0, outputs.length);
+        System.arraycopy(values, values.length - outputs.length, outputs, 0, outputs.length);
     }
 
     /**
