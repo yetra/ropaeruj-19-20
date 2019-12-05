@@ -36,9 +36,9 @@ public class IrisDataset implements ReadOnlyDataset {
      * The outputs per sample in this dataset.
      *
      * Each input consists of {@link #OUTPUTS_COUNT} values that represent the different Iris species.
-     * Consequently, only one of the values is set to {@code true}.
+     * Consequently, only one of the values is set to {@code 1} and others are set to {@code 0}.
      */
-    private boolean[][] outputs;
+    private double[][] outputs;
 
     /**
      * Constructs an {@link IrisDataset}.
@@ -46,7 +46,7 @@ public class IrisDataset implements ReadOnlyDataset {
      * @param inputs the inputs per sample in this dataset
      * @param outputs the outputs per sample in this dataset
      */
-    public IrisDataset(double[][] inputs, boolean[][] outputs) {
+    public IrisDataset(double[][] inputs, double[][] outputs) {
         this.inputs = inputs;
         this.outputs = outputs;
     }
@@ -72,7 +72,7 @@ public class IrisDataset implements ReadOnlyDataset {
     }
 
     @Override
-    public boolean[] getOutput(int index) {
+    public double[] getOutput(int index) {
         return Arrays.copyOf(outputs[index], getOutputsCount());
     }
 
@@ -88,7 +88,7 @@ public class IrisDataset implements ReadOnlyDataset {
 
         int samplesCount = lines.size();
         double[][] inputs = new double[samplesCount][INPUTS_COUNT];
-        boolean[][] outputs = new boolean[samplesCount][OUTPUTS_COUNT];
+        double[][] outputs = new double[samplesCount][OUTPUTS_COUNT];
 
         for (int i = 0; i < samplesCount; i++) {
             String line = lines.get(i);
@@ -101,7 +101,7 @@ public class IrisDataset implements ReadOnlyDataset {
 
             String[] outputParts = parts[1].split(",");
             for (int j = 0; j < OUTPUTS_COUNT; j++) {
-                outputs[i][j] = outputParts[i].equals("1");
+                outputs[i][j] = Double.parseDouble(outputParts[j]);
             }
         }
 

@@ -43,5 +43,5 @@ public interface ReadOnlyDataset {
      * @param index the index of the output to get
      * @return the index-th output in this dataset
      */
-    boolean[] getOutput(int index);
+    double[] getOutput(int index);
 }
