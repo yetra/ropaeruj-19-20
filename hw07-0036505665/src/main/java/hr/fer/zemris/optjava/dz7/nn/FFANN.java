@@ -132,7 +132,7 @@ public class FFANN {
         layers = new Neuron[dimensions.length - 1][];
 
         for (int i = 1; i < dimensions.length; i++) {
-            layers[i] = new Neuron[dimensions[i]];
+            layers[i - 1] = new Neuron[dimensions[i]];
 
             int[] inputIndexes = new int[dimensions[i - 1]];
             for (int j = 0; j < dimensions[i - 1]; j++) {
@@ -145,7 +145,7 @@ public class FFANN {
                     weightIndexes[k] = weightIndex++;
                 }
 
-                layers[i][j] = new Neuron(inputIndexes, outputIndex++, weightIndexes, transferFunctions[i - 1]);
+                layers[i - 1][j] = new Neuron(inputIndexes, outputIndex++, weightIndexes, transferFunctions[i - 1]);
             }
         }
     }
