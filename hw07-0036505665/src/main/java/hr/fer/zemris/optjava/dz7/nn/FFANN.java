@@ -102,8 +102,8 @@ public class FFANN {
     public int getNeuronCount() {
         int neuronCount = 0;
 
-        for (int i = 0; i < dimensions.length; i++) {
-            neuronCount += dimensions[i];
+        for (int dimension : dimensions) {
+            neuronCount += dimension;
         }
 
         return neuronCount;
