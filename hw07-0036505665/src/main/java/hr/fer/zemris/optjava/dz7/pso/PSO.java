@@ -69,6 +69,11 @@ public class PSO {
     private int maxIterations;
 
     /**
+     * The fitness/error threshold which allows for algorithm termination before {@link #maxIterations} is reached.
+     */
+    private double valueThreshold;
+
+    /**
      * The iteration in which the inertia weight becomes constant and equal to {@link #WEIGHT_MAX}.
      * Set to {@code maxIterations / 2} in the constructor.
      */
@@ -105,11 +110,13 @@ public class PSO {
      * @param velocityBoundsPercentage the percentage of the search space used for calculating {@link #velocityBounds}
      * @param swarmSize the number of particles in the population (swarm)
      * @param maxIterations the maximum number of algorithm iterations
+     * @param valueThreshold the fitness/error threshold which allows for algorithm termination
      * @param c1 the individual factor used in calculating a particle's position and velocity
      * @param c2 the social factor used in calculating a particle's position and velocity
      */
     public PSO(Function function, Neighborhood neighborhood, boolean minimize, double[] mins, double[] maxs,
-               double velocityBoundsPercentage, int swarmSize, int maxIterations, double c1, double c2) {
+               double velocityBoundsPercentage, int swarmSize, int maxIterations, double valueThreshold, double c1,
+               double c2) {
         this.function = function;
         this.dimensions = function.getDimensions();
         this.neighborhood = neighborhood;
@@ -124,6 +131,7 @@ public class PSO {
 
         this.swarmSize = swarmSize;
         this.maxIterations = maxIterations;
+        this.valueThreshold = valueThreshold;
         this.linearWeightThreshold = maxIterations / 2;
         this.c1 = c1;
         this.c2 = c2;
@@ -138,7 +146,7 @@ public class PSO {
         evaluate(swarm);
 
         int iteration = 0;
-        while (iteration < maxIterations) {
+        while (iteration < maxIterations && !thresholdReached()) {
             // linear inertia weight
             double weight;
             if (iteration < linearWeightThreshold) {
@@ -156,6 +164,15 @@ public class PSO {
         }
 
         return globalBest;
+    }
+
+    /**
+     * Returns {@code true} if the {@link #valueThreshold} has been reached.
+     *
+     * @return {@code true} if the {@link #valueThreshold} has been reached
+     */
+    private boolean thresholdReached() {
+        return minimize && globalBestValue <= valueThreshold || !minimize && globalBestValue >= valueThreshold;
     }
 
     /**
