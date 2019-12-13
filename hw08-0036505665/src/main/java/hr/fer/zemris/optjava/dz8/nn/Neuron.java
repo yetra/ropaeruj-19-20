@@ -1,6 +1,6 @@
 package hr.fer.zemris.optjava.dz8.nn;
 
-import hr.fer.zemris.optjava.dz7.nn.transfer.TransferFunction;
+import hr.fer.zemris.optjava.dz8.nn.transfer.TransferFunction;
 
 /**
  * Models a neuron in a neural network.

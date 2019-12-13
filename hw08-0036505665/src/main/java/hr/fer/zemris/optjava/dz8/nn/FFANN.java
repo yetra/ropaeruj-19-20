@@ -1,11 +1,11 @@
 package hr.fer.zemris.optjava.dz8.nn;
 
-import hr.fer.zemris.optjava.dz7.dataset.IrisDataset;
-import hr.fer.zemris.optjava.dz7.dataset.ReadOnlyDataset;
-import hr.fer.zemris.optjava.dz7.function.ErrorFunction;
-import hr.fer.zemris.optjava.dz7.function.Function;
-import hr.fer.zemris.optjava.dz7.nn.transfer.SigmoidFunction;
-import hr.fer.zemris.optjava.dz7.nn.transfer.TransferFunction;
+import hr.fer.zemris.optjava.dz8.dataset.IrisDataset;
+import hr.fer.zemris.optjava.dz8.dataset.ReadOnlyDataset;
+import hr.fer.zemris.optjava.dz8.function.ErrorFunction;
+import hr.fer.zemris.optjava.dz8.function.Function;
+import hr.fer.zemris.optjava.dz8.nn.transfer.SigmoidFunction;
+import hr.fer.zemris.optjava.dz8.nn.transfer.TransferFunction;
 
 import java.io.IOException;
 import java.nio.file.Paths;
