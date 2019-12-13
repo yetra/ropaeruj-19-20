@@ -1,15 +1,7 @@
 package hr.fer.zemris.optjava.dz8.nn;
 
-import hr.fer.zemris.optjava.dz8.dataset.IrisDataset;
 import hr.fer.zemris.optjava.dz8.dataset.ReadOnlyDataset;
-import hr.fer.zemris.optjava.dz8.function.ErrorFunction;
-import hr.fer.zemris.optjava.dz8.function.Function;
-import hr.fer.zemris.optjava.dz8.nn.transfer.SigmoidFunction;
 import hr.fer.zemris.optjava.dz8.nn.transfer.TransferFunction;
-
-import java.io.IOException;
-import java.nio.file.Paths;
-import java.util.Arrays;
 
 /**
  * Models a feed-forward artificial neural network.
@@ -165,32 +157,5 @@ public class FFANN {
                 layers[i - 1][j] = new Neuron(inputIndexes, outputIndex++, weightIndexes, transferFunctions[i - 1]);
             }
         }
-    }
-
-    /**
-     * The main method. Tests the {@link FFANN} implementation using the Iris dataset.
-     *
-     * new int[] {4, 5, 3, 3}, Arrays.fill(weights, 0.1) -> 0.8365366587431725
-     * new int[] {4, 3, 3}, Arrays.fill(weights, 0.1) -> 0.8566740399081082
-     * new int[] {4, 3, 3}, Arrays.fill(weights, -0.2) -> 0.7019685477806382
-     *
-     * @param args the command-line arguments, not used
-     * @throws IOException if an I/O error occurs
-     */
-    public static void main(String[] args) throws IOException {
-        ReadOnlyDataset dataset = IrisDataset.fromFile(Paths.get("07-iris-formatirano.data"));
-        FFANN ffann = new FFANN(
-                new int[] {4, 5, 3, 3},
-                // new int[] {4, 3, 3},
-                new TransferFunction[] {new SigmoidFunction(), new SigmoidFunction(), new SigmoidFunction()},
-                dataset
-        );
-
-        double[] weights = new double[ffann.getWeightsCount()];
-        Arrays.fill(weights, 0.1);
-        // Arrays.fill(weights, -0.2);
-
-        Function errorFunction = new ErrorFunction(ffann, dataset);
-        System.out.println(errorFunction.valueAt(weights));
     }
 }
