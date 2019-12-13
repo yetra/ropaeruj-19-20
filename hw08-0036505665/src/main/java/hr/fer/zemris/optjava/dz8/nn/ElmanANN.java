@@ -15,36 +15,12 @@ import java.util.Arrays;
  * @author Bruna Dujmović
  *
  */
-public class ElmanANN {
-
-    /**
-     * The dimensions of this {@link ElmanANN}.
-     *
-     * Each array element specifies the number of neurons per neural network layer.
-     * The length of the array is equal to the number of layers.
-     */
-    private int[] dimensions;
-
-    /**
-     * An array of transfer functions per neural network layer
-     * (excluding the input layer as it only forwards to the first hidden layer).
-     */
-    private TransferFunction[] transferFunctions;
-
-    /**
-     * The dataset to use for learning.
-     */
-    private ReadOnlyDataset dataset;
+public class ElmanANN extends ANN {
 
     /**
      * The layers of this neural network (excluding the input layer).
      */
     private Neuron[][] layers;
-
-    /**
-     * The number of weights that this {@link ElmanANN} requires.
-     */
-    private int weightsCount = -1;
 
     /**
      * Constructs an {@link ElmanANN}.
@@ -54,18 +30,21 @@ public class ElmanANN {
      * @param dataset the dataset to use for learning
      */
     public ElmanANN(int[] dimensions, TransferFunction[] transferFunctions, ReadOnlyDataset dataset) {
-        this.dimensions = dimensions;
-        this.transferFunctions = transferFunctions;
-        this.dataset = dataset;
+        super(dimensions, transferFunctions, dataset);
 
         buildLayers();
     }
 
     /**
-     * Returns the number of weights that this {@link ElmanANN} requires.
+     * Returns the size of the context that this {@link ElmanANN} uses.
      *
-     * @return the number of weights that this {@link ElmanANN} requires
+     * @return the size of the context that this {@link ElmanANN} uses
      */
+    public int getContextSize() {
+        return dimensions[1];
+    }
+
+    @Override
     public int getWeightsCount() {
         if (weightsCount == -1) {
             weightsCount = 0;
@@ -80,30 +59,8 @@ public class ElmanANN {
 
         return weightsCount;
     }
-
-    /**
-     * Returns the number of inputs of this {@link ElmanANN}.
-     *
-     * @return the number of inputs of this {@link ElmanANN}
-     */
-    public int getInputsCount() {
-        return dimensions[0];
-    }
-
-    /**
-     * Returns the number of outputs of this {@link ElmanANN}.
-     *
-     * @return the number of outputs of this {@link ElmanANN}
-     */
-    public int getOutputsCount() {
-        return dimensions[dimensions.length - 1];
-    }
-
-    /**
-     * Returns the number of neurons in this {@link ElmanANN} (including the input and context neurons).
-     *
-     * @return the number of neurons in this {@link ElmanANN}
-     */
+    
+    @Override
     public int getNeuronCount() {
         int neuronCount = dimensions[1]; // context neurons
 
@@ -112,15 +69,6 @@ public class ElmanANN {
         }
 
         return neuronCount;
-    }
-
-    /**
-     * Returns the size of the context that this {@link ElmanANN} uses.
-     *
-     * @return the size of the context that this {@link ElmanANN} uses
-     */
-    public int getContextSize() {
-        return dimensions[1];
     }
 
     /**
@@ -133,6 +81,7 @@ public class ElmanANN {
      *                   elements as the context
      * @throws IllegalArgumentException if the given arrays are of invalid length
      */
+    @Override
     public void calculateOutputs(double[] inputs, double[] outputs, double[] parameters) {
         if (inputs.length != getInputsCount() || outputs.length != getOutputsCount()
                 || parameters.length != getWeightsCount() + getContextSize()) {

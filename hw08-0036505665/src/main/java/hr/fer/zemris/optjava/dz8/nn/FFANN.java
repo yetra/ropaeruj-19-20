@@ -9,36 +9,12 @@ import hr.fer.zemris.optjava.dz8.nn.transfer.TransferFunction;
  * @author Bruna Dujmović
  *
  */
-public class FFANN {
-
-    /**
-     * The dimensions of this {@link FFANN}.
-     *
-     * Each array element specifies the number of neurons per neural network layer.
-     * The length of the array is equal to the number of layers.
-     */
-    private int[] dimensions;
-
-    /**
-     * An array of transfer functions per neural network layer
-     * (excluding the input layer as it only forwards to the first hidden layer).
-     */
-    private TransferFunction[] transferFunctions;
-
-    /**
-     * The dataset to use for learning.
-     */
-    private ReadOnlyDataset dataset;
+public class FFANN extends ANN {
 
     /**
      * The layers of this neural network (excluding the input layer).
      */
     private Neuron[][] layers;
-
-    /**
-     * The number of weights that this {@link FFANN} requires.
-     */
-    private int weightsCount = -1;
 
     /**
      * Constructs a {@link FFANN}.
@@ -48,18 +24,12 @@ public class FFANN {
      * @param dataset the dataset to use for learning
      */
     public FFANN(int[] dimensions, TransferFunction[] transferFunctions, ReadOnlyDataset dataset) {
-        this.dimensions = dimensions;
-        this.transferFunctions = transferFunctions;
-        this.dataset = dataset;
+        super(dimensions, transferFunctions, dataset);
 
         buildLayers();
     }
 
-    /**
-     * Returns the number of weights that this {@link FFANN} requires.
-     *
-     * @return the number of weights that this {@link FFANN} requires
-     */
+    @Override
     public int getWeightsCount() {
         if (weightsCount == -1) {
             weightsCount = 0;
@@ -74,34 +44,6 @@ public class FFANN {
     }
 
     /**
-     * Returns the number of inputs of this {@link FFANN}.
-     *
-     * @return the number of inputs of this {@link FFANN}
-     */
-    public int getInputsCount() {
-        return dimensions[0];
-    }
-
-    /**
-     * Returns the number of outputs of this {@link FFANN}.
-     *
-     * @return the number of outputs of this {@link FFANN}
-     */
-    public int getOutputsCount() {
-        return dimensions[dimensions.length - 1];
-    }
-
-    public int getNeuronCount() {
-        int neuronCount = 0;
-
-        for (int dimension : dimensions) {
-            neuronCount += dimension;
-        }
-
-        return neuronCount;
-    }
-
-    /**
      * Calculates the outputs of this {@link FFANN} and stores them in the given {@code outputs} array.
      *
      * @param inputs the inputs of this {@link FFANN}
@@ -109,6 +51,7 @@ public class FFANN {
      * @param weights the {@link FFANN} weights to use
      * @throws IllegalArgumentException if the given arrays are of invalid length
      */
+    @Override
     public void calculateOutputs(double[] inputs, double[] outputs, double[] weights) {
         if (inputs.length != getInputsCount() || outputs.length != getOutputsCount()
                 || weights.length != getWeightsCount()) {
