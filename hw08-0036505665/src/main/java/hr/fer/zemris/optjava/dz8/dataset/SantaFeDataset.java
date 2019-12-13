@@ -61,4 +61,40 @@ public class SantaFeDataset implements ReadOnlyDataset {
     public double[] getOutput(int index) {
         return new double[] {outputs[index]};
     }
+
+    /**
+     * Constructs a {@link SantaFeDataset} from the given file.
+     *
+     * The dataset will contain {@code linesToRead - timeWindowSize} samples.
+     * Each sample will have {@code timeWindowSize} inputs and a single output.
+     *
+     * @param filePath the path to the file containing Santa Fe data
+     * @param timeWindowSize the amount of data (i.e. number of file rows) to treat as the inputs of a single sample
+     * @param linesToRead the number of lines to read from the given file (or -1 if the whole file should be read)
+     * @return a {@link SantaFeDataset} constructed from the given file
+     * @throws IOException if an I/O error occurs
+     */
+    public static SantaFeDataset fromFile(Path filePath, int timeWindowSize, int linesToRead) throws IOException {
+        Stream<String> linesStream = Files.lines(filePath);
+        if (linesToRead != -1) {
+            linesStream = linesStream.limit(linesToRead);
+        }
+        List<String> lines = linesStream.collect(Collectors.toList());
+
+        int samplesCount = linesToRead - timeWindowSize;
+        double[][] inputs = new double[samplesCount][timeWindowSize];
+        double[] outputs = new double[samplesCount];
+
+        for (int i = 0; i < samplesCount; i++) {
+            int j = 0;
+            while (j < timeWindowSize) {
+                inputs[i][j] = Double.parseDouble(lines.get(i + j));
+                j++;
+            }
+
+            outputs[i] = Double.parseDouble(lines.get(i + j));
+        }
+
+        return new SantaFeDataset(inputs, outputs);
+    }
 }
