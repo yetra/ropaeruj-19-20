@@ -15,10 +15,10 @@ import java.util.Arrays;
  * @author Bruna Dujmović
  *
  */
-public class ElmanNN {
+public class ElmanANN {
 
     /**
-     * The dimensions of this {@link ElmanNN}.
+     * The dimensions of this {@link ElmanANN}.
      *
      * Each array element specifies the number of neurons per neural network layer.
      * The length of the array is equal to the number of layers.
@@ -42,18 +42,18 @@ public class ElmanNN {
     private Neuron[][] layers;
 
     /**
-     * The number of weights that this {@link ElmanNN} requires.
+     * The number of weights that this {@link ElmanANN} requires.
      */
     private int weightsCount = -1;
 
     /**
-     * Constructs an {@link ElmanNN}.
+     * Constructs an {@link ElmanANN}.
      *
-     * @param dimensions the dimensions of this {@link ElmanNN}
+     * @param dimensions the dimensions of this {@link ElmanANN}
      * @param transferFunctions an array of transfer functions per neural network layer (excluding the input layer)
      * @param dataset the dataset to use for learning
      */
-    public ElmanNN(int[] dimensions, TransferFunction[] transferFunctions, ReadOnlyDataset dataset) {
+    public ElmanANN(int[] dimensions, TransferFunction[] transferFunctions, ReadOnlyDataset dataset) {
         this.dimensions = dimensions;
         this.transferFunctions = transferFunctions;
         this.dataset = dataset;
@@ -62,9 +62,9 @@ public class ElmanNN {
     }
 
     /**
-     * Returns the number of weights that this {@link ElmanNN} requires.
+     * Returns the number of weights that this {@link ElmanANN} requires.
      *
-     * @return the number of weights that this {@link ElmanNN} requires
+     * @return the number of weights that this {@link ElmanANN} requires
      */
     public int getWeightsCount() {
         if (weightsCount == -1) {
@@ -82,27 +82,27 @@ public class ElmanNN {
     }
 
     /**
-     * Returns the number of inputs of this {@link ElmanNN}.
+     * Returns the number of inputs of this {@link ElmanANN}.
      *
-     * @return the number of inputs of this {@link ElmanNN}
+     * @return the number of inputs of this {@link ElmanANN}
      */
     public int getInputsCount() {
         return dimensions[0];
     }
 
     /**
-     * Returns the number of outputs of this {@link ElmanNN}.
+     * Returns the number of outputs of this {@link ElmanANN}.
      *
-     * @return the number of outputs of this {@link ElmanNN}
+     * @return the number of outputs of this {@link ElmanANN}
      */
     public int getOutputsCount() {
         return dimensions[dimensions.length - 1];
     }
 
     /**
-     * Returns the number of neurons in this {@link ElmanNN} (including the input and context neurons).
+     * Returns the number of neurons in this {@link ElmanANN} (including the input and context neurons).
      *
-     * @return the number of neurons in this {@link ElmanNN}
+     * @return the number of neurons in this {@link ElmanANN}
      */
     public int getNeuronCount() {
         int neuronCount = dimensions[1]; // context neurons
@@ -115,20 +115,20 @@ public class ElmanNN {
     }
 
     /**
-     * Returns the size of the context that this {@link ElmanNN} uses.
+     * Returns the size of the context that this {@link ElmanANN} uses.
      *
-     * @return the size of the context that this {@link ElmanNN} uses
+     * @return the size of the context that this {@link ElmanANN} uses
      */
     public int getContextSize() {
         return dimensions[1];
     }
 
     /**
-     * Calculates the outputs of this {@link ElmanNN} and stores them in the given {@code outputs} array.
+     * Calculates the outputs of this {@link ElmanANN} and stores them in the given {@code outputs} array.
      *
-     * @param inputs the inputs of this {@link ElmanNN}
+     * @param inputs the inputs of this {@link ElmanANN}
      * @param outputs the outputs array to use for storing the calculated values
-     * @param parameters the {@link ElmanNN} weights and context to use - this method treats the first
+     * @param parameters the {@link ElmanANN} weights and context to use - this method treats the first
      *                   {@link #weightsCount} array elements as the weights, and the following
      *                   elements as the context
      * @throws IllegalArgumentException if the given arrays are of invalid length
