@@ -22,7 +22,7 @@ public class DE {
 
     private double bestError = -1;
 
-    private double minError;
+    private double errorThreshold;
 
     private double[] values;
 
@@ -30,16 +30,17 @@ public class DE {
 
     private double Cr;
 
-    public DE(int d, int n, double[] lowerBounds, double[] upperBounds, Function function, int maxIterations,
-              double f, double cr) {
-        D = d;
+    public DE(int D, int n, double[] lowerBounds, double[] upperBounds, Function function, int maxIterations,
+              double F, double Cr, double errorThreshold) {
+        this.D = D;
         this.n = n;
         this.lowerBounds = lowerBounds;
         this.upperBounds = upperBounds;
         this.function = function;
         this.maxIterations = maxIterations;
-        F = f;
-        Cr = cr;
+        this.F = F;
+        this.Cr = Cr;
+        this.errorThreshold = errorThreshold;
     }
 
     public void run() {
@@ -51,7 +52,7 @@ public class DE {
         double[][] trial_vectors = new double[n][D];
 
         int iteration = 0;
-        while (iteration < maxIterations && bestError > minError) {
+        while (iteration < maxIterations && bestError > errorThreshold) {
             for (int i = 0; i < n; i++) {
                 int r0, r1, r2;
                 do {
@@ -88,9 +89,9 @@ public class DE {
                     vectors[i] = trial_vectors[i];
                     values[i] = trial_value;
 
-                    if (values[i] < minError) {
+                    if (values[i] < errorThreshold) {
                         best = Arrays.copyOf(vectors[i], vectors[i].length);
-                        minError = values[i];
+                        errorThreshold = values[i];
                     }
                 }
             }
@@ -113,9 +114,9 @@ public class DE {
         for (int i = 0; i < n; i++) {
             values[i] = function.valueAt(vectors[i]);
 
-            if (best == null || values[i] < minError) {
+            if (best == null || values[i] < errorThreshold) {
                 best = Arrays.copyOf(vectors[i], vectors[i].length);
-                minError = values[i];
+                errorThreshold = values[i];
             }
         }
     }
