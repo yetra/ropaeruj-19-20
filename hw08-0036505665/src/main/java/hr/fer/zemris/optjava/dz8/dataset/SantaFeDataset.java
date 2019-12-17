@@ -102,6 +102,21 @@ public class SantaFeDataset implements ReadOnlyDataset {
     }
 
     /**
+     * Constructs a {@link SantaFeDataset} from the given file.
+     *
+     * The dataset will contain {@code linesToRead - 1} samples.
+     * Each sample will have a single input and output.
+     *
+     * @param filePath the path to the file containing Santa Fe data
+     * @param linesToRead the number of lines to read from the given file (or -1 if the whole file should be read)
+     * @return a {@link SantaFeDataset} constructed from the given file
+     * @throws IOException if an I/O error occurs
+     */
+    public static SantaFeDataset fromFile(Path filePath, int linesToRead) throws IOException {
+        return SantaFeDataset.fromFile(filePath, 1, linesToRead);
+    }
+
+    /**
      * Normalizes the given stream so that each value is linearly transformed to a value in range [-1, 1].
      *
      * @param values the stream to normalizes
