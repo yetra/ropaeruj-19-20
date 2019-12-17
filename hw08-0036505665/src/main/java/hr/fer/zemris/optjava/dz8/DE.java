@@ -154,6 +154,7 @@ public class DE {
             }
 
             System.out.println(Arrays.toString(best) + " - " + bestError);
+            iteration++;
         }
 
         return best;
