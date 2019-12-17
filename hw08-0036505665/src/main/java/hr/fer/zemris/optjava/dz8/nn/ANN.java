@@ -84,6 +84,13 @@ public abstract class ANN {
     public abstract int getWeightsCount();
 
     /**
+     * Returns the number of parameters that this {@link ANN} requires.
+     *
+     * @return the number of parameters that this {@link ANN} requires
+     */
+    public abstract int getParametersCount();
+
+    /**
      * Calculates the outputs of this {@link ANN} and stores them in the given {@code outputs} array.
      *
      * @param inputs the inputs of this {@link ANN}

@@ -77,6 +77,11 @@ public class ElmanANN extends ANN {
         return weightsCount;
     }
 
+    @Override
+    public int getParametersCount() {
+        return getWeightsCount() + getContextSize();
+    }
+
     /**
      * Calculates the outputs of this {@link ElmanANN} and stores them in the given {@code outputs} array.
      *
@@ -173,10 +178,10 @@ public class ElmanANN extends ANN {
             TransferFunction[] transferFunctions = new TransferFunction[dimensions.length];
             Arrays.fill(transferFunctions, new HyperbolicTangentFunction());
 
-            ElmanANN ann = new ElmanANN(dimensions, transferFunctions, null);
+            ANN ann = new ElmanANN(dimensions, transferFunctions, null);
 
             System.out.format("Neurons: %3d, Weights: %3d, Parameters: %3d%n",
-                    ann.getNeuronCount(), ann.getWeightsCount(), ann.getWeightsCount() + ann.getContextSize());
+                    ann.getNeuronCount(), ann.getWeightsCount(), ann.getParametersCount());
         }
     }
 }

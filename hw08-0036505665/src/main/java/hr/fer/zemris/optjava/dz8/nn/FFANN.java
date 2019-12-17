@@ -51,6 +51,11 @@ public class FFANN extends ANN {
         return weightsCount;
     }
 
+    @Override
+    public int getParametersCount() {
+        return getWeightsCount();
+    }
+
     /**
      * Calculates the outputs of this {@link FFANN} and stores them in the given {@code outputs} array.
      *
