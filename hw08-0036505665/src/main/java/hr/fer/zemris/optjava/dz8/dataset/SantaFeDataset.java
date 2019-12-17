@@ -76,6 +76,8 @@ public class SantaFeDataset implements ReadOnlyDataset {
      */
     public static SantaFeDataset fromFile(Path filePath, int timeWindowSize, int linesToRead) throws IOException {
         Stream<Double> linesStream = Files.lines(filePath).map(Double::parseDouble);
+        linesStream = normalized(linesStream);
+
         if (linesToRead != -1) {
             linesStream = linesStream.limit(linesToRead);
         }
@@ -96,5 +98,18 @@ public class SantaFeDataset implements ReadOnlyDataset {
         }
 
         return new SantaFeDataset(inputs, outputs);
+    }
+
+    /**
+     * Normalizes the given stream so that each value is linearly transformed to a value in range [-1, 1].
+     *
+     * @param stream the stream to normalizes
+     * @return the normalized stream
+     */
+    private static Stream<Double> normalized(Stream<Double> stream) {
+        double min = stream.min(Double::compareTo).orElse(Double.MIN_VALUE);
+        double max = stream.max(Double::compareTo).orElse(Double.MAX_VALUE);
+
+        return stream.map(d -> ((d - min) / (max - min)) * 2 - 1);
     }
 }
