@@ -7,74 +7,75 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class DE {
 
-    private int D;
-
-    private int n;
-
-    private double[] lowerBounds;
-    private double[] upperBounds;
-
     private Function function;
+
+    private int dimensions;
+
+    private int populationSize;
 
     private int maxIterations;
 
-    private double[] best;
-
-    private double bestError = -1;
-
     private double errorThreshold;
 
-    private double[] values;
+    private double differentialWeight;
 
-    private double F;
+    private double crossoverProbability;
 
-    private double Cr;
+    private double[] lowerBounds;
 
-    public DE(int D, int n, double[] lowerBounds, double[] upperBounds, Function function, int maxIterations,
-              double F, double Cr, double errorThreshold) {
-        this.D = D;
-        this.n = n;
+    private double[] upperBounds;
+
+    private double[] best;
+
+    private double bestError;
+
+    private double[] errors;
+
+    public DE(Function function, int dimensions, int populationSize, int maxIterations, double errorThreshold,
+              double differentialWeight, double crossoverProbability, double[] lowerBounds, double[] upperBounds) {
+        this.function = function;
+        this.dimensions = dimensions;
+        this.populationSize = populationSize;
+        this.maxIterations = maxIterations;
+        this.errorThreshold = errorThreshold;
+        this.differentialWeight = differentialWeight;
+        this.crossoverProbability = crossoverProbability;
         this.lowerBounds = lowerBounds;
         this.upperBounds = upperBounds;
-        this.function = function;
-        this.maxIterations = maxIterations;
-        this.F = F;
-        this.Cr = Cr;
-        this.errorThreshold = errorThreshold;
     }
 
     public double[] run() {
-        double[][] vectors = new double[n][D];
+        double[][] vectors = new double[populationSize][dimensions];
         initialize(vectors);
         evaluate(vectors);
 
-        double[] mutant_vector = new double[D];
-        double[][] trial_vectors = new double[n][D];
+        double[] mutant_vector = new double[dimensions];
+        double[][] trial_vectors = new double[populationSize][dimensions];
 
         int iteration = 0;
         while (iteration < maxIterations && bestError > errorThreshold) {
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i < populationSize; i++) {
                 int r0, r1, r2;
                 do {
-                    r0 = ThreadLocalRandom.current().nextInt(n);
+                    r0 = ThreadLocalRandom.current().nextInt(populationSize);
                 } while (r0 == i);
                 do {
-                    r1 = ThreadLocalRandom.current().nextInt(n);
+                    r1 = ThreadLocalRandom.current().nextInt(populationSize);
                 } while (r1 == i || r1 == r0);
                 do {
-                    r2 = ThreadLocalRandom.current().nextInt(n);
+                    r2 = ThreadLocalRandom.current().nextInt(populationSize);
                 } while (r2 == r1 || r2 == r0 || r2 == i);
 
-                double jrand = ThreadLocalRandom.current().nextDouble(D);
+                double r = ThreadLocalRandom.current().nextDouble(dimensions);
 
-                for (int j = 0; j < D; j++) {
-                    mutant_vector[j] = vectors[r0][j] + F * (vectors[r1][j] - vectors[r2][j]);
+                for (int j = 0; j < dimensions; j++) {
+                    mutant_vector[j] = vectors[r0][j] + differentialWeight * (vectors[r1][j] - vectors[r2][j]);
                 }
 
-                for (int j = 0; j < D; j++) {
+                for (int j = 0; j < dimensions; j++) {
                     double randomNumber = ThreadLocalRandom.current().nextDouble();
 
-                    if (randomNumber <= Cr || j == jrand) {
+                    if (randomNumber <= crossoverProbability || j == r) {
                         trial_vectors[i][j] = mutant_vector[j];
                     } else {
                         trial_vectors[i][j] = vectors[i][j];
@@ -82,16 +83,16 @@ public class DE {
                 }
             }
 
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i < populationSize; i++) {
                 double trial_value = function.valueAt(trial_vectors[i]);
 
-                if (trial_value < values[i]) {
+                if (trial_value < errors[i]) {
                     vectors[i] = trial_vectors[i];
-                    values[i] = trial_value;
+                    errors[i] = trial_value;
 
-                    if (values[i] < bestError) {
+                    if (errors[i] < bestError) {
                         best = Arrays.copyOf(vectors[i], vectors[i].length);
-                        bestError = values[i];
+                        bestError = errors[i];
                     }
                 }
             }
@@ -103,24 +104,24 @@ public class DE {
     }
 
     private void initialize(double[][] vectors) {
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < D; j++) {
+        for (int i = 0; i < populationSize; i++) {
+            for (int j = 0; j < dimensions; j++) {
                 vectors[i][j] = ThreadLocalRandom.current().nextDouble(lowerBounds[i], upperBounds[i]);
             }
         }
     }
 
     private void evaluate(double[][] vectors) {
-        if (values == null) {
-            values = new double[n];
+        if (errors == null) {
+            errors = new double[populationSize];
         }
 
-        for (int i = 0; i < n; i++) {
-            values[i] = function.valueAt(vectors[i]);
+        for (int i = 0; i < populationSize; i++) {
+            errors[i] = function.valueAt(vectors[i]);
 
-            if (best == null || values[i] < errorThreshold) {
+            if (best == null || errors[i] < bestError) {
                 best = Arrays.copyOf(vectors[i], vectors[i].length);
-                errorThreshold = values[i];
+                bestError = errors[i];
             }
         }
     }
