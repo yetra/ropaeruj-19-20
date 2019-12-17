@@ -75,11 +75,11 @@ public class SantaFeDataset implements ReadOnlyDataset {
      * @throws IOException if an I/O error occurs
      */
     public static SantaFeDataset fromFile(Path filePath, int timeWindowSize, int linesToRead) throws IOException {
-        Stream<String> linesStream = Files.lines(filePath);
+        Stream<Double> linesStream = Files.lines(filePath).map(Double::parseDouble);
         if (linesToRead != -1) {
             linesStream = linesStream.limit(linesToRead);
         }
-        List<String> lines = linesStream.collect(Collectors.toList());
+        List<Double> lines = linesStream.collect(Collectors.toList());
 
         int samplesCount = linesToRead - timeWindowSize;
         double[][] inputs = new double[samplesCount][timeWindowSize];
@@ -88,11 +88,11 @@ public class SantaFeDataset implements ReadOnlyDataset {
         for (int i = 0; i < samplesCount; i++) {
             int j = 0;
             while (j < timeWindowSize) {
-                inputs[i][j] = Double.parseDouble(lines.get(i + j));
+                inputs[i][j] = lines.get(i + j);
                 j++;
             }
 
-            outputs[i] = Double.parseDouble(lines.get(i + j));
+            outputs[i] = lines.get(i + j);
         }
 
         return new SantaFeDataset(inputs, outputs);
