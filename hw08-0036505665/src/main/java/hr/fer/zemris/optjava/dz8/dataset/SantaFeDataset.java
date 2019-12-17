@@ -3,7 +3,9 @@ package hr.fer.zemris.optjava.dz8.dataset;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -75,13 +77,12 @@ public class SantaFeDataset implements ReadOnlyDataset {
      * @throws IOException if an I/O error occurs
      */
     public static SantaFeDataset fromFile(Path filePath, int timeWindowSize, int linesToRead) throws IOException {
-        Stream<Double> linesStream = Files.lines(filePath).map(Double::parseDouble);
-        linesStream = normalized(linesStream);
+        List<Double> lines = Files.lines(filePath).map(Double::parseDouble).collect(Collectors.toList());
+        normalize(lines);
 
         if (linesToRead != -1) {
-            linesStream = linesStream.limit(linesToRead);
+            lines = lines.subList(0, linesToRead);
         }
-        List<Double> lines = linesStream.collect(Collectors.toList());
 
         int samplesCount = linesToRead - timeWindowSize;
         double[][] inputs = new double[samplesCount][timeWindowSize];
@@ -103,13 +104,16 @@ public class SantaFeDataset implements ReadOnlyDataset {
     /**
      * Normalizes the given stream so that each value is linearly transformed to a value in range [-1, 1].
      *
-     * @param stream the stream to normalizes
+     * @param values the stream to normalizes
      * @return the normalized stream
      */
-    private static Stream<Double> normalized(Stream<Double> stream) {
-        double min = stream.min(Double::compareTo).orElse(Double.MIN_VALUE);
-        double max = stream.max(Double::compareTo).orElse(Double.MAX_VALUE);
+    private static void normalize(List<Double> values) {
+        double min = Collections.min(values);
+        double max = Collections.max(values);
 
-        return stream.map(d -> ((d - min) / (max - min)) * 2 - 1);
+        for (int i = 0, size = values.size(); i < size; i++) {
+            double newValue = ((values.get(i) - min) / (max - min)) * 2 - 1;
+            values.set(i, newValue);
+        }
     }
 }
