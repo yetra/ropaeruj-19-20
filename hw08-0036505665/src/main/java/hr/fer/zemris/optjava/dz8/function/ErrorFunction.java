@@ -35,7 +35,7 @@ public class ErrorFunction implements Function {
 
     @Override
     public int getDimensions() {
-        return neuralNetwork.getWeightsCount();
+        return neuralNetwork.getParametersCount();
     }
 
     @Override
