@@ -1,6 +1,7 @@
 package hr.fer.zemris.optjava.dz8.nn;
 
 import hr.fer.zemris.optjava.dz8.dataset.ReadOnlyDataset;
+import hr.fer.zemris.optjava.dz8.nn.transfer.HyperbolicTangentFunction;
 import hr.fer.zemris.optjava.dz8.nn.transfer.TransferFunction;
 
 import java.util.Arrays;
@@ -146,6 +147,31 @@ public class ElmanANN extends ANN {
 
                 layers[i - 1][j] = new Neuron(inputIndexes, outputIndex++, weightIndexes, transferFunctions[i - 1]);
             }
+        }
+    }
+
+    /**
+     * A test program that prints the neuron, weights, and parameters count for different {@link ElmanANN}
+     * architectures.
+     *
+     * @param args the command-line arguments, not used
+     */
+    public static void main(String[] args) {
+        int[][] dimensionsArray = new int[][] {
+                new int[] {1, 10, 1},
+                new int[] {1, 5, 4, 1},
+                new int[] {1, 12, 1},
+                new int[] {1, 4, 3, 5, 1}
+        };
+
+        for (int[] dimensions : dimensionsArray) {
+            TransferFunction[] transferFunctions = new TransferFunction[dimensions.length];
+            Arrays.fill(transferFunctions, new HyperbolicTangentFunction());
+
+            ElmanANN ann = new ElmanANN(dimensions, transferFunctions, null);
+
+            System.out.format("Neurons: %3d, Weights: %3d, Parameters: %3d%n",
+                    ann.getNeuronCount(), ann.getWeightsCount(), ann.getWeightsCount() + ann.getContextSize());
         }
     }
 }

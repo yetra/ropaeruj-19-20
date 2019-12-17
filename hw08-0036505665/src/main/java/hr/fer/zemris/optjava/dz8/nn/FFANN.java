@@ -1,7 +1,10 @@
 package hr.fer.zemris.optjava.dz8.nn;
 
 import hr.fer.zemris.optjava.dz8.dataset.ReadOnlyDataset;
+import hr.fer.zemris.optjava.dz8.nn.transfer.HyperbolicTangentFunction;
 import hr.fer.zemris.optjava.dz8.nn.transfer.TransferFunction;
+
+import java.util.Arrays;
 
 /**
  * Models a feed-forward artificial neural network.
@@ -99,6 +102,29 @@ public class FFANN extends ANN {
 
                 layers[i - 1][j] = new Neuron(inputIndexes, outputIndex++, weightIndexes, transferFunctions[i - 1]);
             }
+        }
+    }
+
+    /**
+     * A test program that prints the neuron count and weights count for different {@link FFANN} architectures.
+     *
+     * @param args the command-line arguments, not used
+     */
+    public static void main(String[] args) {
+        int[][] dimensionsArray = new int[][] {
+                new int[] {8, 10, 1},
+                new int[] {8, 5, 4, 1},
+                new int[] {4, 12, 1},
+                new int[] {4, 5, 4, 1}
+        };
+
+        for (int[] dimensions : dimensionsArray) {
+            TransferFunction[] transferFunctions = new TransferFunction[dimensions.length];
+            Arrays.fill(transferFunctions, new HyperbolicTangentFunction());
+
+            ANN ann = new FFANN(dimensions, transferFunctions, null);
+
+            System.out.format("Neurons: %3d, Weights: %3d%n", ann.getNeuronCount(), ann.getWeightsCount());
         }
     }
 }
