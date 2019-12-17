@@ -120,7 +120,6 @@ public class SantaFeDataset implements ReadOnlyDataset {
      * Normalizes the given stream so that each value is linearly transformed to a value in range [-1, 1].
      *
      * @param values the stream to normalizes
-     * @return the normalized stream
      */
     private static void normalize(List<Double> values) {
         double min = values.get(0);
