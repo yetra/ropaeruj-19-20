@@ -46,7 +46,7 @@ public class SantaFeDataset implements ReadOnlyDataset {
 
     @Override
     public int getInputsCount() {
-        return inputs.length * inputs[0].length;
+        return inputs[0].length;
     }
 
     @Override
