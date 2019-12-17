@@ -43,7 +43,7 @@ public class DE {
         this.errorThreshold = errorThreshold;
     }
 
-    public void run() {
+    public double[] run() {
         double[][] vectors = new double[n][D];
         initialize(vectors);
         evaluate(vectors);
@@ -82,20 +82,24 @@ public class DE {
                 }
             }
 
-            for (int i = 0; i < D; i++) {
+            for (int i = 0; i < n; i++) {
                 double trial_value = function.valueAt(trial_vectors[i]);
 
                 if (trial_value < values[i]) {
                     vectors[i] = trial_vectors[i];
                     values[i] = trial_value;
 
-                    if (values[i] < errorThreshold) {
+                    if (values[i] < bestError) {
                         best = Arrays.copyOf(vectors[i], vectors[i].length);
-                        errorThreshold = values[i];
+                        bestError = values[i];
                     }
                 }
             }
+
+            System.out.println(Arrays.toString(best) + " - " + bestError);
         }
+
+        return best;
     }
 
     private void initialize(double[][] vectors) {
