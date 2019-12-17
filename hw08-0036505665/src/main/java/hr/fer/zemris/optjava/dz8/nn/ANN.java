@@ -31,11 +31,6 @@ public abstract class ANN {
     ReadOnlyDataset dataset;
 
     /**
-     * The number of weights that this {@link ElmanANN} requires.
-     */
-    int weightsCount = -1;
-
-    /**
      * Constructs an {@link ANN}.
      *
      * @param dimensions the dimensions of this {@link ANN}
@@ -46,15 +41,6 @@ public abstract class ANN {
         this.dimensions = dimensions;
         this.transferFunctions = transferFunctions;
         this.dataset = dataset;
-    }
-
-    /**
-     * Returns the number of weights that this {@link ANN} requires.
-     *
-     * @return the number of weights that this {@link ANN} requires
-     */
-    public int getWeightsCount() {
-        return weightsCount;
     }
 
     /**
@@ -89,6 +75,13 @@ public abstract class ANN {
 
         return neuronCount;
     }
+
+    /**
+     * Returns the number of weights that this {@link ANN} requires.
+     *
+     * @return the number of weights that this {@link ANN} requires
+     */
+    public abstract int getWeightsCount();
 
     /**
      * Calculates the outputs of this {@link ANN} and stores them in the given {@code outputs} array.

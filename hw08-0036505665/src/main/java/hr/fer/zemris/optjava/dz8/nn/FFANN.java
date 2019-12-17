@@ -20,6 +20,11 @@ public class FFANN extends ANN {
     private Neuron[][] layers;
 
     /**
+     * The number of weights that this {@link FFANN} requires.
+     */
+    private int weightsCount = -1;
+
+    /**
      * Constructs a {@link FFANN}.
      *
      * @param dimensions the dimensions of this {@link FFANN}

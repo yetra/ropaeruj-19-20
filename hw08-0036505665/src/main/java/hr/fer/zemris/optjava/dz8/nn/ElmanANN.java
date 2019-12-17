@@ -24,6 +24,11 @@ public class ElmanANN extends ANN {
     private Neuron[][] layers;
 
     /**
+     * The number of weights that this {@link ElmanANN} requires.
+     */
+    private int weightsCount = -1;
+
+    /**
      * Constructs an {@link ElmanANN}.
      *
      * @param dimensions the dimensions of this {@link ElmanANN}
@@ -44,6 +49,17 @@ public class ElmanANN extends ANN {
     public int getContextSize() {
         return dimensions[1];
     }
+    
+    @Override
+    public int getNeuronCount() {
+        int neuronCount = dimensions[1]; // context neurons
+
+        for (int dimension : dimensions) {
+            neuronCount += dimension;
+        }
+
+        return neuronCount;
+    }
 
     @Override
     public int getWeightsCount() {
@@ -59,17 +75,6 @@ public class ElmanANN extends ANN {
         }
 
         return weightsCount;
-    }
-    
-    @Override
-    public int getNeuronCount() {
-        int neuronCount = dimensions[1]; // context neurons
-
-        for (int dimension : dimensions) {
-            neuronCount += dimension;
-        }
-
-        return neuronCount;
     }
 
     /**
