@@ -84,7 +84,7 @@ public class SantaFeDataset implements ReadOnlyDataset {
             lines = lines.subList(0, linesToRead);
         }
 
-        int samplesCount = linesToRead - timeWindowSize;
+        int samplesCount = lines.size() - timeWindowSize;
         double[][] inputs = new double[samplesCount][timeWindowSize];
         double[] outputs = new double[samplesCount];
 
