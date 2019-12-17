@@ -26,11 +26,20 @@ import java.util.Arrays;
  */
 public class ANNTrainer {
 
+    /**
+     * The number of lines to read from the Santa Fe laser dataset.
+     */
     private static final int LINES_TO_READ = 600;
 
-    private static final double F = 0.7;
+    /**
+     * F - the parameter determining the impact of the vector difference when constructing a mutant vector.
+     */
+    private static final double DIFFERENTIAL_WEIGHT = 0.7;
 
-    private static final double CR = 0.02;
+    /**
+     * Cr - the probability of replacing a trial vector component with a mutant vector component.
+     */
+    private static final double CROSSOVER_PROBABILITY = 0.02;
 
     /**
      * The main method. Loads the Iris dataset and trains the {@link FFANN} using the specified algorithm.
@@ -96,7 +105,7 @@ public class ANNTrainer {
         Arrays.fill(lowerBounds, -1.0);
         Arrays.fill(upperBounds, 1.0);
 
-        new DE(dimensions, populationSize, lowerBounds, upperBounds, errorFunction, maxIterations, F, CR,
-                errorThreshold).run();
+        new DE(errorFunction, dimensions, populationSize, maxIterations, errorThreshold, DIFFERENTIAL_WEIGHT,
+                CROSSOVER_PROBABILITY, lowerBounds, upperBounds).run();
     }
 }
