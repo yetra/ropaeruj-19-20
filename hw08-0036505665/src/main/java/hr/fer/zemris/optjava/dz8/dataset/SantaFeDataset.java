@@ -108,8 +108,17 @@ public class SantaFeDataset implements ReadOnlyDataset {
      * @return the normalized stream
      */
     private static void normalize(List<Double> values) {
-        double min = Collections.min(values);
-        double max = Collections.max(values);
+        double min = values.get(0);
+        double max = values.get(0);
+
+        for (Double value : values) {
+            if (value < min) {
+                min = value;
+
+            } else if (value > max) {
+                max = value;
+            }
+        }
 
         for (int i = 0, size = values.size(); i < size; i++) {
             double newValue = ((values.get(i) - min) / (max - min)) * 2 - 1;
