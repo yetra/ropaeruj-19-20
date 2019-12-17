@@ -105,7 +105,31 @@ public class ANNTrainer {
         Arrays.fill(lowerBounds, -1.0);
         Arrays.fill(upperBounds, 1.0);
 
-        new DE(errorFunction, dimensions, populationSize, maxIterations, errorThreshold, DIFFERENTIAL_WEIGHT,
-                CROSSOVER_PROBABILITY, lowerBounds, upperBounds).run();
+        double[] parameters = new DE(errorFunction, dimensions, populationSize, maxIterations, errorThreshold,
+                DIFFERENTIAL_WEIGHT, CROSSOVER_PROBABILITY, lowerBounds, upperBounds).run();
+
+        printStatistics(parameters, ann, dataset);
+    }
+
+    /**
+     * Prints the statistics for the given {@link ANN} parameters.
+     * For each sample in a given dataset, its original inputs and outputs will be printed along with the outputs
+     * obtained from the specified neural network.
+     *
+     * @param parameters the {@link ANN} parameters to check
+     * @param ann the neural network
+     * @param dataset the dataset to be compared to the neural network's results
+     */
+    private static void printStatistics(double[] parameters, ANN ann, ReadOnlyDataset dataset) {
+        for (int s = 0, samplesCount = dataset.getSamplesCount(); s < samplesCount; s++) {
+            double[] inputs = dataset.getInput(s);
+            double[] outputs = dataset.getOutput(s);
+            double[] nnOutputs = new double[dataset.getOutputsCount()];
+
+            ann.calculateOutputs(inputs, nnOutputs, parameters);
+
+            System.out.print("(" + Arrays.toString(inputs) + "), (" + Arrays.toString(outputs) + ")");
+            System.out.println(" => Prediction: " + Arrays.toString(nnOutputs));
+        }
     }
 }
