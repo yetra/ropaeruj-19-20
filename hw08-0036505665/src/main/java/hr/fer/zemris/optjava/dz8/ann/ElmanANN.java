@@ -1,8 +1,8 @@
-package hr.fer.zemris.optjava.dz8.nn;
+package hr.fer.zemris.optjava.dz8.ann;
 
 import hr.fer.zemris.optjava.dz8.dataset.ReadOnlyDataset;
-import hr.fer.zemris.optjava.dz8.nn.transfer.HyperbolicTangentFunction;
-import hr.fer.zemris.optjava.dz8.nn.transfer.TransferFunction;
+import hr.fer.zemris.optjava.dz8.ann.transfer.HyperbolicTangentFunction;
+import hr.fer.zemris.optjava.dz8.ann.transfer.TransferFunction;
 
 import java.util.Arrays;
 

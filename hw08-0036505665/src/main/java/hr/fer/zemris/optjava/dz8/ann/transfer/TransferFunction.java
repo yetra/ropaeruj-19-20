@@ -1,4 +1,4 @@
-package hr.fer.zemris.optjava.dz8.nn.transfer;
+package hr.fer.zemris.optjava.dz8.ann.transfer;
 
 /**
  * An interface to be implemented by various kinds of neural network transfer functions.

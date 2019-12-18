@@ -1,7 +1,7 @@
 package hr.fer.zemris.optjava.dz8.function;
 
 import hr.fer.zemris.optjava.dz8.dataset.ReadOnlyDataset;
-import hr.fer.zemris.optjava.dz8.nn.ANN;
+import hr.fer.zemris.optjava.dz8.ann.ANN;
 
 /**
  * Models the mean squared error (MSE) function - used to determine how wrong

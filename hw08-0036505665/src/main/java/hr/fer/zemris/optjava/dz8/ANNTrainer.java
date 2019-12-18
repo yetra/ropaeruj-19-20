@@ -4,11 +4,11 @@ import hr.fer.zemris.optjava.dz8.dataset.ReadOnlyDataset;
 import hr.fer.zemris.optjava.dz8.dataset.SantaFeDataset;
 import hr.fer.zemris.optjava.dz8.function.ErrorFunction;
 import hr.fer.zemris.optjava.dz8.function.Function;
-import hr.fer.zemris.optjava.dz8.nn.ANN;
-import hr.fer.zemris.optjava.dz8.nn.ElmanANN;
-import hr.fer.zemris.optjava.dz8.nn.FFANN;
-import hr.fer.zemris.optjava.dz8.nn.transfer.HyperbolicTangentFunction;
-import hr.fer.zemris.optjava.dz8.nn.transfer.TransferFunction;
+import hr.fer.zemris.optjava.dz8.ann.ANN;
+import hr.fer.zemris.optjava.dz8.ann.ElmanANN;
+import hr.fer.zemris.optjava.dz8.ann.FFANN;
+import hr.fer.zemris.optjava.dz8.ann.transfer.HyperbolicTangentFunction;
+import hr.fer.zemris.optjava.dz8.ann.transfer.TransferFunction;
 
 import java.io.IOException;
 import java.nio.file.Path;

@@ -1,4 +1,4 @@
-package hr.fer.zemris.optjava.dz8.nn.transfer;
+package hr.fer.zemris.optjava.dz8.ann.transfer;
 
 /**
  * A hyperbolic tangent neural network transfer function.
