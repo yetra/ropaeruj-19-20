@@ -2,10 +2,25 @@ package hr.fer.zemris.optjava.dz8.de.crossover;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * An implementation of uniform DE crossover.
+ *
+ * @author Bruna Dujmović
+ *
+ */
 public class BinCrossover implements Crossover {
 
+    /**
+     * Cr - the probability of setting a trial vector component to the corresponding mutant vector component.
+     */
     private double crossoverProbability;
 
+    /**
+     * Constructs a {@link BinCrossover}.
+     *
+     * @param crossoverProbability Cr - the probability of setting a trial vector component to the corresponding
+     *                             mutant vector component
+     */
     public BinCrossover(double crossoverProbability) {
         this.crossoverProbability = crossoverProbability;
     }
