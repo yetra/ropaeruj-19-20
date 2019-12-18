@@ -131,7 +131,7 @@ public class ElmanANN extends ANN {
      */
     private void buildLayers() {
         int inputIndex = 0;
-        int outputIndex = dimensions[0];
+        int outputIndex = dimensions[0] + getContextSize();
         int weightIndex = 0;
 
         layers = new Neuron[dimensions.length - 1][];
