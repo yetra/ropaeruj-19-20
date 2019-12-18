@@ -1,11 +1,29 @@
 package hr.fer.zemris.optjava.dz8.de.mutation;
 
+/**
+ * An implementation of DE mutation where the base vector is randomly selected from a given vector population.
+ *
+ * @author Bruna Dujmović
+ *
+ */
 public class RandMutation implements Mutation {
 
+    /**
+     * The number of unique random indexes needed for generating a mutant vector.
+     */
     private static final int RANDOM_INDEX_COUNT = 3;
 
+    /**
+     * F - the parameter determining the impact of the vector difference when constructing a mutant vector.
+     */
     private double differentialWeight;
 
+    /**
+     * Constructs a {@link RandMutation}.
+     *
+     * @param differentialWeight F - the parameter determining the impact of the vector difference when constructing
+     *                           a mutant vector
+     */
     public RandMutation(double differentialWeight) {
         this.differentialWeight = differentialWeight;
     }
