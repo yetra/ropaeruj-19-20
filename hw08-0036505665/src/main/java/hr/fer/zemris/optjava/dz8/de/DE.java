@@ -116,11 +116,11 @@ public class DE {
             for (int i = 0; i < populationSize; i++) {
                 double trialValue = function.valueAt(trialVectors[i]);
 
-                if (trialValue < errors[i]) {
+                if (trialValue <= errors[i]) {
                     vectors[i] = trialVectors[i];
                     errors[i] = trialValue;
 
-                    if (errors[i] < bestError) {
+                    if (errors[i] <= bestError) {
                         best = Arrays.copyOf(vectors[i], vectors[i].length);
                         bestError = errors[i];
                     }
