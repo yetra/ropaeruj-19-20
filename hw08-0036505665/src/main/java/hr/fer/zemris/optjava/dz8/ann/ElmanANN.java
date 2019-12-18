@@ -99,7 +99,7 @@ public class ElmanANN extends ANN {
             throw new IllegalArgumentException("Invalid array length(s) given!");
         }
 
-        double[] values = new double[getNeuronCount()];
+        double[] values = new double[getNeuronCount() - getContextSize()];
         System.arraycopy(inputs, 0, values, 0, inputs.length);
         System.arraycopy(parameters, getWeightsCount(), values, inputs.length, getContextSize()); // initial context
 
@@ -131,7 +131,7 @@ public class ElmanANN extends ANN {
      */
     private void buildLayers() {
         int inputIndex = 0;
-        int outputIndex = dimensions[0] + getContextSize();
+        int outputIndex = dimensions[0];
         int weightIndex = 0;
 
         layers = new Neuron[dimensions.length - 1][];
@@ -147,6 +147,10 @@ public class ElmanANN extends ANN {
             int[] inputIndexes = new int[inputIndexesLength];
             for (int j = 0; j < inputIndexesLength; j++) {
                 inputIndexes[j] = inputIndex++;
+            }
+
+            if (i == 1) {
+                inputIndex = dimensions[i - 1];
             }
 
             for (int j = 0; j < dimensions[i]; j++) {
