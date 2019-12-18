@@ -7,6 +7,15 @@ import hr.fer.zemris.optjava.dz8.function.Function;
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * An implementation of the Differential Evolution algorithm to be used for function minimization.
+ *
+ * This implementation supports different kinds of trial vector generation strategies.
+ * The strategy can be adjusted by passing different {@link Mutation} & {@link Crossover} instances to the constructor.
+ *
+ * @author Bruna Dujmović
+ *
+ */
 public class DE {
 
     /**
@@ -34,7 +43,14 @@ public class DE {
      */
     private double errorThreshold;
 
+    /**
+     * The mutation to use in the algorithm.
+     */
     private Mutation mutation;
+
+    /**
+     * The crossover to use in the algorithm.
+     */
     private Crossover crossover;
 
     /**
@@ -71,8 +87,8 @@ public class DE {
      * @param maxIterations the maximum number of algorithm iterations
      * @param errorThreshold the error threshold which allows for algorithm termination before {@link #maxIterations}
      *                       is reached
-     * @param mutation
-     * @param crossover
+     * @param mutation the mutation to use in the algorithm
+     * @param crossover the crossover to use in the algorithm
      * @param lowerBounds the lowest allowed values for each vector component
      * @param upperBounds the highest allowed values for each vector component
      */
