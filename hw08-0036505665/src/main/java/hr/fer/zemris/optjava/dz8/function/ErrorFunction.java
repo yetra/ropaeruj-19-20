@@ -39,13 +39,13 @@ public class ErrorFunction implements Function {
     }
 
     @Override
-    public double valueAt(double[] point) {
+    public double valueAt(double[] vector) {
+        double[] nnOutputs = new double[dataset.getOutputsCount()];
         double value = 0;
 
         for (int s = 0, samplesCount = dataset.getSamplesCount(); s < samplesCount; s++) {
             double[] sampleOutputs = dataset.getOutput(s);
-            double[] nnOutputs = new double[dataset.getOutputsCount()];
-            neuralNetwork.calculateOutputs(dataset.getInput(s), nnOutputs, point);
+            neuralNetwork.calculateOutputs(dataset.getInput(s), nnOutputs, vector);
 
             for (int o = 0, outputsCount = dataset.getOutputsCount(); o < outputsCount; o++) {
                 value += Math.pow(sampleOutputs[o] - nnOutputs[o], 2);
