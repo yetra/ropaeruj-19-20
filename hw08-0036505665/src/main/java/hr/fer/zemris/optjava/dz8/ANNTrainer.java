@@ -132,8 +132,12 @@ public class ANNTrainer {
 
             ann.calculateOutputs(inputs, nnOutputs, parameters);
 
-            System.out.print("(" + Arrays.toString(inputs) + "), (" + Arrays.toString(outputs) + ")");
-            System.out.println(" => Prediction: " + Arrays.toString(nnOutputs));
+            Arrays.stream(inputs).forEach(i -> System.out.format("%7.4f ", i));
+            System.out.print("\t");
+            Arrays.stream(outputs).forEach(o -> System.out.format("%7.4f ", o));
+            System.out.print("=> Prediction: ");
+            Arrays.stream(nnOutputs).forEach(nno -> System.out.format("%7.4f ", nno));
+            System.out.println();
         }
     }
 }

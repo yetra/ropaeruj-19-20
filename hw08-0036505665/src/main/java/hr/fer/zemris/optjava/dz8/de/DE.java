@@ -127,10 +127,12 @@ public class DE {
                 }
             }
 
-            System.out.println(Arrays.toString(best) + " - " + bestError);
+            System.out.println("Iteration " + iteration + ", error: " + bestError);
             iteration++;
         }
 
+        System.out.println("\nBest: " + Arrays.toString(best));
+        System.out.println("Best error: " + bestError + "\n");
         return best;
     }
 
