@@ -109,8 +109,7 @@ public class ANNTrainer {
         Arrays.fill(upperBounds, 1.0);
 
         double[] parameters = new DE(errorFunction, dimensions, populationSize, maxIterations, errorThreshold,
-                new RandMutation(dimensions, populationSize, DIFFERENTIAL_WEIGHT),
-                new BinCrossover(CROSSOVER_PROBABILITY), lowerBounds, upperBounds
+                new RandMutation(DIFFERENTIAL_WEIGHT), new BinCrossover(CROSSOVER_PROBABILITY), lowerBounds, upperBounds
         ).run();
 
         printStatistics(parameters, ann, dataset);

@@ -4,23 +4,11 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
-public abstract class Mutation {
+public interface Mutation {
 
-    int dimensions;
+    double[] of(double[][] vectors, double[] best, int currentIndex);
 
-    int populationSize;
-
-    double differentialWeight;
-
-    public Mutation(int dimensions, int populationSize, double differentialWeight) {
-        this.dimensions = dimensions;
-        this.populationSize = populationSize;
-        this.differentialWeight = differentialWeight;
-    }
-
-    public abstract double[] of(double[][] vectors, double[] best, int currentIndex);
-
-    Integer[] getRandomIndexes(int currentIndex, int indexCount) {
+    default Integer[] getRandomIndexes(int populationSize, int currentIndex, int indexCount) {
         Set<Integer> indexes = new HashSet<>();
 
         while (indexes.size() < indexCount) {
