@@ -1,5 +1,7 @@
 package hr.fer.zemris.optjava.dz8.de;
 
+import hr.fer.zemris.optjava.dz8.de.crossover.Crossover;
+import hr.fer.zemris.optjava.dz8.de.mutation.Mutation;
 import hr.fer.zemris.optjava.dz8.function.Function;
 
 import java.util.Arrays;
@@ -32,15 +34,8 @@ public class DE {
      */
     private double errorThreshold;
 
-    /**
-     * The parameter determining the impact of the vector difference when constructing a mutant vector.
-     */
-    private double differentialWeight;
-
-    /**
-     * The probability of replacing a trial vector component with a mutant vector component.
-     */
-    private double crossoverProbability;
+    private Mutation mutation;
+    private Crossover crossover;
 
     /**
      * The lowest allowed values for each vector component.
@@ -76,21 +71,23 @@ public class DE {
      * @param maxIterations the maximum number of algorithm iterations
      * @param errorThreshold the error threshold which allows for algorithm termination before {@link #maxIterations}
      *                       is reached
-     * @param differentialWeight the parameter determining the impact of the vector difference when constructing a
-     *                           mutant vector
-     * @param crossoverProbability the probability of replacing a trial vector component with a mutant vector component
+     * @param mutation
+     * @param crossover
      * @param lowerBounds the lowest allowed values for each vector component
      * @param upperBounds the highest allowed values for each vector component
      */
     public DE(Function function, int dimensions, int populationSize, int maxIterations, double errorThreshold,
-              double differentialWeight, double crossoverProbability, double[] lowerBounds, double[] upperBounds) {
+              Mutation mutation, Crossover crossover, double[] lowerBounds, double[] upperBounds) {
         this.function = function;
         this.dimensions = dimensions;
+
         this.populationSize = populationSize;
         this.maxIterations = maxIterations;
         this.errorThreshold = errorThreshold;
-        this.differentialWeight = differentialWeight;
-        this.crossoverProbability = crossoverProbability;
+
+        this.mutation = mutation;
+        this.crossover = crossover;
+
         this.lowerBounds = lowerBounds;
         this.upperBounds = upperBounds;
     }
@@ -105,46 +102,23 @@ public class DE {
         initialize(vectors);
         evaluate(vectors);
 
-        double[] mutant_vector = new double[dimensions];
-        double[][] trial_vectors = new double[populationSize][dimensions];
+        double[][] trialVectors = new double[populationSize][dimensions];
 
         int iteration = 0;
         while (iteration < maxIterations && bestError > errorThreshold) {
-            for (int i = 0; i < populationSize; i++) {
-                int r0, r1, r2;
-                do {
-                    r0 = ThreadLocalRandom.current().nextInt(populationSize);
-                } while (r0 == i);
-                do {
-                    r1 = ThreadLocalRandom.current().nextInt(populationSize);
-                } while (r1 == i || r1 == r0);
-                do {
-                    r2 = ThreadLocalRandom.current().nextInt(populationSize);
-                } while (r2 == r1 || r2 == r0 || r2 == i);
+            for (int i = 0; i < vectors.length; i++) {
+                double[] targetVector = vectors[i];
+                double[] mutantVector = mutation.of(vectors, best, i);
 
-                double r = ThreadLocalRandom.current().nextDouble(dimensions);
-
-                for (int j = 0; j < dimensions; j++) {
-                    mutant_vector[j] = vectors[r0][j] + differentialWeight * (vectors[r1][j] - vectors[r2][j]);
-                }
-
-                for (int j = 0; j < dimensions; j++) {
-                    double randomNumber = ThreadLocalRandom.current().nextDouble();
-
-                    if (randomNumber <= crossoverProbability || j == r) {
-                        trial_vectors[i][j] = mutant_vector[j];
-                    } else {
-                        trial_vectors[i][j] = vectors[i][j];
-                    }
-                }
+                trialVectors[i] = crossover.of(targetVector, mutantVector);
             }
 
             for (int i = 0; i < populationSize; i++) {
-                double trial_value = function.valueAt(trial_vectors[i]);
+                double trialValue = function.valueAt(trialVectors[i]);
 
-                if (trial_value < errors[i]) {
-                    vectors[i] = trial_vectors[i];
-                    errors[i] = trial_value;
+                if (trialValue < errors[i]) {
+                    vectors[i] = trialVectors[i];
+                    errors[i] = trialValue;
 
                     if (errors[i] < bestError) {
                         best = Arrays.copyOf(vectors[i], vectors[i].length);

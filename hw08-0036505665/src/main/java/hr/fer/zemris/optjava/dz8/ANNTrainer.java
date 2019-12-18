@@ -3,6 +3,8 @@ package hr.fer.zemris.optjava.dz8;
 import hr.fer.zemris.optjava.dz8.dataset.ReadOnlyDataset;
 import hr.fer.zemris.optjava.dz8.dataset.SantaFeDataset;
 import hr.fer.zemris.optjava.dz8.de.DE;
+import hr.fer.zemris.optjava.dz8.de.crossover.BinCrossover;
+import hr.fer.zemris.optjava.dz8.de.mutation.RandMutation;
 import hr.fer.zemris.optjava.dz8.function.ErrorFunction;
 import hr.fer.zemris.optjava.dz8.function.Function;
 import hr.fer.zemris.optjava.dz8.ann.ANN;
@@ -107,7 +109,9 @@ public class ANNTrainer {
         Arrays.fill(upperBounds, 1.0);
 
         double[] parameters = new DE(errorFunction, dimensions, populationSize, maxIterations, errorThreshold,
-                DIFFERENTIAL_WEIGHT, CROSSOVER_PROBABILITY, lowerBounds, upperBounds).run();
+                new RandMutation(dimensions, populationSize, DIFFERENTIAL_WEIGHT),
+                new BinCrossover(CROSSOVER_PROBABILITY), lowerBounds, upperBounds
+        ).run();
 
         printStatistics(parameters, ann, dataset);
     }
