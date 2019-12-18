@@ -4,6 +4,8 @@ import hr.fer.zemris.optjava.dz8.dataset.ReadOnlyDataset;
 import hr.fer.zemris.optjava.dz8.dataset.SantaFeDataset;
 import hr.fer.zemris.optjava.dz8.de.DE;
 import hr.fer.zemris.optjava.dz8.de.crossover.BinCrossover;
+import hr.fer.zemris.optjava.dz8.de.crossover.Crossover;
+import hr.fer.zemris.optjava.dz8.de.mutation.Mutation;
 import hr.fer.zemris.optjava.dz8.de.mutation.RandMutation;
 import hr.fer.zemris.optjava.dz8.function.ErrorFunction;
 import hr.fer.zemris.optjava.dz8.function.Function;
@@ -14,7 +16,6 @@ import hr.fer.zemris.optjava.dz8.ann.transfer.HyperbolicTangentFunction;
 import hr.fer.zemris.optjava.dz8.ann.transfer.TransferFunction;
 
 import java.io.IOException;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 
@@ -22,8 +23,8 @@ import java.util.Arrays;
  * {@link ANNTrainer} is a program that trains an instance of {@link ANN} on the Santa Fe laser dataset.
  *
  * Usage examples:
- * 08-Laser-generated-data.txt tdnn-8x10x1 30 0.02 1000
- * 08-Laser-generated-data.txt elman-1x5x4x1 30 0.02 1000
+ * 08-Laser-generated-data.txt tdnn-8x10x1 30 0.0 2000
+ * 08-Laser-generated-data.txt elman-1x10x1 30 0.0 2000
  *
  * @author Bruna Dujmović
  */
@@ -40,7 +41,7 @@ public class ANNTrainer {
     private static final double DIFFERENTIAL_WEIGHT = 0.7;
 
     /**
-     * Cr - the probability of replacing a trial vector component with a mutant vector component.
+     * Cr - the probability of setting a trial vector component to the corresponding mutant vector component.
      */
     private static final double CROSSOVER_PROBABILITY = 0.02;
 
@@ -59,49 +60,18 @@ public class ANNTrainer {
             System.exit(1);
         }
 
-        Path filePath = Paths.get(args[0]);
-        String neuralNetworkType = args[1];
+        ANN ann = getANN(args[1]);
+        ReadOnlyDataset dataset = SantaFeDataset.fromFile(Paths.get(args[0]), ann.getInputsCount(), LINES_TO_READ);
+
+        Function errorFunction = new ErrorFunction(ann, dataset);
+        int dimensions = errorFunction.getDimensions();
+
         int populationSize = Integer.parseInt(args[2]);
         double errorThreshold = Double.parseDouble(args[3]);
         int maxIterations = Integer.parseInt(args[4]);
 
-        ANN ann = null;
-        ReadOnlyDataset dataset = null;
-        if (neuralNetworkType.startsWith("tdnn-")) {
-            int[] nnDimensions = Arrays.stream(neuralNetworkType.split("-")[1].split("x"))
-                                       .mapToInt(Integer::parseInt).toArray();
-
-            if (nnDimensions[nnDimensions.length - 1] != 1) {
-                throw new IllegalArgumentException("Illegal FFANN dimensions!");
-            }
-
-            TransferFunction[] transferFunctions = new TransferFunction[nnDimensions.length - 1];
-            Arrays.fill(transferFunctions, new HyperbolicTangentFunction());
-
-            dataset = SantaFeDataset.fromFile(filePath, nnDimensions[0], LINES_TO_READ);
-            ann = new FFANN(nnDimensions, transferFunctions, dataset);
-
-        } else if (neuralNetworkType.startsWith("elman-")) {
-            int[] nnDimensions = Arrays.stream(neuralNetworkType.split("-")[1].split("x"))
-                                       .mapToInt(Integer::parseInt).toArray();
-
-            if (nnDimensions[0] != 1 || nnDimensions[nnDimensions.length - 1] != 1) {
-                throw new IllegalArgumentException("Illegal ElmanANN dimensions!");
-            }
-
-            TransferFunction[] transferFunctions = new TransferFunction[nnDimensions.length - 1];
-            Arrays.fill(transferFunctions, new HyperbolicTangentFunction());
-
-            dataset = SantaFeDataset.fromFile(filePath, nnDimensions[0], LINES_TO_READ);
-            ann = new ElmanANN(nnDimensions, transferFunctions, dataset);
-
-        } else {
-            System.out.println("Unknown neural network type " + neuralNetworkType);
-            System.exit(1);
-        }
-
-        Function errorFunction = new ErrorFunction(ann, dataset);
-        int dimensions = errorFunction.getDimensions();
+        Mutation mutation = new RandMutation(DIFFERENTIAL_WEIGHT);
+        Crossover crossover = new BinCrossover(CROSSOVER_PROBABILITY);
 
         double[] lowerBounds = new double[dimensions];
         double[] upperBounds = new double[dimensions];
@@ -109,10 +79,46 @@ public class ANNTrainer {
         Arrays.fill(upperBounds, 1.0);
 
         double[] parameters = new DE(errorFunction, dimensions, populationSize, maxIterations, errorThreshold,
-                new RandMutation(DIFFERENTIAL_WEIGHT), new BinCrossover(CROSSOVER_PROBABILITY), lowerBounds, upperBounds
-        ).run();
+                mutation, crossover, lowerBounds, upperBounds).run();
 
         printStatistics(parameters, ann, dataset);
+    }
+
+    /**
+     * Returns an {@link ANN} instance constructed based on the given string.
+     *
+     * @param annType the string determining the {@link ANN} instance to construct
+     * @return the constructed {@link ANN} instance
+     */
+    private static ANN getANN(String annType) {
+        int[] dimensions = null;
+        TransferFunction[] transferFunctions = null;
+
+        if (annType.startsWith("tdnn-") || annType.startsWith("elman-")) {
+            dimensions = Arrays.stream(annType.split("-")[1].split("x")).mapToInt(Integer::parseInt).toArray();
+
+            if (dimensions[dimensions.length - 1] != 1) {
+                throw new IllegalArgumentException("Invalid ANN dimensions!");
+            }
+
+            transferFunctions = new TransferFunction[dimensions.length - 1];
+            Arrays.fill(transferFunctions, new HyperbolicTangentFunction());
+
+        } else {
+            System.out.println("Unknown neural network type " + annType);
+            System.exit(1);
+        }
+
+        if (annType.startsWith("tdnn-")) {
+            return new FFANN(dimensions, transferFunctions, null);
+
+        } else {
+            if (dimensions[0] != 1) {
+                throw new IllegalArgumentException("Invalid ANN dimensions!");
+            }
+
+            return new ElmanANN(dimensions, transferFunctions, null);
+        }
     }
 
     /**
