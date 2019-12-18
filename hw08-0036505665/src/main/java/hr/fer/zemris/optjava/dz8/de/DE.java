@@ -1,4 +1,4 @@
-package hr.fer.zemris.optjava.dz8;
+package hr.fer.zemris.optjava.dz8.de;
 
 import hr.fer.zemris.optjava.dz8.function.Function;
 

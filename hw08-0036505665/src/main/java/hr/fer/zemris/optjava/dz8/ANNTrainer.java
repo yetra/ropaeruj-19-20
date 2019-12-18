@@ -2,6 +2,7 @@ package hr.fer.zemris.optjava.dz8;
 
 import hr.fer.zemris.optjava.dz8.dataset.ReadOnlyDataset;
 import hr.fer.zemris.optjava.dz8.dataset.SantaFeDataset;
+import hr.fer.zemris.optjava.dz8.de.DE;
 import hr.fer.zemris.optjava.dz8.function.ErrorFunction;
 import hr.fer.zemris.optjava.dz8.function.Function;
 import hr.fer.zemris.optjava.dz8.ann.ANN;
