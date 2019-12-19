@@ -13,6 +13,8 @@ import java.util.concurrent.ThreadLocalRandom;
  * This implementation supports different kinds of trial vector generation strategies.
  * The strategy can be adjusted by passing different {@link Mutation} & {@link Crossover} instances to the constructor.
  *
+ * Currently supported strategies: DE/rand/1/bin, DE/best/1/bin, DE/target-to-best/1/bin
+ *
  * @author Bruna Dujmović
  *
  */

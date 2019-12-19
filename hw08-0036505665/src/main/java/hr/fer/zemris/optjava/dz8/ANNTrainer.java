@@ -29,6 +29,7 @@ import java.util.Arrays;
  * 08-Laser-generated-data.txt elman-1x10x1 30 0.0 2000
  *
  * @author Bruna Dujmović
+ *
  */
 public class ANNTrainer {
 
