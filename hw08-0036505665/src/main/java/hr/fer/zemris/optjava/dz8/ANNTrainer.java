@@ -24,6 +24,8 @@ import java.util.Arrays;
  *
  * Usage examples:
  * 08-Laser-generated-data.txt tdnn-8x10x1 30 0.0 2000
+ * 08-Laser-generated-data.txt tdnn-4x5x4x1 30 0.0 2000
+ * 08-Laser-generated-data.txt elman-1x5x4x1 30 0.0 2000
  * 08-Laser-generated-data.txt elman-1x10x1 30 0.0 2000
  *
  * @author Bruna Dujmović
