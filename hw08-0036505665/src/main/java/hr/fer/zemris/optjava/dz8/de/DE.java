@@ -118,7 +118,7 @@ public class DE {
         initialize(vectors);
         evaluate(vectors);
 
-        double[][] trialVectors = new double[populationSize][dimensions];
+        double[][] trialVectors = new double[populationSize][];
 
         int iteration = 0;
         while (iteration < maxIterations && bestError > errorThreshold) {
