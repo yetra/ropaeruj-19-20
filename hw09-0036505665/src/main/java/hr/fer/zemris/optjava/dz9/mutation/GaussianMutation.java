@@ -50,7 +50,7 @@ public class GaussianMutation implements Mutation {
     public void mutate(double[][] solutions) {
         for (int i = 0; i < solutions.length; i++) {
             for (int j = 0; j < solutions[0].length; j++) {
-                if (probability <= ThreadLocalRandom.current().nextDouble()) {
+                if (probability >= ThreadLocalRandom.current().nextDouble()) {
                     solutions[i][j] += ThreadLocalRandom.current().nextGaussian() * sigma;
 
                     if (solutions[i][j] < mins[j]) {

@@ -36,7 +36,7 @@ public class OnePointCrossover implements Crossover {
             throw new IllegalArgumentException("Parents must be of the same size!");
         }
 
-        if (probability > ThreadLocalRandom.current().nextDouble()) {
+        if (probability <= ThreadLocalRandom.current().nextDouble()) {
             return new double[][] {firstParent, secondParent};
         }
 
