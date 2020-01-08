@@ -15,9 +15,9 @@ public class RouletteWheelSelection implements Selection {
     public double[][] from(double[][] population, double[] populationFitness, int numberToSelect) {
         double[] cumulativeErrors = new double[population.length];
 
-        cumulativeErrors[0] = adjust(populationFitness[0]);
+        cumulativeErrors[0] = populationFitness[0];
         for (int i = 1; i < population.length; i++) {
-            cumulativeErrors[i] = cumulativeErrors[i - 1] + adjust(populationFitness[i]);
+            cumulativeErrors[i] = cumulativeErrors[i - 1] + populationFitness[i];
         }
 
         double[][] parents = new double[numberToSelect][];
@@ -36,19 +36,5 @@ public class RouletteWheelSelection implements Selection {
         }
 
         return parents;
-    }
-
-    /**
-     * Adjusts the given error value.
-     *
-     * @param error the error value to adjust
-     * @return the adjusted error value
-     */
-    private double adjust(double error) {
-        if (error != 0) {
-            return 1 / error;
-        }
-
-        return Double.POSITIVE_INFINITY;
     }
 }
