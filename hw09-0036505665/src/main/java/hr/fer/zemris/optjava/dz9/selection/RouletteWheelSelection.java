@@ -12,12 +12,12 @@ import java.util.concurrent.ThreadLocalRandom;
 public class RouletteWheelSelection implements Selection {
 
     @Override
-    public double[][] from(double[][] population, double[] errors, int numberToSelect) {
+    public double[][] from(double[][] population, double[] populationFitness, int numberToSelect) {
         double[] cumulativeErrors = new double[population.length];
 
-        cumulativeErrors[0] = adjust(errors[0]);
+        cumulativeErrors[0] = adjust(populationFitness[0]);
         for (int i = 1; i < population.length; i++) {
-            cumulativeErrors[i] = cumulativeErrors[i - 1] + adjust(errors[i]);
+            cumulativeErrors[i] = cumulativeErrors[i - 1] + adjust(populationFitness[i]);
         }
 
         double[][] parents = new double[numberToSelect][];

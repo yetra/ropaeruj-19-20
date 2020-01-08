@@ -15,9 +15,9 @@ public interface Selection {
      *
      *
      * @param population the population to select from
-     * @param errors the error values for each solution in the population
+     * @param populationFitness the fitness values for each solution in the population
      * @param numberToSelect the number of solutions to select
      * @return the selected solutions
      */
-    double[][] from(double[][] population, double[] errors, int numberToSelect);
+    double[][] from(double[][] population, double[] populationFitness, int numberToSelect);
 }
