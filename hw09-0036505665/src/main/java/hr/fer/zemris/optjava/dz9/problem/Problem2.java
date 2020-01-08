@@ -11,6 +11,16 @@ package hr.fer.zemris.optjava.dz9.problem;
  */
 public class Problem2 implements MOOPProblem {
 
+    /**
+     * The lowest possible values of each dimension in the solution space.
+     */
+    private static final double[] MINS = new double[] {-5, -5, -5, -5};
+
+    /**
+     * The highest possible values of each dimension in the solution space.
+     */
+    private static final double[] MAXS = new double[] {5, 5, 5, 5};
+
     @Override
     public int getNumberOfObjectives() {
         return 2;
@@ -19,6 +29,16 @@ public class Problem2 implements MOOPProblem {
     @Override
     public int getNumberOfVariables() {
         return 2;
+    }
+
+    @Override
+    public double[] getMins() {
+        return MINS;
+    }
+
+    @Override
+    public double[] getMaxs() {
+        return MAXS;
     }
 
     @Override

@@ -26,6 +26,20 @@ public interface MOOPProblem {
     int getNumberOfVariables();
 
     /**
+     * Returns the lowest possible values of each dimension in the solution space.
+     *
+     * @return the lowest possible values of each dimension in the solution space
+     */
+    double[] getMins();
+
+    /**
+     * Returns the highest possible values of each dimension in the solution space.
+     *
+     * @return the highest possible values of each dimension in the solution space
+     */
+    double[] getMaxs();
+
+    /**
      * Evaluates the given solution.
      *
      * @param solution the solution to evaluate
