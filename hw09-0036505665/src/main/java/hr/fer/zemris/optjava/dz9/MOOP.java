@@ -53,7 +53,25 @@ public class MOOP {
         return null;
     }
 
+    /**
+     * Returns {@code true} if the solution distance should be calculated in the decision space,
+     * {@code false} if it should be calculated in the objective space.
+     *
+     * @param distanceCalculationString a string specifying the distance calculation method
+     *                                  (decision-space / objective-space)
+     * @return {@code true} if the solution distance should be calculated in the decision space,
+     *         {@code false} if it should be calculated in the objective space
+     */
     private static boolean getDistanceCalculationType(String distanceCalculationString) {
-        return false;
+        switch (distanceCalculationString) {
+            case "decision-space":
+                return true;
+            case "objective-space":
+                return false;
+            default:
+                throw new IllegalArgumentException(
+                        "Unknown distance calculation string " + distanceCalculationString
+                );
+        }
     }
 }
