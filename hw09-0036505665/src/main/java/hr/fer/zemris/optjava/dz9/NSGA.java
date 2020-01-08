@@ -123,7 +123,7 @@ public class NSGA {
         this.mutation = mutation;
         this.selection = selection;
 
-        Fmin = populationSize + EPSILON;
+        Fmin = populationSize + populationSize / EPSILON;
         populationErrors = new double[populationSize];
     }
 
@@ -298,7 +298,7 @@ public class NSGA {
             double nextFmin = Integer.MAX_VALUE;
 
             for (int solutionIndex : front) {
-                populationErrors[solutionIndex] = (Fmin - EPSILON) / nicheDensity(solutionIndex, front);
+                populationErrors[solutionIndex] = (Fmin - Fmin / EPSILON) / nicheDensity(solutionIndex, front);
 
                 if (populationErrors[solutionIndex] < nextFmin) {
                     nextFmin = populationErrors[solutionIndex];
