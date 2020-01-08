@@ -49,8 +49,21 @@ public class MOOP {
         new NSGA(problem, populationSize, maxIterations, decisionSpaceDistance, crossover, mutation, selection).run();
     }
 
+    /**
+     * Returns a {@link MOOPProblem} instance parsed from the given string.
+     *
+     * @param problemNumber the number of the MOOP problem to use (1 / 2)
+     * @return a {@link MOOPProblem} instance parsed from the given string
+     */
     private static MOOPProblem getProblem(String problemNumber) {
-        return null;
+        switch (problemNumber) {
+            case "1":
+                return new Problem1();
+            case "2":
+                return new Problem2();
+            default:
+                throw new IllegalArgumentException("Unknown problem number " + problemNumber);
+        }
     }
 
     /**
