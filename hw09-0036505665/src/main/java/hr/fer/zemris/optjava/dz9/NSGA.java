@@ -145,6 +145,15 @@ public class NSGA {
     }
 
     /**
+     * Returns the fitness values obtained through fitness sharing for each solution in the {@link #population}.
+     * 
+     * @return the fitness values obtained through fitness sharing for each solution in the {@link #population}
+     */
+    public double[] getPopulationFitness() {
+        return populationFitness;
+    }
+
+    /**
      * Executes the algorithm.
      */
     public List<List<Integer>> run() {
