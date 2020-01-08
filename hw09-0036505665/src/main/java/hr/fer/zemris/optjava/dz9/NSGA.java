@@ -6,7 +6,6 @@ import hr.fer.zemris.optjava.dz9.problem.MOOPProblem;
 import hr.fer.zemris.optjava.dz9.selection.Selection;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -31,7 +30,7 @@ public class NSGA {
     private static final double SHARE_DISTRIBUTION_COEFFICIENT = 2;
 
     /**
-     * A parameter used for calculating {@link #Fmin}.
+     * A parameter used for calculating {@link #minFrontFitness}.
      */
     private static final double EPSILON = 0.01;
 
@@ -72,9 +71,9 @@ public class NSGA {
     private Selection selection;
 
     /**
-     * The minimum fitness value for a given front.
+     * The minimum fitness value in a given front.
      */
-    private double Fmin;
+    private double minFrontFitness;
 
     /**
      * The population of {@link #problem} solutions.
@@ -87,9 +86,9 @@ public class NSGA {
     private double[][] populationObjectives;
 
     /**
-     * The errors obtained through fitness sharing for each solution in the {@link #population}.
+     * The fitness values obtained through fitness sharing for each solution in the {@link #population}.
      */
-    private double[] populationErrors;
+    private double[] populationFitness;
 
     /**
      * The minimum values used when calculating the {@link #distance(int, int)}.
@@ -123,8 +122,8 @@ public class NSGA {
         this.mutation = mutation;
         this.selection = selection;
 
-        Fmin = populationSize + populationSize / EPSILON;
-        populationErrors = new double[populationSize];
+        minFrontFitness = populationSize + populationSize / EPSILON;
+        populationFitness = new double[populationSize];
     }
 
     /**
@@ -160,7 +159,7 @@ public class NSGA {
 
             int childrenCount = 0;
             while (childrenCount < populationSize) {
-                double[][] parents = selection.from(population, populationErrors, 2);
+                double[][] parents = selection.from(population, populationFitness, 2);
                 double[][] children = crossover.of(parents[0], parents[1]);
                 mutation.mutate(children);
 
@@ -295,17 +294,18 @@ public class NSGA {
      */
     private void evaluate(List<List<Integer>> fronts) {
         for (List<Integer> front : fronts) {
-            double nextFmin = Integer.MAX_VALUE;
+            double minFitness = Integer.MAX_VALUE;
 
             for (int solutionIndex : front) {
-                populationErrors[solutionIndex] = (Fmin - Fmin / EPSILON) / nicheDensity(solutionIndex, front);
+                populationFitness[solutionIndex] = minFrontFitness * (1 - 1 / EPSILON);
+                populationFitness[solutionIndex] /= nicheDensity(solutionIndex, front);
 
-                if (populationErrors[solutionIndex] < nextFmin) {
-                    nextFmin = populationErrors[solutionIndex];
+                if (populationFitness[solutionIndex] < minFitness) {
+                    minFitness = populationFitness[solutionIndex];
                 }
             }
 
-            Fmin = nextFmin;
+            minFrontFitness = minFitness;
         }
     }
 
