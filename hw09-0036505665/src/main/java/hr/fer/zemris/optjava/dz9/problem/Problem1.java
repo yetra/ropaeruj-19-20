@@ -16,12 +16,12 @@ public class Problem1 implements MOOPProblem {
     /**
      * The lowest possible values of each dimension in the solution space.
      */
-    private static final double[] MINS = new double[] {0.1, 0};
+    private static final double[] MINS = new double[] {-5, -5, -5, -5};
 
     /**
      * The highest possible values of each dimension in the solution space.
      */
-    private static final double[] MAXS = new double[] {1, 5};
+    private static final double[] MAXS = new double[] {5, 5, 5, 5};
 
     @Override
     public int getNumberOfObjectives() {
