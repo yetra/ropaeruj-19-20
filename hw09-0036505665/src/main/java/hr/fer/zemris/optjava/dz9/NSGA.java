@@ -29,7 +29,9 @@ public class NSGA {
      */
     private static final double SHARE_DISTRIBUTION_COEFFICIENT = 2;
 
-    // TODO
+    /**
+     * A parameter used for calculating {@link #Fmin}.
+     */
     private static final double EPSILON = 0.1;
 
     /**
@@ -68,7 +70,9 @@ public class NSGA {
      */
     private Selection selection;
 
-    // TODO
+    /**
+     * The minimum fitness value for a given front.
+     */
     private double Fmin;
 
     /**
@@ -150,7 +154,7 @@ public class NSGA {
             for (int i = 0; i < populationSize; i++) {
                 problem.evaluate(nextPopulation[i], populationObjectives[i]);
 
-                updateDistanceBounds(decisionSpaceDistance ? population[i] : populationObjectives[i]);
+                updateDistanceBounds(decisionSpaceDistance ? nextPopulation[i] : populationObjectives[i]);
             }
 
             population = nextPopulation;
@@ -270,7 +274,7 @@ public class NSGA {
             for (int solutionIndex : front) {
                 populationErrors[solutionIndex] = (Fmin - EPSILON) / nicheDensity(solutionIndex, front);
 
-                if (populationErrors[solutionIndex] < nextFmin) { // TODO >< ??
+                if (populationErrors[solutionIndex] < nextFmin) {
                     nextFmin = populationErrors[solutionIndex];
                 }
             }
