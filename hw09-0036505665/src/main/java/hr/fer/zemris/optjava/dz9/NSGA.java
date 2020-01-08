@@ -127,6 +127,24 @@ public class NSGA {
     }
 
     /**
+     * Returns the population of {@link #problem} solutions.
+     *
+     * @return the population of {@link #problem} solutions
+     */
+    public double[][] getPopulation() {
+        return population;
+    }
+
+    /**
+     * Returns the objectives for each solution in the {@link #population}.
+     *
+     * @return the objectives for each solution in the {@link #population}
+     */
+    public double[][] getPopulationObjectives() {
+        return populationObjectives;
+    }
+
+    /**
      * Executes the algorithm.
      */
     public List<List<Integer>> run() {
