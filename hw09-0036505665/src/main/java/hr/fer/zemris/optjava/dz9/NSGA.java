@@ -6,6 +6,7 @@ import hr.fer.zemris.optjava.dz9.problem.MOOPProblem;
 import hr.fer.zemris.optjava.dz9.selection.Selection;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -32,7 +33,7 @@ public class NSGA {
     /**
      * A parameter used for calculating {@link #Fmin}.
      */
-    private static final double EPSILON = 0.1;
+    private static final double EPSILON = 0.01;
 
     /**
      * The MOOP problem to minimize.
@@ -204,7 +205,8 @@ public class NSGA {
             problem.evaluate(population[i], populationObjectives[i]);
         }
 
-        distanceMins = distanceMaxs = decisionSpaceDistance ? population[0] : populationObjectives[0];
+        distanceMins = decisionSpaceDistance ? population[0].clone() : populationObjectives[0].clone();
+        distanceMaxs = decisionSpaceDistance ? population[0].clone() : populationObjectives[0].clone();
         for (int i = 1; i < populationSize; i++) {
             updateDistanceBounds(decisionSpaceDistance ? population[i] : populationObjectives[i]);
         }
