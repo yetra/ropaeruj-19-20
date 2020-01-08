@@ -45,7 +45,7 @@ public class MOOP {
         boolean decisionSpaceDistance = getDistanceCalculationType(args[2]);
         int maxIterations = Integer.parseInt(args[3]);
 
-        Crossover crossover = new OnePointCrossover(0.9);
+        Crossover crossover = new OnePointCrossover(0.98);
         Mutation mutation = new GaussianMutation(0.03, 1, problem.getMins(), problem.getMaxs());
         Selection selection = new RouletteWheelSelection();
 
@@ -54,7 +54,7 @@ public class MOOP {
         );
 
         List<List<Integer>> fronts = nsga.run();
-        print(fronts, nsga.getPopulation(), nsga.getPopulationObjectives());
+        print(fronts, nsga.getPopulation(), nsga.getPopulationObjectives(), nsga.getPopulationFitness());
     }
 
     /**
@@ -97,13 +97,15 @@ public class MOOP {
     }
 
     /**
-     * Prints the number of solutions per front, along with the solutions & objectives for the first front.
+     * Prints the number of solutions per front, along with the solutions, objectives & fitness for the first front.
      *
      * @param fronts the fronts to print
      * @param population the population of solutions
      * @param populationObjectives the objectives for each solution in the population
+     * @param populationFitness the fitness values obtained through fitness sharing for each solution in the population
      */
-    private static void print(List<List<Integer>> fronts, double[][] population, double[][] populationObjectives) {
+    private static void print(List<List<Integer>> fronts, double[][] population, double[][] populationObjectives,
+                              double[] populationFitness) {
         for (int i = 0, frontsCount = fronts.size(); i < frontsCount; i++) {
             System.out.println("Front " + i + ": " + fronts.get(i).size() + " solutions");
         }
@@ -112,7 +114,8 @@ public class MOOP {
         List<Integer> firstFront = fronts.get(0);
         for (int i : firstFront) {
             System.out.println("Solution: " + Arrays.toString(population[i])
-                    + " => Objectives: " + Arrays.toString(populationObjectives[i]));
+                    + " => Objectives: " + Arrays.toString(populationObjectives[i])
+                    + " | Fitness: " + populationFitness[i]);
         }
     }
 }
