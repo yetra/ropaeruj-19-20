@@ -28,6 +28,9 @@ public class RouletteWheelSelection implements Selection {
             if (index < 0) {
                 index = Math.abs(index + 1);
             }
+            if (index == population.length) {
+                index--;
+            }
 
             parents[i] = population[index];
         }
