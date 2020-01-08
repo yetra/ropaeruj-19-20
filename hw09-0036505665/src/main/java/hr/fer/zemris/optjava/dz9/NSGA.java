@@ -122,7 +122,7 @@ public class NSGA {
         this.mutation = mutation;
         this.selection = selection;
 
-        minFrontFitness = populationSize + populationSize / EPSILON;
+        minFrontFitness = populationSize * (1 + EPSILON);
         populationFitness = new double[populationSize];
     }
 
@@ -297,7 +297,7 @@ public class NSGA {
             double minFitness = Integer.MAX_VALUE;
 
             for (int solutionIndex : front) {
-                populationFitness[solutionIndex] = minFrontFitness * (1 - 1 / EPSILON);
+                populationFitness[solutionIndex] = minFrontFitness * (1 - EPSILON);
                 populationFitness[solutionIndex] /= nicheDensity(solutionIndex, front);
 
                 if (populationFitness[solutionIndex] < minFitness) {
