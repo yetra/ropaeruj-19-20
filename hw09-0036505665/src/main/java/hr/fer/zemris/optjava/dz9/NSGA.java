@@ -129,7 +129,7 @@ public class NSGA {
     /**
      * Executes the algorithm.
      */
-    public void run() {
+    public List<List<Integer>> run() {
         double[][] nextPopulation = new double[populationSize][];
 
         initialize();
@@ -161,6 +161,11 @@ public class NSGA {
             population = nextPopulation;
             iteration++;
         }
+
+        List<List<Integer>> fronts = sort();
+        evaluate(fronts);
+
+        return fronts;
     }
 
     /**
