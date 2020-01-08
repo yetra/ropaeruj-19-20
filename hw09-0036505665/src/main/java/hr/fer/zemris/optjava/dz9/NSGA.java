@@ -87,6 +87,16 @@ public class NSGA {
     private double[] populationErrors = new double[populationSize];
 
     /**
+     * The minimum values used when calculating the {@link #distance(int, int)}.
+     */
+    private double[] distanceMins;
+
+    /**
+     * The maximum values used when calculating the {@link #distance(int, int)}.
+     */
+    private double[] distanceMaxs;
+
+    /**
      * Constructs an instance of {@link NSGA}.
      *
      * @param problem the MOOP problem to minimize
@@ -138,7 +148,9 @@ public class NSGA {
             }
 
             for (int i = 0; i < populationSize; i++) {
-                problem.evaluate(population[i], populationObjectives[i]);
+                problem.evaluate(nextPopulation[i], populationObjectives[i]);
+
+                updateDistanceBounds(decisionSpaceDistance ? population[i] : populationObjectives[i]);
             }
 
             population = nextPopulation;
@@ -162,6 +174,11 @@ public class NSGA {
             }
 
             problem.evaluate(population[i], populationObjectives[i]);
+        }
+
+        distanceMins = distanceMaxs = decisionSpaceDistance ? population[0] : populationObjectives[0];
+        for (int i = 1; i < populationSize; i++) {
+            updateDistanceBounds(decisionSpaceDistance ? population[i] : populationObjectives[i]);
         }
     }
 
@@ -313,16 +330,36 @@ public class NSGA {
         int maxLoops = decisionSpaceDistance ? problem.getNumberOfVariables() : problem.getNumberOfObjectives();
 
         for (int k = 0; k < maxLoops; k++) {
-            double fraction;
+            if (distanceMins[k] == distanceMaxs[k]) {
+                continue;
+            }
+
+            double fraction = 1.0 / (distanceMaxs[k] - distanceMins[k]);
             if (decisionSpaceDistance) {
-                fraction = population[i][k] - population[j][k]; // TODO max min ????
+                fraction *= (population[i][k] - population[j][k]);
             } else {
-                fraction = populationObjectives[i][k] - populationObjectives[j][k]; // TODO max min ????
+                fraction *= (populationObjectives[i][k] - populationObjectives[j][k]);
             }
 
             distanceSquared += fraction * fraction;
         }
 
         return Math.sqrt(distanceSquared);
+    }
+
+    /**
+     * Updates the {@link #distanceMins} and {@link #distanceMaxs} arrays using the given values array.
+     *
+     * @param values the values array used for updating - represents a solution if {@link #decisionSpaceDistance}
+     *               is {@code true} or a solutions' objectives if {@code false}
+     */
+    private void updateDistanceBounds(double[] values) {
+        for (int i = 0; i < values.length; i++) {
+            if (values[i] < distanceMins[i]) {
+                distanceMins[i] = values[i];
+            } else if (values[i] > distanceMaxs[i]) {
+                distanceMaxs[i] = values[i];
+            }
+        }
     }
 }
