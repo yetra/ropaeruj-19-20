@@ -88,7 +88,7 @@ public class NSGA {
     /**
      * The errors obtained through fitness sharing for each solution in the {@link #population}.
      */
-    private double[] populationErrors = new double[populationSize];
+    private double[] populationErrors;
 
     /**
      * The minimum values used when calculating the {@link #distance(int, int)}.
@@ -123,6 +123,7 @@ public class NSGA {
         this.selection = selection;
 
         Fmin = populationSize + EPSILON;
+        populationErrors = new double[populationSize];
     }
 
     /**
