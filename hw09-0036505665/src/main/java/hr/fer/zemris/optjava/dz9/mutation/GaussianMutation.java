@@ -22,14 +22,28 @@ public class GaussianMutation implements Mutation {
     private double sigma;
 
     /**
+     * The lowest possible values of each dimension in the solution space.
+     */
+    private double[] mins;
+
+    /**
+     * The highest possible values of each dimension in the solution space.
+     */
+    private double[] maxs;
+
+    /**
      * Constructs a {@link GaussianMutation} instance.
      *
      * @param probability the probability of mutating a solution's component
      * @param sigma the standard deviation of the distribution
+     * @param mins the lowest possible values of each dimension in the solution space
+     * @param maxs the highest possible values of each dimension in the solution space
      */
-    public GaussianMutation(double probability, double sigma) {
+    public GaussianMutation(double probability, double sigma, double[] mins, double[] maxs) {
         this.probability = probability;
         this.sigma = sigma;
+        this.mins = mins;
+        this.maxs = maxs;
     }
 
     @Override
@@ -38,6 +52,12 @@ public class GaussianMutation implements Mutation {
             for (int j = 0; j < solutions[0].length; j++) {
                 if (probability <= ThreadLocalRandom.current().nextDouble()) {
                     solutions[i][j] += ThreadLocalRandom.current().nextGaussian() * sigma;
+
+                    if (solutions[i][j] < mins[j]) {
+                        solutions[i][j] = mins[j];
+                    } else if (solutions[i][j] > maxs[j]) {
+                        solutions[i][j] = maxs[j];
+                    }
                 }
             }
         }

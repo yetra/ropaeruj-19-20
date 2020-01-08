@@ -43,7 +43,7 @@ public class MOOP {
         int maxIterations = Integer.parseInt(args[3]);
 
         Crossover crossover = new OnePointCrossover(0.9);
-        Mutation mutation = new GaussianMutation(0.03, 1);
+        Mutation mutation = new GaussianMutation(0.03, 1, problem.getMins(), problem.getMaxs());
         Selection selection = new RouletteWheelSelection();
 
         new NSGA(problem, populationSize, maxIterations, decisionSpaceDistance, crossover, mutation, selection).run();
