@@ -10,6 +10,9 @@ import hr.fer.zemris.optjava.dz9.problem.Problem2;
 import hr.fer.zemris.optjava.dz9.selection.RouletteWheelSelection;
 import hr.fer.zemris.optjava.dz9.selection.Selection;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * A program for running the Non-Dominated Sorting Genetic Algorithm (NSGA) on a specified {@link MOOPProblem}.
  *
@@ -46,7 +49,12 @@ public class MOOP {
         Mutation mutation = new GaussianMutation(0.03, 1, problem.getMins(), problem.getMaxs());
         Selection selection = new RouletteWheelSelection();
 
-        new NSGA(problem, populationSize, maxIterations, decisionSpaceDistance, crossover, mutation, selection).run();
+        NSGA nsga = new NSGA(
+                problem, populationSize, maxIterations, decisionSpaceDistance, crossover, mutation, selection
+        );
+
+        List<List<Integer>> fronts = nsga.run();
+        print(fronts, nsga.getPopulation(), nsga.getPopulationObjectives());
     }
 
     /**
@@ -85,6 +93,26 @@ public class MOOP {
                 throw new IllegalArgumentException(
                         "Unknown distance calculation string " + distanceCalculationString
                 );
+        }
+    }
+
+    /**
+     * Prints the number of solutions per front, along with the solutions & objectives for the first front.
+     *
+     * @param fronts the fronts to print
+     * @param population the population of solutions
+     * @param populationObjectives the objectives for each solution in the population
+     */
+    private static void print(List<List<Integer>> fronts, double[][] population, double[][] populationObjectives) {
+        for (int i = 0, frontsCount = fronts.size(); i < frontsCount; i++) {
+            System.out.println("Front " + i + ": " + fronts.get(i).size() + " solutions");
+        }
+
+        System.out.println("\nPrinting the first front...");
+        List<Integer> firstFront = fronts.get(0);
+        for (int i : firstFront) {
+            System.out.println("Solution: " + Arrays.toString(population[i])
+                    + " => Objectives: " + Arrays.toString(populationObjectives[i]));
         }
     }
 }
