@@ -1,5 +1,6 @@
 package hr.fer.zemris.optjava.dz10;
 
+import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -66,5 +67,18 @@ public class Solution {
         for (int i = 0; i < variables.length; i++) {
             variables[i] = ThreadLocalRandom.current().nextDouble(mins[i], maxs[i]);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Solution solution = (Solution) o;
+        return Arrays.equals(variables, solution.variables);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(variables);
     }
 }
