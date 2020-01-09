@@ -30,7 +30,7 @@ public class NSGA {
     private static final double SHARE_DISTRIBUTION_COEFFICIENT = 2;
 
     /**
-     * A parameter used for calculating {@link #minFrontFitness}.
+     * A parameter used for scaling the minimum fitness value in a given front.
      */
     private static final double EPSILON = 0.01;
 
@@ -69,11 +69,6 @@ public class NSGA {
      * The selection operator to use.
      */
     private Selection selection;
-
-    /**
-     * The minimum fitness value in a given front.
-     */
-    private double minFrontFitness;
 
     /**
      * The population of {@link #problem} solutions.
@@ -122,7 +117,6 @@ public class NSGA {
         this.mutation = mutation;
         this.selection = selection;
 
-        minFrontFitness = populationSize * (1 + EPSILON);
         populationFitness = new double[populationSize];
     }
 
@@ -302,6 +296,8 @@ public class NSGA {
      * @param fronts the list of fronts to evaluate
      */
     private void evaluate(List<List<Integer>> fronts) {
+        double minFrontFitness = populationSize * (1 + EPSILON);
+
         for (List<Integer> front : fronts) {
             double minFitness = Integer.MAX_VALUE;
 
