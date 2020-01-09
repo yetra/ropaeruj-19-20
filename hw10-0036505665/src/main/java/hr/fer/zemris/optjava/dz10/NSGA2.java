@@ -135,7 +135,7 @@ public class NSGA2 {
                 }
             }
 
-            crowdingSort(tooLargeFront, union);
+            crowdingSort(tooLargeFront);
 
             assert tooLargeFront != null;
             tooLargeFront.sort(Collections.reverseOrder(Comparator.comparingDouble(s -> s.crowdingDistance)));
@@ -259,18 +259,18 @@ public class NSGA2 {
      *
      * @param front the front containing the solutions to be sorted
      */
-    private void crowdingSort(List<Solution> front, Solution[] population) {
-        for (int i = 0; i < population[0].objectives.length; i++) {
+    private void crowdingSort(List<Solution> front) {
+        front.get(0).crowdingDistance = Double.POSITIVE_INFINITY;
+        front.get(front.size() - 1).crowdingDistance = Double.POSITIVE_INFINITY;
+        
+        for (int i = 0, numberOfObjectives = problem.getNumberOfObjectives(); i < numberOfObjectives; i++) {
             int index = i;
             front.sort(Comparator.comparingDouble(solution -> solution.objectives[index]));
-
-            front.get(0).crowdingDistance = Double.POSITIVE_INFINITY;
-            front.get(front.size() - 1).crowdingDistance = Double.POSITIVE_INFINITY;
 
             for (int j = 1, frontSize = front.size(); j < frontSize - 1; j++) {
                 Solution solution = front.get(j);
 
-                solution.crowdingDistance += (population[j + 1].objectives[i] - population[j - 1].objectives[i]);
+                solution.crowdingDistance += (front.get(j + 1).objectives[i] - front.get(j - 1).objectives[i]);
                 // TODO / (fmax - fmin)
             }
         }
