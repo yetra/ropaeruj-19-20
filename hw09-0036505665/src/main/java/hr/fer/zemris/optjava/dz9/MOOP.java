@@ -30,12 +30,12 @@ import java.util.List;
 public class MOOP {
 
     /**
-     * The path to the results for the decision space distance calculation method.
+     * The path to the results for the decision space.
      */
     private static final Path DECISION_SPACE_PATH = Paths.get("izlaz-dec.txt");
 
     /**
-     * The path to the results for the objective space distance calculation method.
+     * The path to the results for the objective space.
      */
     private static final Path OBJECTIVE_SPACE_PATH = Paths.get("izlaz-obj.txt");
 
@@ -70,13 +70,8 @@ public class MOOP {
         List<List<Integer>> fronts = nsga.run();
         print(fronts, nsga.getPopulation(), nsga.getPopulationObjectives(), nsga.getPopulationFitness());
 
-        if (problem instanceof Problem2) {
-            if (decisionSpaceDistance) {
-                write(DECISION_SPACE_PATH, nsga.getPopulation());
-            } else {
-                write(OBJECTIVE_SPACE_PATH, nsga.getPopulationObjectives());
-            }
-        }
+        write(DECISION_SPACE_PATH, nsga.getPopulation());
+        write(OBJECTIVE_SPACE_PATH, nsga.getPopulationObjectives());
     }
 
     /**
