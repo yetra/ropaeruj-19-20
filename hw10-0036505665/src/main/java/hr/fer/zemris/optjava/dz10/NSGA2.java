@@ -6,6 +6,7 @@ import hr.fer.zemris.optjava.dz10.problem.MOOPProblem;
 import hr.fer.zemris.optjava.dz10.selection.Selection;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -60,6 +61,11 @@ public class NSGA2 {
     private double[][] populationObjectives;
 
     /**
+     * The crowding distances for each solution in the population.
+     */
+    private double[] crowdingDistance; // TODO init
+
+    /**
      * Constructs an instance of {@link NSGA2}.
      *
      * @param problem the MOOP problem to minimize
@@ -110,13 +116,16 @@ public class NSGA2 {
         double[][] childPopulation = new double[populationSize][];
         double[][] nextPopulation = new double[populationSize][];
 
+        double[][] union = new double[populationSize * 2][];
+        double[][] unionObjectives = new double[populationSize * 2][problem.getNumberOfObjectives()];
+
         int iteration = 0;
         while (iteration < maxIterations) {
             // generiraj populaciju djece
 
-            double[][] union = new double[populationSize * 2][];
             System.arraycopy(population, 0, union, 0, populationSize);
             System.arraycopy(childPopulation, 0, union, populationSize, populationSize);
+            // TODO child objectives
 
             fronts = nonDominatedSort(union);
 
@@ -129,8 +138,8 @@ public class NSGA2 {
                 frontIndex++;
             }
 
-            // za frontu koja ne stane
-            //     crowding sort
+            List<Integer> tooLargeFront = fronts.get(frontIndex);
+            crowdingSort(tooLargeFront, union, unionObjectives);
             //     odabrati podskup s najvecim crowding-distance dok se ne popuni nextPopulation
 
             // sljedece fronte = fronte u populaciji + podskup iz fronte koja ne stane (zadnja fronta)
@@ -235,5 +244,29 @@ public class NSGA2 {
         }
 
         return isStrictlyBetter;
+    }
+
+    /**
+     * Applies the crowding sort algorithm to solutions in the given front.
+     *
+     * @param front the front determining which solutions should be sorted
+     * @param population the population containing the solutions
+     * @param populationObjectives the objectives for each solution in the population
+     */
+    private void crowdingSort(List<Integer> front, double[][] population, double[][] populationObjectives) {
+        for (int i = 0; i < populationObjectives[0].length; i++) {
+            int finalI = i;
+            front.sort(Comparator.comparingDouble(integer -> populationObjectives[integer][finalI]));
+
+            crowdingDistance[front.get(0)] = Double.POSITIVE_INFINITY;
+            crowdingDistance[front.get(front.size() - 1)] = Double.POSITIVE_INFINITY;
+
+            for (int j = 1, frontSize = front.size(); j < frontSize - 1; j++) {
+                int index = front.get(j);
+
+                crowdingDistance[index] += (populationObjectives[index + 1][i] - populationObjectives[index - 1][i]);
+                // TODO fmax - fmin
+            }
+        }
     }
 }
