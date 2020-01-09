@@ -16,8 +16,8 @@ public class Solution implements Comparable<Solution> {
      * A comparator to be used in {@link #compareTo(Solution)} for comparing solutions in crowded tournament selection.
      */
     private static final Comparator<Solution> CTS_COMPARATOR = Comparator.comparingDouble((Solution s) -> s.rank)
-                                                                     .reversed()
-                                                                     .thenComparingDouble(s -> s.crowdingDistance);
+                                                                         .reversed()
+                                                                         .thenComparingDouble(s -> s.crowdingDistance);
 
     /**
      * The variables of this solution.
