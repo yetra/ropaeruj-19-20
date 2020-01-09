@@ -40,6 +40,10 @@ public class ArithmeticCrossover implements Crossover {
 
     @Override
     public Solution[] of(Solution firstParent, Solution secondParent) {
+        if (firstParent.variables.length != secondParent.variables.length) {
+            throw new IllegalArgumentException("Parent solutions must be of the same length!");
+        }
+
         Solution firstChild = new Solution(firstParent.variables.length, firstParent.objectives.length);
         Solution secondChild = new Solution(firstParent.variables.length, firstParent.objectives.length);
 
