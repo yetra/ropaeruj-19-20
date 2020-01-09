@@ -40,4 +40,16 @@ public class Solution {
         variables = new double[numberOfVariables];
         objectives = new double[numberOfObjectives];
     }
+
+    /**
+     * Randomizes the {@link #variables} of this solution.
+     *
+     * @param mins the lowest possible values of each variable
+     * @param maxs the highest possible values of each variable
+     */
+    public void randomize(double[] mins, double[] maxs) {
+        for (int i = 0; i < variables.length; i++) {
+            variables[i] = ThreadLocalRandom.current().nextDouble(mins[i], maxs[i]);
+        }
+    }
 }
