@@ -28,12 +28,16 @@ public class Problem1 implements MOOPProblem {
     /**
      * The lowest possible values of each objective.
      */
-    private double[] objectiveMins = new double[4];
+    private double[] objectiveMins = new double[] {
+            Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE
+    };
 
     /**
      * The highest possible values of each objective.
      */
-    private double[] objectiveMaxs = new double[4];
+    private double[] objectiveMaxs = new double[] {
+            Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE
+    };
 
     @Override
     public int getNumberOfObjectives() {
