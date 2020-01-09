@@ -25,6 +25,16 @@ public class Problem1 implements MOOPProblem {
      */
     private static final double[] MAXS = new double[] {5, 5, 5, 5};
 
+    /**
+     * The lowest possible values of each objective.
+     */
+    private double[] objectiveMins = new double[4];
+
+    /**
+     * The highest possible values of each objective.
+     */
+    private double[] objectiveMaxs = new double[4];
+
     @Override
     public int getNumberOfObjectives() {
         return 4;
@@ -46,6 +56,16 @@ public class Problem1 implements MOOPProblem {
     }
 
     @Override
+    public double[] getObjectiveMins() {
+        return objectiveMins;
+    }
+
+    @Override
+    public double[] getObjectiveMaxs() {
+        return objectiveMaxs;
+    }
+
+    @Override
     public void evaluate(Solution solution) {
         if (solution.variables.length != 4 || solution.objectives.length != 4) {
             throw new IllegalArgumentException("Solution variables and objectives need to be of length 4!");
@@ -53,6 +73,12 @@ public class Problem1 implements MOOPProblem {
 
         for (int i = 0; i < solution.objectives.length; i++) {
             solution.objectives[i] = solution.variables[i] * solution.variables[i];
+
+            if (solution.objectives[i] < objectiveMins[i]) {
+                objectiveMins[i] = solution.objectives[i];
+            } else if (solution.objectives[i] > objectiveMaxs[i]) {
+                objectiveMaxs[i] = solution.objectives[i];
+            }
         }
     }
 }
