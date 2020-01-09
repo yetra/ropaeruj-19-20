@@ -137,15 +137,18 @@ public class NSGA2 {
             assert tooLargeFront != null;
             tooLargeFront.sort(Collections.reverseOrder(Comparator.comparingDouble(s -> s.crowdingDistance)));
 
+            List<Solution> newLastFront = new ArrayList<>();
             for (Solution solution : tooLargeFront) {
                 nextPopulation[added++] = solution;
+                newLastFront.add(solution);
 
                 if (nextPopulation.length == populationSize) {
                     break;
                 }
             }
-
-            // sljedece fronte = fronte u populaciji + podskup iz fronte koja ne stane (zadnja fronta)
+            
+            fronts = fronts.subList(0, fronts.indexOf(tooLargeFront));
+            fronts.add(newLastFront);
 
             population = nextPopulation;
             iteration++;
