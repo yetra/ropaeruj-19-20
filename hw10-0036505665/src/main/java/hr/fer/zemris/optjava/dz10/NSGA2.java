@@ -5,6 +5,7 @@ import hr.fer.zemris.optjava.dz10.mutation.Mutation;
 import hr.fer.zemris.optjava.dz10.problem.MOOPProblem;
 import hr.fer.zemris.optjava.dz10.selection.Selection;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -103,7 +104,7 @@ public class NSGA2 {
      */
     public List<List<Integer>> run() {
         initialize();
-        
+
         // non-dominated sort inicijalne populacije
 
         int iteration = 0;
@@ -145,5 +146,29 @@ public class NSGA2 {
 
             problem.evaluate(population[i], populationObjectives[i]);
         }
+    }
+
+    /**
+     * Returns {@code true} if the solution on the {@code firstIndex} dominates
+     * the solution on the {@code secondIndex}.
+     *
+     * @param firstIndex the index of the first solution
+     * @param secondIndex the index of the second solution
+     * @return {@code true} if the first solution dominates the second solution
+     */
+    private boolean dominates(int firstIndex, int secondIndex) {
+        double[] firstObjectives = populationObjectives[firstIndex];
+        double[] secondObjectives = populationObjectives[secondIndex];
+        boolean isStrictlyBetter = false;
+
+        for (int i = 0; i < firstObjectives.length; i++) {
+            if (firstObjectives[i] > secondObjectives[i]) {
+                return false;
+            } else if (firstObjectives[i] < secondObjectives[i]) {
+                isStrictlyBetter = true;
+            }
+        }
+
+        return isStrictlyBetter;
     }
 }
