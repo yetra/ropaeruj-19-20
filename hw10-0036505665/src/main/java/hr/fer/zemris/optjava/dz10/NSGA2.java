@@ -100,24 +100,7 @@ public class NSGA2 {
         int iteration = 0;
         while (iteration < maxIterations) {
             System.arraycopy(population, 0, union, 0, populationSize);
-
-            int childrenCount = 0;
-            while (childrenCount < populationSize) {
-                Solution firstParent = selection.from(population);
-                Solution secondParent = selection.from(population);
-                Solution[] children = crossover.of(firstParent, secondParent);
-                mutation.mutate(children);
-
-                for (Solution child : children) {
-                    union[populationSize + childrenCount] = child;
-                    problem.evaluate(child);
-
-                    childrenCount++;
-                    if (childrenCount == populationSize) {
-                        break;
-                    }
-                }
-            }
+            generateChildren(union);
 
             fronts = buildFronts(union);
 
@@ -146,7 +129,7 @@ public class NSGA2 {
                     break;
                 }
             }
-            
+
             fronts = fronts.subList(0, fronts.indexOf(tooLargeFront));
             fronts.add(newLastFront);
 
@@ -173,6 +156,32 @@ public class NSGA2 {
             population[i] = new Solution(numberOfVariables, numberOfObjectives, mins, maxs);
 
             problem.evaluate(population[i]);
+        }
+    }
+
+    /**
+     * Generates {@link #populationSize} children and adds them to the given {@code union} array.
+     *
+     * @param union an array of parents and children
+     */
+    private void generateChildren(Solution[] union) {
+        int childrenCount = 0;
+
+        while (childrenCount < populationSize) {
+            Solution firstParent = selection.from(population);
+            Solution secondParent = selection.from(population);
+            Solution[] children = crossover.of(firstParent, secondParent);
+            mutation.mutate(children);
+
+            for (Solution child : children) {
+                union[populationSize + childrenCount] = child;
+                problem.evaluate(child);
+
+                childrenCount++;
+                if (childrenCount == populationSize) {
+                    break;
+                }
+            }
         }
     }
 
