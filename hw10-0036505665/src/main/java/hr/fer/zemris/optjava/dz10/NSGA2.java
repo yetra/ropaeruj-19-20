@@ -118,7 +118,16 @@ public class NSGA2 {
             System.arraycopy(population, 0, union, 0, populationSize);
             System.arraycopy(childPopulation, 0, union, populationSize, populationSize);
 
-            // frontu po frontu dodavati u nextPopulation dok stane
+            fronts = nonDominatedSort(union);
+
+            int added = 0;
+            int frontIndex = 0;
+            while (fronts.get(frontIndex).size() + added < populationSize) {
+                for (int i : fronts.get(frontIndex)) {
+                    nextPopulation[added++] = union[i];
+                }
+                frontIndex++;
+            }
 
             // za frontu koja ne stane
             //     crowding sort
