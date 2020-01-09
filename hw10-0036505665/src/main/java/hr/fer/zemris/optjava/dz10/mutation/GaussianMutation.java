@@ -1,10 +1,12 @@
 package hr.fer.zemris.optjava.dz10.mutation;
 
+import hr.fer.zemris.optjava.dz10.Solution;
+
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * An implementation of Gaussian hr.fer.zemris.optjava.dz10.mutation which adds a Gaussian distributed random value
- * to each value of the genome.
+ * An implementation of Gaussian mutation which adds a Gaussian distributed random value
+ * to each variable of a given solution.
  *
  * @author Bruna Dujmović
  *
@@ -22,12 +24,12 @@ public class GaussianMutation implements Mutation {
     private double sigma;
 
     /**
-     * The lowest possible values of each dimension in the solution space.
+     * The lowest possible values of each solution variable.
      */
     private double[] mins;
 
     /**
-     * The highest possible values of each dimension in the solution space.
+     * The highest possible values of each solution variable.
      */
     private double[] maxs;
 
@@ -36,8 +38,8 @@ public class GaussianMutation implements Mutation {
      *
      * @param probability the probability of mutating a solution's component
      * @param sigma the standard deviation of the distribution
-     * @param mins the lowest possible values of each dimension in the solution space
-     * @param maxs the highest possible values of each dimension in the solution space
+     * @param mins the lowest possible values of each solution variable
+     * @param maxs the highest possible values of each solution variable
      */
     public GaussianMutation(double probability, double sigma, double[] mins, double[] maxs) {
         this.probability = probability;
@@ -47,16 +49,16 @@ public class GaussianMutation implements Mutation {
     }
 
     @Override
-    public void mutate(double[][] solutions) {
-        for (int i = 0; i < solutions.length; i++) {
-            for (int j = 0; j < solutions[0].length; j++) {
+    public void mutate(Solution[] solutions) {
+        for (Solution solution : solutions) {
+            for (int i = 0; i < solutions[0].variables.length; i++) {
                 if (probability >= ThreadLocalRandom.current().nextDouble()) {
-                    solutions[i][j] += ThreadLocalRandom.current().nextGaussian() * sigma;
+                    solution.variables[i] += ThreadLocalRandom.current().nextGaussian() * sigma;
 
-                    if (solutions[i][j] < mins[j]) {
-                        solutions[i][j] = mins[j];
-                    } else if (solutions[i][j] > maxs[j]) {
-                        solutions[i][j] = maxs[j];
+                    if (solution.variables[i] < mins[i]) {
+                        solution.variables[i] = mins[i];
+                    } else if (solution.variables[i] > maxs[i]) {
+                        solution.variables[i] = maxs[i];
                     }
                 }
             }
