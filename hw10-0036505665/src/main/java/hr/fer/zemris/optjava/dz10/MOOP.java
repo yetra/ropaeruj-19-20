@@ -7,7 +7,7 @@ import hr.fer.zemris.optjava.dz10.mutation.Mutation;
 import hr.fer.zemris.optjava.dz10.problem.MOOPProblem;
 import hr.fer.zemris.optjava.dz10.problem.Problem1;
 import hr.fer.zemris.optjava.dz10.problem.Problem2;
-import hr.fer.zemris.optjava.dz10.selection.CrowdedTournamentSelection;
+import hr.fer.zemris.optjava.dz10.selection.TournamentSelection;
 import hr.fer.zemris.optjava.dz10.selection.Selection;
 
 import java.io.IOException;
@@ -59,15 +59,15 @@ public class MOOP {
 
         Crossover crossover = new ArithmeticCrossover(0.5, problem.getMins(), problem.getMaxs());
         Mutation mutation = new GaussianMutation(0.03, 1, problem.getMins(), problem.getMaxs());
-        Selection selection = new CrowdedTournamentSelection();
+        Selection selection = new TournamentSelection(2);
 
-        NSGA2 nsga = new NSGA2(problem, populationSize, maxIterations, crossover, mutation, selection);
+        NSGA2 nsga2 = new NSGA2(problem, populationSize, maxIterations, crossover, mutation, selection);
 
-        List<List<Solution>> fronts = nsga.run();
+        List<List<Solution>> fronts = nsga2.run();
         print(fronts);
 
-        write(DECISION_SPACE_PATH, nsga.getPopulation(), true);
-        write(OBJECTIVE_SPACE_PATH, nsga.getPopulation(), false);
+        write(DECISION_SPACE_PATH, nsga2.getPopulation(), true);
+        write(OBJECTIVE_SPACE_PATH, nsga2.getPopulation(), false);
     }
 
     /**
