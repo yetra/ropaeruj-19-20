@@ -1,7 +1,9 @@
 package hr.fer.zemris.optjava.dz10.crossover;
 
+import hr.fer.zemris.optjava.dz10.Solution;
+
 /**
- * An implementation of arithmetic hr.fer.zemris.optjava.dz10.crossover.
+ * An implementation of arithmetic crossover.
  *
  * @author Bruna Dujmović
  *
@@ -14,12 +16,12 @@ public class ArithmeticCrossover implements Crossover {
     private double alpha;
 
     /**
-     * The lowest possible values of each dimension in the solution space.
+     * The lowest possible values of each solution variable.
      */
     private double[] mins;
 
     /**
-     * The highest possible values of each dimension in the solution space.
+     * The highest possible values of each solution variable.
      */
     private double[] maxs;
 
@@ -27,8 +29,8 @@ public class ArithmeticCrossover implements Crossover {
      * Constructs an {@link ArithmeticCrossover} instance.
      *
      * @param alpha the weighting factor
-     * @param mins the lowest possible values of each dimension in the solution space
-     * @param maxs the highest possible values of each dimension in the solution space
+     * @param mins the lowest possible values of each solution variable
+     * @param maxs the highest possible values of each solution variable
      */
     public ArithmeticCrossover(double alpha, double[] mins, double[] maxs) {
         this.alpha = alpha;
@@ -37,19 +39,19 @@ public class ArithmeticCrossover implements Crossover {
     }
 
     @Override
-    public double[][] of(double[] firstParent, double[] secondParent) {
-        double[] firstChild = new double[firstParent.length];
-        double[] secondChild = new double[firstParent.length];
+    public Solution[] of(Solution firstParent, Solution secondParent) {
+        Solution firstChild = new Solution(firstParent.variables.length, firstParent.objectives.length);
+        Solution secondChild = new Solution(firstParent.variables.length, firstParent.objectives.length);
 
-        for (int i = 0; i < firstParent.length; i++) {
-            firstChild[i] = alpha * firstParent[i] + (1 - alpha) * secondParent[i];
-            checkBounds(i, firstChild);
+        for (int i = 0; i < firstParent.variables.length; i++) {
+            firstChild.variables[i] = alpha * firstParent.variables[i] + (1 - alpha) * secondParent.variables[i];
+            checkBounds(i, firstChild.variables);
 
-            secondChild[i] = (1 - alpha) * firstParent[i] + alpha * secondParent[i];
-            checkBounds(i, secondChild);
+            secondChild.variables[i] = (1 - alpha) * firstParent.variables[i] + alpha * secondParent.variables[i];
+            checkBounds(i, secondChild.variables);
         }
 
-        return new double[][] {firstChild, secondChild};
+        return new Solution[] {firstChild, secondChild};
     }
 
     /**
@@ -57,13 +59,13 @@ public class ArithmeticCrossover implements Crossover {
      * and corrects it accordingly.
      *
      * @param i the index of the value to check
-     * @param child the child whose value should be checked
+     * @param variables the variables whose value should be checked
      */
-    private void checkBounds(int i, double[] child) {
-        if (child[i] < mins[i]) {
-            child[i] = mins[i];
-        } else if (child[i] > maxs[i]) {
-            child[i] = maxs[i];
+    private void checkBounds(int i, double[] variables) {
+        if (variables[i] < mins[i]) {
+            variables[i] = mins[i];
+        } else if (variables[i] > maxs[i]) {
+            variables[i] = maxs[i];
         }
     }
 }
