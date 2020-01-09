@@ -149,19 +149,20 @@ public class NSGA2 {
     }
 
     /**
-     * Returns the fronts obtained by applying non-dominated sorting to the {@link #population}.
+     * Returns the fronts obtained by performing a non-dominated sort of the given population.
      *
-     * @return the fronts obtained by applying non-dominated sorting to the {@link #population}
+     * @param population the population to sort
+     * @return the fronts obtained by performing a non-dominated sort of the given population
      */
-    private List<List<Integer>> nonDominatedSort() {
-        List<List<Integer>> dominates = new ArrayList<>(populationSize);
-        int[] dominatedBy = new int[populationSize];
+    private List<List<Integer>> nonDominatedSort(double[][] population) {
+        List<List<Integer>> dominates = new ArrayList<>(population.length);
+        int[] dominatedBy = new int[population.length];
 
         List<Integer> initialFront = new ArrayList<>();
-        for (int i = 0; i < populationSize; i++) {
+        for (int i = 0; i < population.length; i++) {
             dominates.add(new ArrayList<>());
 
-            for (int j = 0; j < populationSize; j++) {
+            for (int j = 0; j < population.length; j++) {
                 if (i == j) {
                     continue;
                 }
