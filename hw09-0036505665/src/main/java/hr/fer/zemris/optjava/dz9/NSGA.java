@@ -166,11 +166,13 @@ public class NSGA {
                 double[][] children = crossover.of(parents[0], parents[1]);
                 mutation.mutate(children);
 
-                nextPopulation[childrenCount++] = children[0];
-                if (childrenCount == populationSize) {
-                    break;
+                for (double[] child : children) {
+                    nextPopulation[childrenCount++] = child;
+
+                    if (childrenCount == populationSize) {
+                        break;
+                    }
                 }
-                nextPopulation[childrenCount++] = children[1];
             }
 
             for (int i = 0; i < populationSize; i++) {
