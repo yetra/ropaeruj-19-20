@@ -42,6 +42,21 @@ public class Solution {
     }
 
     /**
+     * Constructs a {@link Solution} of randomized {@link #variables}.
+     *
+     * @param numberOfVariables the length of the {@link #variables} array
+     * @param numberOfObjectives the length of the {@link #objectives} array
+     * @param mins the lowest possible values of each variable
+     * @param maxs the highest possible values of each variable
+     */
+    public Solution(int numberOfVariables, int numberOfObjectives, double[] mins, double[] maxs) {
+        variables = new double[numberOfVariables];
+        objectives = new double[numberOfObjectives];
+
+        randomize(mins, maxs);
+    }
+
+    /**
      * Randomizes the {@link #variables} of this solution.
      *
      * @param mins the lowest possible values of each variable
