@@ -6,6 +6,7 @@ import hr.fer.zemris.optjava.dz10.problem.MOOPProblem;
 import hr.fer.zemris.optjava.dz10.selection.Selection;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -140,10 +141,20 @@ public class NSGA2 {
 
             List<Integer> tooLargeFront = fronts.get(frontIndex);
             crowdingSort(tooLargeFront, union, unionObjectives);
-            //     odabrati podskup s najvecim crowding-distance dok se ne popuni nextPopulation
+
+            tooLargeFront.sort(Collections.reverseOrder(Comparator.comparingDouble(index -> crowdingDistance[index])));
+
+            for (int i : tooLargeFront) {
+                nextPopulation[added++] = union[i];
+
+                if (nextPopulation.length == populationSize) {
+                    break;
+                }
+            }
 
             // sljedece fronte = fronte u populaciji + podskup iz fronte koja ne stane (zadnja fronta)
 
+            population = nextPopulation;
             iteration++;
         }
 
