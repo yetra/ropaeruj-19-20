@@ -1,6 +1,7 @@
 package hr.fer.zemris.optjava.dz10;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -9,7 +10,14 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author Bruna Dujmović
  *
  */
-public class Solution {
+public class Solution implements Comparable<Solution> {
+
+    /**
+     * A comparator to be used in {@link #compareTo(Solution)} for comparing solutions in crowded tournament selection.
+     */
+    private static final Comparator<Solution> CTS_COMPARATOR = Comparator.comparingDouble((Solution s) -> s.rank)
+                                                                     .reversed()
+                                                                     .thenComparingDouble(s -> s.crowdingDistance);
 
     /**
      * The variables of this solution.
@@ -80,5 +88,10 @@ public class Solution {
     @Override
     public int hashCode() {
         return Arrays.hashCode(variables);
+    }
+
+    @Override
+    public int compareTo(Solution o) {
+        return CTS_COMPARATOR.compare(this, o);
     }
 }
