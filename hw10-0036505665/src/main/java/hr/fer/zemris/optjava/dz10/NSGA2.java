@@ -89,7 +89,7 @@ public class NSGA2 {
      *
      * @return the fronts belonging to the last population
      */
-    public List<List<Integer>> run() {
+    public List<List<Solution>> run() {
         initialize();
 
         List<List<Solution>> fronts = nonDominatedSort(population);
@@ -153,7 +153,7 @@ public class NSGA2 {
             iteration++;
         }
 
-        return null;
+        return fronts;
     }
 
     /**
