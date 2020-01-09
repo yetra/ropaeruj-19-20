@@ -105,15 +105,18 @@ public class NSGA2 {
     public List<List<Integer>> run() {
         initialize();
 
-        // non-dominated sort inicijalne populacije
+        List<List<Integer>> fronts = nonDominatedSort(population);
+
+        double[][] childPopulation = new double[populationSize][];
+        double[][] nextPopulation = new double[populationSize][];
 
         int iteration = 0;
         while (iteration < maxIterations) {
-
             // generiraj populaciju djece
-            // unija roditelja i djece
 
-            // non-dominated sort unije
+            double[][] union = new double[populationSize * 2][];
+            System.arraycopy(population, 0, union, 0, populationSize);
+            System.arraycopy(childPopulation, 0, union, populationSize, populationSize);
 
             // frontu po frontu dodavati u nextPopulation dok stane
 
