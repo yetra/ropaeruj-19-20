@@ -149,6 +149,58 @@ public class NSGA2 {
     }
 
     /**
+     * Returns the fronts obtained by applying non-dominated sorting to the {@link #population}.
+     *
+     * @return the fronts obtained by applying non-dominated sorting to the {@link #population}
+     */
+    private List<List<Integer>> nonDominatedSort() {
+        List<List<Integer>> dominates = new ArrayList<>(populationSize);
+        int[] dominatedBy = new int[populationSize];
+
+        List<Integer> initialFront = new ArrayList<>();
+        for (int i = 0; i < populationSize; i++) {
+            dominates.add(new ArrayList<>());
+
+            for (int j = 0; j < populationSize; j++) {
+                if (i == j) {
+                    continue;
+                }
+
+                if (dominates(i, j)) {
+                    dominates.get(i).add(j);
+                } else if (dominates(j, i)) {
+                    dominatedBy[i]++;
+                }
+            }
+
+            if (dominatedBy[i] == 0) {
+                initialFront.add(i);
+            }
+        }
+
+        List<List<Integer>> fronts = new ArrayList<>();
+        List<Integer> currentFront = initialFront;
+        while (!currentFront.isEmpty()) {
+            fronts.add(currentFront);
+            List<Integer> nextFront = new ArrayList<>();
+
+            for (int i : currentFront) {
+                for (int j : dominates.get(i)) {
+                    dominatedBy[j]--;
+
+                    if (dominatedBy[j] == 0) {
+                        nextFront.add(j);
+                    }
+                }
+            }
+
+            currentFront = nextFront;
+        }
+
+        return fronts;
+    }
+
+    /**
      * Returns {@code true} if the solution on the {@code firstIndex} dominates
      * the solution on the {@code secondIndex}.
      *
