@@ -46,13 +46,13 @@ public class Problem1 implements MOOPProblem {
     }
 
     @Override
-    public void evaluate(Solution solution, double[] objectives) {
-        if (solution.variables.length != 4 || objectives.length != 4) {
-            throw new IllegalArgumentException("Invalid array sizes, must be 4!");
+    public void evaluate(Solution solution) {
+        if (solution.variables.length != 4 || solution.objectives.length != 4) {
+            throw new IllegalArgumentException("Solution variables and objectives need to be of length 4!");
         }
 
-        for (int i = 0; i < objectives.length; i++) {
-            objectives[i] = solution.variables[i] * solution.variables[i];
+        for (int i = 0; i < solution.objectives.length; i++) {
+            solution.objectives[i] = solution.variables[i] * solution.variables[i];
         }
     }
 }

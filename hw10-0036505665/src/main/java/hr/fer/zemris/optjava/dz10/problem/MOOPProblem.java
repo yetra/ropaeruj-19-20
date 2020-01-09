@@ -45,9 +45,8 @@ public interface MOOPProblem {
      * Evaluates the given solution.
      *
      * @param solution the solution to evaluate
-     * @param objectives the array that will contain the evaluation results
-     * @throws IllegalArgumentException if any array is of incorrect length
+     * @throws IllegalArgumentException if the solution is of invalid size
      */
-    void evaluate(Solution solution, double[] objectives);
+    void evaluate(Solution solution);
 }
 
