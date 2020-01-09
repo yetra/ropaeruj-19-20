@@ -93,7 +93,6 @@ public class NSGA2 {
         initialize();
 
         List<List<Solution>> fronts = nonDominatedSort(population);
-        // TODO init crowdingDistances ?
 
         Solution[] nextPopulation = new Solution[populationSize];
         Solution[] union = new Solution[populationSize * 2];
@@ -134,8 +133,6 @@ public class NSGA2 {
                     nextPopulation[added++] = solution;
                 }
             }
-
-            crowdingSort(tooLargeFront);
 
             assert tooLargeFront != null;
             tooLargeFront.sort(Collections.reverseOrder(Comparator.comparingDouble(s -> s.crowdingDistance)));
@@ -212,6 +209,7 @@ public class NSGA2 {
         List<List<Solution>> fronts = new ArrayList<>();
         List<Solution> currentFront = initialFront;
         while (!currentFront.isEmpty()) {
+            crowdingSort(currentFront);
             fronts.add(currentFront);
             List<Solution> nextFront = new ArrayList<>();
 
