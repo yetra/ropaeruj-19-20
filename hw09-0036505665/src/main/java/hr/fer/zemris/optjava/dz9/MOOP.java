@@ -10,6 +10,10 @@ import hr.fer.zemris.optjava.dz9.problem.Problem2;
 import hr.fer.zemris.optjava.dz9.selection.RouletteWheelSelection;
 import hr.fer.zemris.optjava.dz9.selection.Selection;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,6 +28,16 @@ import java.util.List;
  *
  */
 public class MOOP {
+
+    /**
+     * The path to the results for the decision space distance calculation method.
+     */
+    private static final Path DECISION_SPACE_PATH = Paths.get("izlaz-dec.txt");
+
+    /**
+     * The path to the results for the objective space distance calculation method.
+     */
+    private static final Path OBJECTIVE_SPACE_PATH = Paths.get("izlaz-obj.txt");
 
     /**
      * Executes the NSGA on the specified optimization problem.
@@ -55,6 +69,14 @@ public class MOOP {
 
         List<List<Integer>> fronts = nsga.run();
         print(fronts, nsga.getPopulation(), nsga.getPopulationObjectives(), nsga.getPopulationFitness());
+
+        if (problem instanceof Problem2) {
+            if (decisionSpaceDistance) {
+                write(DECISION_SPACE_PATH, nsga.getPopulation());
+            } else {
+                write(OBJECTIVE_SPACE_PATH, nsga.getPopulationObjectives());
+            }
+        }
     }
 
     /**
@@ -116,6 +138,33 @@ public class MOOP {
             System.out.println("Solution: " + Arrays.toString(population[i])
                     + " => Objectives: " + Arrays.toString(populationObjectives[i])
                     + " | Fitness: " + populationFitness[i]);
+        }
+    }
+
+    /**
+     * Writes the given array to the specified file.
+     *
+     * @param filePath the path to the file to write
+     * @param valuesArray the array to write
+     */
+    private static void write(Path filePath, double[][] valuesArray) {
+        StringBuilder sb = new StringBuilder();
+
+        for (double[] values : valuesArray) {
+            for (double value : values) {
+                sb.append(value);
+                sb.append(",");
+            }
+
+            sb.setLength(sb.length() - 1);
+            sb.append("\n");
+        }
+
+        try {
+            Files.writeString(filePath, sb.toString());
+        } catch (IOException e) {
+            System.out.println("I/O error ocurred!");
+            System.exit(1);
         }
     }
 }
