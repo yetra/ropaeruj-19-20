@@ -6,6 +6,7 @@ import hr.fer.zemris.optjava.dz10.problem.MOOPProblem;
 import hr.fer.zemris.optjava.dz10.selection.Selection;
 
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * An implementation of NSGA-II.
@@ -101,7 +102,8 @@ public class NSGA2 {
      * @return the fronts belonging to the last population
      */
     public List<List<Integer>> run() {
-        // init
+        initialize();
+        
         // non-dominated sort inicijalne populacije
 
         int iteration = 0;
@@ -124,5 +126,24 @@ public class NSGA2 {
         }
 
         return null;
+    }
+
+    /**
+     * Initializes the {@link #population} and {@link #populationObjectives} arrays.
+     */
+    private void initialize() {
+        population = new double[populationSize][problem.getNumberOfVariables()];
+        populationObjectives = new double[populationSize][problem.getNumberOfObjectives()];
+
+        double[] mins = problem.getMins();
+        double[] maxs = problem.getMaxs();
+
+        for (int i = 0; i < populationSize; i++) {
+            for (int j = 0, solutionSize = problem.getNumberOfVariables(); j < solutionSize; j++) {
+                population[i][j] = ThreadLocalRandom.current().nextDouble(mins[j], maxs[j]);
+            }
+
+            problem.evaluate(population[i], populationObjectives[i]);
+        }
     }
 }
