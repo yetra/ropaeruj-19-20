@@ -275,6 +275,9 @@ public class NSGA2 {
      * @param front the front containing the solutions to be sorted
      */
     private void crowdingSort(List<Solution> front) {
+        double[] fmins = problem.getObjectiveMins();
+        double[] fmaxs = problem.getObjectiveMaxs();
+
         front.get(0).crowdingDistance = Double.POSITIVE_INFINITY;
         front.get(front.size() - 1).crowdingDistance = Double.POSITIVE_INFINITY;
         
@@ -285,8 +288,8 @@ public class NSGA2 {
             for (int j = 1, frontSize = front.size(); j < frontSize - 1; j++) {
                 Solution solution = front.get(j);
 
-                solution.crowdingDistance += (front.get(j + 1).objectives[i] - front.get(j - 1).objectives[i]);
-                // TODO / (fmax - fmin)
+                solution.crowdingDistance += (front.get(j + 1).objectives[i] - front.get(j - 1).objectives[i])
+                        / (fmaxs[i] - fmins[i]);
             }
         }
     }
