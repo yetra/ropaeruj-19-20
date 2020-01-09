@@ -42,6 +42,20 @@ public interface MOOPProblem {
     double[] getMaxs();
 
     /**
+     * Returns the lowest possible values of each objective.
+     *
+     * @return the lowest possible values of each objective
+     */
+    double[] getObjectiveMins();
+
+    /**
+     * Returns the highest possible values of each objective.
+     *
+     * @return the highest possible values of each objective
+     */
+    double[] getObjectiveMaxs();
+
+    /**
      * Evaluates the given solution.
      *
      * @param solution the solution to evaluate
