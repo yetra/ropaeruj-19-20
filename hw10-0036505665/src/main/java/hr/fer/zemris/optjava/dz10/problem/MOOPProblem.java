@@ -1,5 +1,7 @@
 package hr.fer.zemris.optjava.dz10.problem;
 
+import hr.fer.zemris.optjava.dz10.Solution;
+
 /**
  * An interface containing the methods used to describe an MOOP problem.
  *
@@ -46,6 +48,6 @@ public interface MOOPProblem {
      * @param objectives the array that will contain the evaluation results
      * @throws IllegalArgumentException if any array is of incorrect length
      */
-    void evaluate(double[] solution, double[] objectives);
+    void evaluate(Solution solution, double[] objectives);
 }
 

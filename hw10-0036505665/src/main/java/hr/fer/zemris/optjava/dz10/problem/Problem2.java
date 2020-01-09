@@ -1,5 +1,7 @@
 package hr.fer.zemris.optjava.dz10.problem;
 
+import hr.fer.zemris.optjava.dz10.Solution;
+
 /**
  * A {@link MOOPProblem} implementation for minimizing the following functions:
  *
@@ -12,12 +14,12 @@ package hr.fer.zemris.optjava.dz10.problem;
 public class Problem2 implements MOOPProblem {
 
     /**
-     * The lowest possible values of each dimension in the solution space.
+     * The lowest possible values of each solution variable.
      */
     private static final double[] MINS = new double[] {0.1, 0};
 
     /**
-     * The highest possible values of each dimension in the solution space.
+     * The highest possible values of each solution variable.
      */
     private static final double[] MAXS = new double[] {1, 5};
 
@@ -42,12 +44,12 @@ public class Problem2 implements MOOPProblem {
     }
 
     @Override
-    public void evaluate(double[] solution, double[] objectives) {
-        if (solution.length != 2 || objectives.length != 2) {
+    public void evaluate(Solution solution, double[] objectives) {
+        if (solution.variables.length != 2 || objectives.length != 2) {
             throw new IllegalArgumentException("Invalid array sizes, must be 2!");
         }
 
-        objectives[0] = solution[0];
-        objectives[1] = (1 + solution[1]) / solution[0];
+        objectives[0] = solution.variables[0];
+        objectives[1] = (1 + solution.variables[1]) / solution.variables[0];
     }
 }
