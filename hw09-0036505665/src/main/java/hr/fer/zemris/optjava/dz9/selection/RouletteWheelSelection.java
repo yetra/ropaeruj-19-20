@@ -1,6 +1,8 @@
 package hr.fer.zemris.optjava.dz9.selection;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -21,7 +23,10 @@ public class RouletteWheelSelection implements Selection {
         }
 
         double[][] parents = new double[numberToSelect][];
-        for (int i = 0; i < numberToSelect; i++) {
+        Set<Integer> selectedIndexes = new HashSet<>(numberToSelect);
+
+        int selected = 0;
+        while (selected < numberToSelect) {
             double randomError = ThreadLocalRandom.current().nextDouble() * cumulativeErrors[population.length - 1];
 
             int index = Arrays.binarySearch(cumulativeErrors, randomError);
@@ -32,7 +37,10 @@ public class RouletteWheelSelection implements Selection {
                 index--;
             }
 
-            parents[i] = population[index];
+            if (selectedIndexes.add(index)) {
+                parents[selected] = population[index];
+                selected++;
+            }
         }
 
         return parents;
