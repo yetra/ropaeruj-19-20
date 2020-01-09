@@ -61,15 +61,13 @@ public class MOOP {
         Mutation mutation = new GaussianMutation(0.03, 1, problem.getMins(), problem.getMaxs());
         Selection selection = new CrowdedTournamentSelection();
 
-        NSGA2 nsga = new NSGA2(
-                problem, populationSize, maxIterations, crossover, mutation, selection
-        );
+        NSGA2 nsga = new NSGA2(problem, populationSize, maxIterations, crossover, mutation, selection);
 
-        List<List<Integer>> fronts = nsga.run();
-        print(fronts, nsga.getPopulation(), nsga.getPopulationObjectives());
+        List<List<Solution>> fronts = nsga.run();
+        print(fronts);
 
-        write(DECISION_SPACE_PATH, nsga.getPopulation());
-        write(OBJECTIVE_SPACE_PATH, nsga.getPopulationObjectives());
+        write(DECISION_SPACE_PATH, nsga.getPopulation(), true);
+        write(OBJECTIVE_SPACE_PATH, nsga.getPopulation(), false);
     }
 
     /**
@@ -90,35 +88,36 @@ public class MOOP {
     }
 
     /**
-     * Prints the number of solutions per front, along with the solutions, objectives & fitness for the first front.
+     * Prints the first front, and the number of solutions per front.
      *
      * @param fronts the fronts to print
-     * @param population the population of solutions
-     * @param populationObjectives the objectives for each solution in the population
      */
-    private static void print(List<List<Integer>> fronts, double[][] population, double[][] populationObjectives) {
+    private static void print(List<List<Solution>> fronts) {
         for (int i = 0, frontsCount = fronts.size(); i < frontsCount; i++) {
             System.out.println("Front " + i + ": " + fronts.get(i).size() + " solutions");
         }
 
         System.out.println("\nPrinting the first front...");
-        List<Integer> firstFront = fronts.get(0);
-        for (int i : firstFront) {
-            System.out.println("Solution: " + Arrays.toString(population[i])
-                    + " => Objectives: " + Arrays.toString(populationObjectives[i]));
+        List<Solution> firstFront = fronts.get(0);
+        for (Solution solution : firstFront) {
+            System.out.println("Solution: " + Arrays.toString(solution.variables)
+                    + " => Objectives: " + Arrays.toString(solution.objectives));
         }
     }
 
     /**
-     * Writes the given array to the specified file.
+     * Writes a given population's variables of objectives to the specified file.
      *
-     * @param filePath the path to the file to write
-     * @param valuesArray the array to write
+     * @param filePath the path to the file to write to
+     * @param population the population of solutions
+     * @param decisionSpace {@code true} when writing variables, {@code false} when writing objectives
      */
-    private static void write(Path filePath, double[][] valuesArray) {
+    private static void write(Path filePath, Solution[] population, boolean decisionSpace) {
         StringBuilder sb = new StringBuilder();
 
-        for (double[] values : valuesArray) {
+        for (Solution solution : population) {
+            double[] values = decisionSpace ? solution.variables : solution.objectives;
+
             for (double value : values) {
                 sb.append(value);
                 sb.append(",");
