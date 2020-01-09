@@ -5,8 +5,7 @@ import hr.fer.zemris.optjava.dz10.Solution;
 /**
  * An interface to be implemented by different types of GA selection.
  *
- * Each implementation should provide a method for selecting a specified amount of
- * solutions from a given population.
+ * Each implementation should provide a method for selecting a single solution from a given population.
  *
  * @author Bruna Dujmović
  *
@@ -14,11 +13,10 @@ import hr.fer.zemris.optjava.dz10.Solution;
 public interface Selection {
 
     /**
-     * Selects a specified amount of solutions from the given population.
+     * Selects a single solution from the given population.
      *
      * @param population the population to select from
-     * @param numberToSelect the number of solutions to select
-     * @return an array containing the selected solutions
+     * @return the selected solution
      */
-    Solution[] from(Solution[] population, int numberToSelect);
+    Solution from(Solution[] population);
 }
