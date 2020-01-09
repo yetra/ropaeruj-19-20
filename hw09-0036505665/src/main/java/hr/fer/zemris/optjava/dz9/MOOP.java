@@ -1,7 +1,7 @@
 package hr.fer.zemris.optjava.dz9;
 
+import hr.fer.zemris.optjava.dz9.crossover.ArithmeticCrossover;
 import hr.fer.zemris.optjava.dz9.crossover.Crossover;
-import hr.fer.zemris.optjava.dz9.crossover.OnePointCrossover;
 import hr.fer.zemris.optjava.dz9.mutation.GaussianMutation;
 import hr.fer.zemris.optjava.dz9.mutation.Mutation;
 import hr.fer.zemris.optjava.dz9.problem.MOOPProblem;
@@ -59,7 +59,7 @@ public class MOOP {
         boolean decisionSpaceDistance = getDistanceCalculationType(args[2]);
         int maxIterations = Integer.parseInt(args[3]);
 
-        Crossover crossover = new OnePointCrossover(0.98);
+        Crossover crossover = new ArithmeticCrossover(0.5, problem.getMins(), problem.getMaxs());
         Mutation mutation = new GaussianMutation(0.03, 1, problem.getMins(), problem.getMaxs());
         Selection selection = new RouletteWheelSelection();
 
