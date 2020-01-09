@@ -99,8 +99,7 @@ public class NSGA2 {
 
         int iteration = 0;
         while (iteration < maxIterations) {
-            System.arraycopy(population, 0, union, 0, populationSize);
-            generateChildren(union);
+            populate(union);
 
             fronts = buildFronts(union);
 
@@ -160,13 +159,14 @@ public class NSGA2 {
     }
 
     /**
-     * Generates {@link #populationSize} children and adds them to the given {@code union} array.
+     * Populates the given array with {@link #population} parents and {@link #populationSize} generated children.
      *
-     * @param union an array of parents and children
+     * @param union the array to populate
      */
-    private void generateChildren(Solution[] union) {
-        int childrenCount = 0;
+    private void populate(Solution[] union) {
+        System.arraycopy(population, 0, union, 0, populationSize);
 
+        int childrenCount = 0;
         while (childrenCount < populationSize) {
             Solution firstParent = selection.from(population);
             Solution secondParent = selection.from(population);
