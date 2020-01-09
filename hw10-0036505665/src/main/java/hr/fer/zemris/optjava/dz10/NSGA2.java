@@ -104,8 +104,9 @@ public class NSGA2 {
 
             int childrenCount = 0;
             while (childrenCount < populationSize) {
-                Solution[] parents = selection.from(population, 2);
-                Solution[] children = crossover.of(parents[0], parents[1]);
+                Solution firstParent = selection.from(population);
+                Solution secondParent = selection.from(population);
+                Solution[] children = crossover.of(firstParent, secondParent);
                 mutation.mutate(children);
 
                 for (Solution child : children) {
