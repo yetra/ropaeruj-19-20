@@ -114,19 +114,32 @@ public class NSGA2 {
 
         List<List<Integer>> fronts = nonDominatedSort(population);
 
-        double[][] childPopulation = new double[populationSize][];
         double[][] nextPopulation = new double[populationSize][];
-
+        
         double[][] union = new double[populationSize * 2][];
         double[][] unionObjectives = new double[populationSize * 2][problem.getNumberOfObjectives()];
 
         int iteration = 0;
         while (iteration < maxIterations) {
-            // generiraj populaciju djece
-
             System.arraycopy(population, 0, union, 0, populationSize);
-            System.arraycopy(childPopulation, 0, union, populationSize, populationSize);
-            // TODO child objectives
+            System.arraycopy(populationObjectives, 0, union, 0, populationSize);
+
+            int childrenCount = 0;
+            while (childrenCount < populationSize) {
+                double[][] parents = selection.from(population, null, 2);
+                double[][] children = crossover.of(parents[0], parents[1]);
+                mutation.mutate(children);
+
+                for (double[] child : children) {
+                    union[populationSize + childrenCount] = child;
+                    problem.evaluate(child, unionObjectives[populationSize + childrenCount]);
+                    childrenCount++;
+
+                    if (childrenCount == populationSize) {
+                        break;
+                    }
+                }
+            }
 
             fronts = nonDominatedSort(union);
 
