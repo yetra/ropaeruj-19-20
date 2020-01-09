@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * An implementation of NSGA-II.
@@ -54,17 +53,7 @@ public class NSGA2 {
     /**
      * The population of {@link #problem} solutions.
      */
-    private double[][] population;
-
-    /**
-     * The objectives for each solution in the {@link #population}.
-     */
-    private double[][] populationObjectives;
-
-    /**
-     * The crowding distances for each solution in the population.
-     */
-    private double[] crowdingDistance; // TODO init
+    private Solution[] population;
 
     /**
      * Constructs an instance of {@link NSGA2}.
@@ -91,17 +80,8 @@ public class NSGA2 {
      *
      * @return the population of {@link #problem} solutions
      */
-    public double[][] getPopulation() {
+    public Solution[] getPopulation() {
         return population;
-    }
-
-    /**
-     * Returns the objectives for each solution in the {@link #population}.
-     *
-     * @return the objectives for each solution in the {@link #population}
-     */
-    public double[][] getPopulationObjectives() {
-        return populationObjectives;
     }
 
     /**
@@ -112,29 +92,27 @@ public class NSGA2 {
     public List<List<Integer>> run() {
         initialize();
 
-        List<List<Integer>> fronts = nonDominatedSort(population);
+        List<List<Solution>> fronts = nonDominatedSort(population);
+        // TODO init crowdingDistances ?
 
-        double[][] nextPopulation = new double[populationSize][];
-        
-        double[][] union = new double[populationSize * 2][];
-        double[][] unionObjectives = new double[populationSize * 2][problem.getNumberOfObjectives()];
+        Solution[] nextPopulation = new Solution[populationSize];
+        Solution[] union = new Solution[populationSize * 2];
 
         int iteration = 0;
         while (iteration < maxIterations) {
             System.arraycopy(population, 0, union, 0, populationSize);
-            System.arraycopy(populationObjectives, 0, union, 0, populationSize);
 
             int childrenCount = 0;
             while (childrenCount < populationSize) {
-                double[][] parents = selection.from(population, null, 2);
-                double[][] children = crossover.of(parents[0], parents[1]);
+                Solution[] parents = selection.from(population, 2);
+                Solution[] children = crossover.of(parents[0], parents[1]);
                 mutation.mutate(children);
 
-                for (double[] child : children) {
+                for (Solution child : children) {
                     union[populationSize + childrenCount] = child;
-                    problem.evaluate(child, unionObjectives[populationSize + childrenCount]);
-                    childrenCount++;
+                    problem.evaluate(child);
 
+                    childrenCount++;
                     if (childrenCount == populationSize) {
                         break;
                     }
@@ -144,21 +122,25 @@ public class NSGA2 {
             fronts = nonDominatedSort(union);
 
             int added = 0;
-            int frontIndex = 0;
-            while (fronts.get(frontIndex).size() + added < populationSize) {
-                for (int i : fronts.get(frontIndex)) {
-                    nextPopulation[added++] = union[i];
+            List<Solution> tooLargeFront = null;
+            for (List<Solution> front : fronts) {
+                if (front.size() + added >= populationSize) {
+                    tooLargeFront = front;
+                    break;
                 }
-                frontIndex++;
+
+                for (Solution solution: front) {
+                    nextPopulation[added++] = solution;
+                }
             }
 
-            List<Integer> tooLargeFront = fronts.get(frontIndex);
-            crowdingSort(tooLargeFront, union, unionObjectives);
+            crowdingSort(tooLargeFront, union);
 
-            tooLargeFront.sort(Collections.reverseOrder(Comparator.comparingDouble(index -> crowdingDistance[index])));
+            assert tooLargeFront != null;
+            tooLargeFront.sort(Collections.reverseOrder(Comparator.comparingDouble(s -> s.crowdingDistance)));
 
-            for (int i : tooLargeFront) {
-                nextPopulation[added++] = union[i];
+            for (Solution solution : tooLargeFront) {
+                nextPopulation[added++] = solution;
 
                 if (nextPopulation.length == populationSize) {
                     break;
@@ -175,21 +157,21 @@ public class NSGA2 {
     }
 
     /**
-     * Initializes the {@link #population} and {@link #populationObjectives} arrays.
+     * Initializes the {@link #population}.
      */
     private void initialize() {
-        population = new double[populationSize][problem.getNumberOfVariables()];
-        populationObjectives = new double[populationSize][problem.getNumberOfObjectives()];
+        population = new Solution[populationSize];
+
+        int numberOfVariables = problem.getNumberOfVariables();
+        int numberOfObjectives = problem.getNumberOfObjectives();
 
         double[] mins = problem.getMins();
         double[] maxs = problem.getMaxs();
 
         for (int i = 0; i < populationSize; i++) {
-            for (int j = 0, solutionSize = problem.getNumberOfVariables(); j < solutionSize; j++) {
-                population[i][j] = ThreadLocalRandom.current().nextDouble(mins[j], maxs[j]);
-            }
+            population[i] = new Solution(numberOfVariables, numberOfObjectives, mins, maxs);
 
-            problem.evaluate(population[i], populationObjectives[i]);
+            problem.evaluate(population[i]);
         }
     }
 
@@ -199,11 +181,11 @@ public class NSGA2 {
      * @param population the population to sort
      * @return the fronts obtained by performing a non-dominated sort of the given population
      */
-    private List<List<Integer>> nonDominatedSort(double[][] population) {
-        List<List<Integer>> dominates = new ArrayList<>(population.length);
+    private List<List<Solution>> nonDominatedSort(Solution[] population) {
+        List<List<Solution>> dominates = new ArrayList<>(population.length);
         int[] dominatedBy = new int[population.length];
 
-        List<Integer> initialFront = new ArrayList<>();
+        List<Solution> initialFront = new ArrayList<>();
         for (int i = 0; i < population.length; i++) {
             dominates.add(new ArrayList<>());
 
@@ -212,34 +194,38 @@ public class NSGA2 {
                     continue;
                 }
 
-                if (dominates(i, j)) {
-                    dominates.get(i).add(j);
-                } else if (dominates(j, i)) {
+                if (dominates(population[i], population[j])) {
+                    dominates.get(i).add(population[j]);
+                } else if (dominates(population[j], population[i])) {
                     dominatedBy[i]++;
                 }
             }
 
             if (dominatedBy[i] == 0) {
-                initialFront.add(i);
+                initialFront.add(population[i]);
+                population[i].rank = 0;
             }
         }
 
-        List<List<Integer>> fronts = new ArrayList<>();
-        List<Integer> currentFront = initialFront;
+        int frontIndex = 1;
+        List<List<Solution>> fronts = new ArrayList<>();
+        List<Solution> currentFront = initialFront;
         while (!currentFront.isEmpty()) {
             fronts.add(currentFront);
-            List<Integer> nextFront = new ArrayList<>();
+            List<Solution> nextFront = new ArrayList<>();
 
-            for (int i : currentFront) {
-                for (int j : dominates.get(i)) {
+            for (int i = 0, frontSize = currentFront.size(); i < frontSize; i++) {
+                for (int j = 0, dominatesCount = dominates.get(i).size(); j < dominatesCount; j++) {
                     dominatedBy[j]--;
 
                     if (dominatedBy[j] == 0) {
-                        nextFront.add(j);
+                        nextFront.add(population[j]);
+                        population[j].rank = frontIndex;
                     }
                 }
             }
 
+            frontIndex++;
             currentFront = nextFront;
         }
 
@@ -247,22 +233,19 @@ public class NSGA2 {
     }
 
     /**
-     * Returns {@code true} if the solution on the {@code firstIndex} dominates
-     * the solution on the {@code secondIndex}.
+     * Returns {@code true} if the first solution dominates the second solution.
      *
-     * @param firstIndex the index of the first solution
-     * @param secondIndex the index of the second solution
+     * @param first the first solution
+     * @param second the second solution
      * @return {@code true} if the first solution dominates the second solution
      */
-    private boolean dominates(int firstIndex, int secondIndex) {
-        double[] firstObjectives = populationObjectives[firstIndex];
-        double[] secondObjectives = populationObjectives[secondIndex];
+    private boolean dominates(Solution first, Solution second) {
         boolean isStrictlyBetter = false;
 
-        for (int i = 0; i < firstObjectives.length; i++) {
-            if (firstObjectives[i] > secondObjectives[i]) {
+        for (int i = 0; i < first.objectives.length; i++) {
+            if (first.objectives[i] > second.objectives[i]) {
                 return false;
-            } else if (firstObjectives[i] < secondObjectives[i]) {
+            } else if (first.objectives[i] < second.objectives[i]) {
                 isStrictlyBetter = true;
             }
         }
@@ -271,25 +254,23 @@ public class NSGA2 {
     }
 
     /**
-     * Applies the crowding sort algorithm to solutions in the given front.
+     * Applies the crowding sort algorithm to a given front.
      *
-     * @param front the front determining which solutions should be sorted
-     * @param population the population containing the solutions
-     * @param populationObjectives the objectives for each solution in the population
+     * @param front the front containing the solutions to be sorted
      */
-    private void crowdingSort(List<Integer> front, double[][] population, double[][] populationObjectives) {
-        for (int i = 0; i < populationObjectives[0].length; i++) {
-            int finalI = i;
-            front.sort(Comparator.comparingDouble(integer -> populationObjectives[integer][finalI]));
+    private void crowdingSort(List<Solution> front, Solution[] population) {
+        for (int i = 0; i < population[0].objectives.length; i++) {
+            int index = i;
+            front.sort(Comparator.comparingDouble(solution -> solution.objectives[index]));
 
-            crowdingDistance[front.get(0)] = Double.POSITIVE_INFINITY;
-            crowdingDistance[front.get(front.size() - 1)] = Double.POSITIVE_INFINITY;
+            front.get(0).crowdingDistance = Double.POSITIVE_INFINITY;
+            front.get(front.size() - 1).crowdingDistance = Double.POSITIVE_INFINITY;
 
             for (int j = 1, frontSize = front.size(); j < frontSize - 1; j++) {
-                int index = front.get(j);
+                Solution solution = front.get(j);
 
-                crowdingDistance[index] += (populationObjectives[index + 1][i] - populationObjectives[index - 1][i]);
-                // TODO fmax - fmin
+                solution.crowdingDistance += (population[j + 1].objectives[i] - population[j - 1].objectives[i]);
+                // TODO / (fmax - fmin)
             }
         }
     }
