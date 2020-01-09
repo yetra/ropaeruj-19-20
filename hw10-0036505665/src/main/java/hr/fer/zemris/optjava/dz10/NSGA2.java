@@ -103,6 +103,7 @@ public class NSGA2 {
 
             fronts = buildFronts(union);
 
+            // copy entire fronts and find the first one that doesn't fit
             int added = 0;
             List<Solution> tooLargeFront = null;
             for (List<Solution> front : fronts) {
@@ -116,9 +117,11 @@ public class NSGA2 {
                 }
             }
 
+            // sort the too large front by crowding distance
             assert tooLargeFront != null;
-            tooLargeFront.sort(Collections.reverseOrder(Comparator.comparingDouble(s -> s.crowdingDistance)));
+            tooLargeFront.sort(Comparator.comparingDouble((Solution s) -> s.crowdingDistance).reversed());
 
+            // fill next population with the best solutions in the too large front
             List<Solution> newLastFront = new ArrayList<>();
             for (Solution solution : tooLargeFront) {
                 nextPopulation[added++] = solution;
@@ -129,6 +132,7 @@ public class NSGA2 {
                 }
             }
 
+            // update fronts
             fronts = fronts.subList(0, fronts.indexOf(tooLargeFront));
             fronts.add(newLastFront);
 
