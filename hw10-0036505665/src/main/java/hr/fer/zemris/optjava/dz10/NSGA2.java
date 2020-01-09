@@ -92,7 +92,7 @@ public class NSGA2 {
     public List<List<Solution>> run() {
         initialize();
 
-        List<List<Solution>> fronts = nonDominatedSort(population);
+        List<List<Solution>> fronts = buildFronts(population);
 
         Solution[] nextPopulation = new Solution[populationSize];
         Solution[] union = new Solution[populationSize * 2];
@@ -119,7 +119,7 @@ public class NSGA2 {
                 }
             }
 
-            fronts = nonDominatedSort(union);
+            fronts = buildFronts(union);
 
             int added = 0;
             List<Solution> tooLargeFront = null;
@@ -176,10 +176,10 @@ public class NSGA2 {
     /**
      * Returns the fronts obtained by performing a non-dominated sort of the given population.
      *
-     * @param population the population to sort
+     * @param population the population to split into fronts
      * @return the fronts obtained by performing a non-dominated sort of the given population
      */
-    private List<List<Solution>> nonDominatedSort(Solution[] population) {
+    private List<List<Solution>> buildFronts(Solution[] population) {
         List<List<Solution>> dominates = new ArrayList<>(population.length);
         int[] dominatedBy = new int[population.length];
 
@@ -205,6 +205,7 @@ public class NSGA2 {
             }
         }
 
+        // non-dominated sort
         int frontIndex = 1;
         List<List<Solution>> fronts = new ArrayList<>();
         List<Solution> currentFront = initialFront;
