@@ -275,6 +275,10 @@ public class NSGA2 {
         double[] fmins = problem.getObjectiveMins();
         double[] fmaxs = problem.getObjectiveMaxs();
 
+        for (Solution solution : front) {
+            solution.crowdingDistance = 0;
+        }
+
         front.get(0).crowdingDistance = Double.POSITIVE_INFINITY;
         front.get(front.size() - 1).crowdingDistance = Double.POSITIVE_INFINITY;
         
