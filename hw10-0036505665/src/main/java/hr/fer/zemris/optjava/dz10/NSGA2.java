@@ -127,7 +127,7 @@ public class NSGA2 {
                 nextPopulation[added++] = solution;
                 newLastFront.add(solution);
 
-                if (nextPopulation.length == populationSize) {
+                if (added == populationSize) {
                     break;
                 }
             }
