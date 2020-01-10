@@ -196,12 +196,9 @@ public class NSGA2 {
      * @return the fronts obtained by performing a non-dominated sort of the given population
      */
     private List<List<Solution>> buildFronts(Solution[] population) {
-        List<List<Solution>> dominates = new ArrayList<>(population.length);
-        int[] dominatedBy = new int[population.length];
-
         List<Solution> initialFront = new ArrayList<>();
         for (int i = 0; i < population.length; i++) {
-            dominates.add(new ArrayList<>());
+            population[i].dominates = new ArrayList<>();
 
             for (int j = 0; j < population.length; j++) {
                 if (i == j) {
@@ -209,13 +206,13 @@ public class NSGA2 {
                 }
 
                 if (dominates(population[i], population[j])) {
-                    dominates.get(i).add(population[j]);
+                    population[i].dominates.add(population[j]);
                 } else if (dominates(population[j], population[i])) {
-                    dominatedBy[i]++;
+                    population[i].dominatedBy++;
                 }
             }
 
-            if (dominatedBy[i] == 0) {
+            if (population[i].dominatedBy == 0) {
                 initialFront.add(population[i]);
                 population[i].rank = 0;
             }
@@ -230,13 +227,13 @@ public class NSGA2 {
             fronts.add(currentFront);
             List<Solution> nextFront = new ArrayList<>();
 
-            for (int i = 0, frontSize = currentFront.size(); i < frontSize; i++) {
-                for (int j = 0, dominatesCount = dominates.get(i).size(); j < dominatesCount; j++) {
-                    dominatedBy[j]--;
+            for (Solution solution : currentFront) {
+                for (Solution dominated : solution.dominates) {
+                    dominated.dominatedBy--;
 
-                    if (dominatedBy[j] == 0) {
-                        nextFront.add(population[j]);
-                        population[j].rank = frontIndex;
+                    if (dominated.dominatedBy == 0) {
+                        nextFront.add(dominated);
+                        dominated.rank = frontIndex;
                     }
                 }
             }

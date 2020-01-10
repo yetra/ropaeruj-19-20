@@ -2,6 +2,7 @@ package hr.fer.zemris.optjava.dz10;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -28,6 +29,16 @@ public class Solution implements Comparable<Solution> {
      * The objectives of this solution.
      */
     public double[] objectives;
+
+    /**
+     * A list of solution that this solution dominates.
+     */
+    public List<Solution> dominates;
+
+    /**
+     * The number of solutions that this solution is dominated by.
+     */
+    public double dominatedBy;
 
     /**
      * The rank of this solution - the index of the front in which this solution was sorted.
