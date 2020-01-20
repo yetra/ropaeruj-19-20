@@ -1,7 +1,8 @@
-package hr.fer.zemris.optjava.rng.rngimpl;
+package hr.fer.zemris.optjava.rng.provimpl;
 
 import hr.fer.zemris.optjava.rng.IRNG;
 import hr.fer.zemris.optjava.rng.IRNGProvider;
+import hr.fer.zemris.optjava.rng.rngimpl.RNGRandomImpl;
 
 /**
  * An implementation of {@link IRNGProvider} that uses {@link ThreadLocal}.
