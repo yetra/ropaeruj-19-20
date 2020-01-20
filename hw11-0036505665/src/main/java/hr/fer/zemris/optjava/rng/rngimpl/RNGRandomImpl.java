@@ -51,7 +51,7 @@ public class RNGRandomImpl implements IRNG {
 
     @Override
     public int nextInt(int min, int max) {
-        return random.nextInt() * (max - min) + min;
+        return random.nextInt(max - min) + min;
     }
 
     @Override
