@@ -1,6 +1,7 @@
-package hr.fer.zemris.generic.ga.crossover;
+package hr.fer.zemris.optjava.dz11.ga;
 
 import hr.fer.zemris.generic.ga.GASolution;
+import hr.fer.zemris.generic.ga.ICrossover;
 
 import java.util.Arrays;
 import java.util.Collection;

@@ -1,6 +1,7 @@
-package hr.fer.zemris.generic.ga.selection;
+package hr.fer.zemris.optjava.dz11.ga;
 
 import hr.fer.zemris.generic.ga.GASolution;
+import hr.fer.zemris.generic.ga.ISelection;
 
 import java.util.ArrayList;
 import java.util.Collection;

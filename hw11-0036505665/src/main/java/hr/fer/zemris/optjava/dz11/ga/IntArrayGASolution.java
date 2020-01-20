@@ -1,4 +1,4 @@
-package hr.fer.zemris.optjava.dz11;
+package hr.fer.zemris.optjava.dz11.ga;
 
 import hr.fer.zemris.generic.ga.GASolution;
 

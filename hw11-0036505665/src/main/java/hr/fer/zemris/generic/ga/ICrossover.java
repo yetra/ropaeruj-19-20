@@ -1,4 +1,4 @@
-package hr.fer.zemris.generic.ga.crossover;
+package hr.fer.zemris.generic.ga;
 
 import hr.fer.zemris.generic.ga.GASolution;
 
