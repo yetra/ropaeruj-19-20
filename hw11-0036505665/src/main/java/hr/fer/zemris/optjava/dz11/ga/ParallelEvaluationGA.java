@@ -201,11 +201,25 @@ public class ParallelEvaluationGA {
     /**
      * A job for evaluating a solution.
      */
-    private static class EvaluationJob implements Runnable {
+    private class EvaluationJob implements Runnable {
 
         @Override
         public void run() {
-            // TODO
+            while (true) {
+                try {
+                    GASolution<int[]> solution = notEvaluatedQueue.take();
+                    if (solution.getData() == null) {
+                        break; // poison
+                    }
+
+                    evaluator.evaluate(solution);
+                    evaluatedQueue.put(solution);
+                    
+                } catch (InterruptedException e1) {
+                    System.err.println("Thread interrupted.");
+                    System.exit(1);
+                }
+            }
         }
     }
 }
