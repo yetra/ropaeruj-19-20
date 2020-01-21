@@ -132,12 +132,7 @@ public class ParallelEvaluationGA {
 
                 for (GASolution<int[]> child : children) {
                     mutation.mutate(child);
-                    evaluator.evaluate(child);
                     nextPopulation.add(child);
-
-                    if (child.fitness > best.fitness) {
-                        best = child;
-                    }
                 }
             }
 
@@ -170,14 +165,7 @@ public class ParallelEvaluationGA {
                 data[j + 4] = rng.nextInt(Byte.MIN_VALUE, Byte.MAX_VALUE);
             }
 
-            GASolution<int[]> solution = new IntArrayGASolution(data);
-
-            evaluator.evaluate(solution);
-            if (best == null || solution.fitness > best.fitness) {
-                best = solution;
-            }
-
-            population.add(solution);
+            population.add(new IntArrayGASolution(data));
         }
     }
 
@@ -194,7 +182,13 @@ public class ParallelEvaluationGA {
 
         population.clear();
         for (int i = 0; i < populationSize; i++) {
-            population.add(evaluationQueue.take());
+            GASolution<int[]> solution = evaluationQueue.take();
+
+            if (best == null || solution.fitness > best.fitness) {
+                best = solution;
+            }
+
+            population.add(solution);
         }
     }
 
