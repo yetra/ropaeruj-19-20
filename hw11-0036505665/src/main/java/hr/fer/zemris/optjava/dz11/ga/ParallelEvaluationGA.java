@@ -93,6 +93,8 @@ public class ParallelEvaluationGA {
         this.populationSize = populationSize;
         this.minFitness = minFitness;
         this.maxIterations = maxIterations;
+        this.rectangleCount = rectangleCount;
+        this.image = image;
         this.selection = selection;
         this.crossover = crossover;
         this.mutation = mutation;
