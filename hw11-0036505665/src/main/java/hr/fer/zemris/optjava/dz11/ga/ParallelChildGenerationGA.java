@@ -8,6 +8,7 @@ import hr.fer.zemris.optjava.rng.RNG;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -65,6 +66,11 @@ public class ParallelChildGenerationGA {
     private IGAEvaluator<int[]> evaluator;
 
     /**
+     * The population of solutions.
+     */
+    private List<GASolution<int[]>> population;
+
+    /**
      * The best solution found by the algorithm.
      */
     private GASolution<int[]> best;
@@ -75,9 +81,14 @@ public class ParallelChildGenerationGA {
     private IRNG rng;
 
     /**
-     * A queue for parallel child generation.
+     * A queue containing generation tasks - the number of children to generate.
      */
-    private LinkedBlockingQueue<GASolution<int[]>> generationQueue;
+    private LinkedBlockingQueue<Integer> generationTaskQueue;
+
+    /**
+     * A queue of collections of generated children.
+     */
+    private LinkedBlockingQueue<Collection<GASolution<int[]>>> generatedQueue;
 
     /**
      * Constructs a {@link ParallelEvaluationGA} object with the given parameters.
@@ -103,14 +114,15 @@ public class ParallelChildGenerationGA {
         this.evaluator = evaluator;
 
         this.rng = RNG.getRNG();
-        this.generationQueue = new LinkedBlockingQueue<>(populationSize);
+        this.population = new ArrayList<>(populationSize);
+        this.generationTaskQueue = new LinkedBlockingQueue<>();
+        this.generatedQueue = new LinkedBlockingQueue<>();
     }
 
     /**
      * Executes the algorithm.
      */
     public GASolution<int[]> run() throws InterruptedException {
-        List<GASolution<int[]>> population = new ArrayList<>(populationSize);
         List<GASolution<int[]>> nextPopulation = new ArrayList<>(populationSize);
 
         int workerCount = Runtime.getRuntime().availableProcessors();
@@ -120,31 +132,23 @@ public class ParallelChildGenerationGA {
             workers[i].start();
         }
 
-        initialize(population);
+        initialize();
 
         int iteration = 0;
         while (iteration < maxIterations && best.fitness < minFitness){
             // TODO print best
 
-            for (int i = 0; i < populationSize / 2; i++) {
-                GASolution<int[]> firstParent = selection.from(population);
-                GASolution<int[]> secondParent = selection.from(population);
-                Collection<GASolution<int[]>> children = crossover.of(firstParent, secondParent);
-
-                for (GASolution<int[]> child : children) {
-                    mutation.mutate(child);
-
-                    evaluator.evaluate(child);
-                    if (child.fitness > best.fitness) {
-                        best = child;
-                    }
-
-                    nextPopulation.add(child);
-                }
+            for (int i = 0; i < populationSize; i++) {
+                Collection<GASolution<int[]>> generated = generatedQueue.take();
+                nextPopulation.addAll(generated);
             }
 
             population = nextPopulation;
             nextPopulation.clear();
+        }
+
+        for (int i = 0; i < workerCount; i++) {
+            generationTaskQueue.put(0);
         }
 
         return best;
@@ -152,10 +156,8 @@ public class ParallelChildGenerationGA {
 
     /**
      * Initializes the given population with random solutions.
-     *
-     * @param population the population to initialize
      */
-    private void initialize(Collection<GASolution<int[]>> population) {
+    private void initialize() {
         int width = image.getWidth();
         int height = image.getHeight();
 
@@ -183,13 +185,43 @@ public class ParallelChildGenerationGA {
     }
 
     /**
-     * A job for evaluating a solution.
+     * A job for creating a specified number of child solutions.
      */
-    private static class GenerationJob implements Runnable {
+    private class GenerationJob implements Runnable {
 
         @Override
         public void run() {
-            // TODO
+            while (true) {
+                try {
+                    int childrenToGenerate = generationTaskQueue.take();
+                    if (childrenToGenerate == 0) {
+                        break; // poison
+                    }
+
+                    Collection<GASolution<int[]>> generated = new ArrayList<>(childrenToGenerate);
+                    for (int i = 0; i < childrenToGenerate / 2; i++) {
+                        GASolution<int[]> firstParent = selection.from(population);
+                        GASolution<int[]> secondParent = selection.from(population);
+                        Collection<GASolution<int[]>> children = crossover.of(firstParent, secondParent);
+
+                        for (GASolution<int[]> child : children) {
+                            mutation.mutate(child);
+
+                            evaluator.evaluate(child);
+                            if (child.fitness > best.fitness) {
+                                best = child;
+                            }
+
+                            generated.add(child);
+                        }
+                    }
+
+                    generatedQueue.put(generated);
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }
