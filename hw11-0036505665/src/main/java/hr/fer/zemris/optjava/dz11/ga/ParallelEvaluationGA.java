@@ -2,10 +2,12 @@ package hr.fer.zemris.optjava.dz11.ga;
 
 import hr.fer.zemris.art.GrayScaleImage;
 import hr.fer.zemris.generic.ga.*;
+import hr.fer.zemris.optjava.rng.EVOThread;
 import hr.fer.zemris.optjava.rng.IRNG;
 import hr.fer.zemris.optjava.rng.RNG;
 
 import java.util.*;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * A generational GA implementation where solution evaluation is parallelized.
@@ -71,6 +73,11 @@ public class ParallelEvaluationGA {
     private IRNG rng; // TODO use in operator implementations
 
     /**
+     * A qu
+     */
+    private LinkedBlockingQueue<GASolution<int[]>> evaluationQueue;
+
+    /**
      * Constructs a {@link ParallelEvaluationGA} object with the given parameters.
      *
      * @param populationSize the size of the population
@@ -90,19 +97,27 @@ public class ParallelEvaluationGA {
         this.crossover = crossover;
         this.mutation = mutation;
         this.evaluator = evaluator;
+
         this.rng = RNG.getRNG();
+        this.evaluationQueue = new LinkedBlockingQueue<>(populationSize);
     }
 
     /**
      * Executes the algorithm.
      */
-    public GASolution<int[]> run() {
+    public GASolution<int[]> run() throws InterruptedException {
         List<GASolution<int[]>> population = new ArrayList<>(populationSize);
         List<GASolution<int[]>> nextPopulation = new ArrayList<>(populationSize);
 
-        initialize(population);
+        int workerCount = Runtime.getRuntime().availableProcessors();
+        EVOThread[] workers = new EVOThread[workerCount];
+        for (int i = 0; i < workerCount; i++) {
+            workers[i] = new EVOThread(new EvaluationJob());
+            workers[i].start();
+        }
 
-        // TODO threads
+        initialize(population);
+        evaluate(population);
 
         int iteration = 0;
         while (iteration < maxIterations && best.fitness < minFitness){
@@ -124,6 +139,7 @@ public class ParallelEvaluationGA {
                 }
             }
 
+            evaluate(nextPopulation);
             population = nextPopulation;
             nextPopulation.clear();
         }
@@ -160,6 +176,34 @@ public class ParallelEvaluationGA {
             }
 
             population.add(solution);
+        }
+    }
+
+    /**
+     * Evaluates the given population using the {@link #evaluationQueue}.
+     *
+     * @param population the population to evaluate
+     * @throws InterruptedException if a thread is interrupted
+     */
+    private void evaluate(List<GASolution<int[]>> population) throws InterruptedException {
+        for (GASolution<int[]> solution : population) {
+            evaluationQueue.put(solution);
+        }
+
+        population.clear();
+        for (int i = 0; i < populationSize; i++) {
+            population.add(evaluationQueue.take());
+        }
+    }
+
+    /**
+     * A job for evaluating a solution.
+     */
+    private static class EvaluationJob implements Runnable {
+
+        @Override
+        public void run() {
+            // TODO
         }
     }
 }
