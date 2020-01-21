@@ -14,4 +14,9 @@ public class IntArrayGASolution extends GASolution<int[]> {
     public GASolution<int[]> duplicate() {
         return new IntArrayGASolution(Arrays.copyOf(data, data.length));
     }
+
+    @Override
+    public String toString() {
+        return "data=" + Arrays.toString(data) + ", fitness=" + fitness;
+    }
 }
