@@ -147,6 +147,10 @@ public class ParallelEvaluationGA {
             nextPopulation.clear();
         }
 
+        for (int i = 0; i < workerCount; i++) {
+            notEvaluatedQueue.put(new IntArrayGASolution(null));
+        }
+
         return best;
     }
 
