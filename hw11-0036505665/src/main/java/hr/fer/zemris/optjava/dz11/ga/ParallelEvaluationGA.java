@@ -137,14 +137,18 @@ public class ParallelEvaluationGA {
      * @param population the population to initialize
      */
     private void initialize(Collection<GASolution<int[]>> population) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+
         for (int i = 0; i < populationSize; i++) {
             int[] data = new int[1 + rectangleCount * 5];
+
             data[0] = rng.nextInt(Byte.MIN_VALUE, Byte.MAX_VALUE);
             for (int j = 1; j < 1 + rectangleCount * 5; j += 5) {
-                data[j] = rng.nextInt(0, image.getWidth());
-                data[j + 1] = rng.nextInt(0, image.getHeight());
-                data[j + 2] = rng.nextInt(1, image.getWidth());
-                data[j + 3] = rng.nextInt(1, image.getHeight());
+                data[j] = rng.nextInt(0, width);
+                data[j + 1] = rng.nextInt(0, height);
+                data[j + 2] = rng.nextInt(1, width);
+                data[j + 3] = rng.nextInt(1, height);
                 data[j + 4] = rng.nextInt(Byte.MIN_VALUE, Byte.MAX_VALUE);
             }
 
