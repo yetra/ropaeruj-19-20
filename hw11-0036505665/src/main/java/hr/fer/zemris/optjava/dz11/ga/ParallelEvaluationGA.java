@@ -73,7 +73,7 @@ public class ParallelEvaluationGA {
     private IRNG rng;
 
     /**
-     * A qu
+     * A queue for parallel solution evaluation.
      */
     private LinkedBlockingQueue<GASolution<int[]>> evaluationQueue;
 
