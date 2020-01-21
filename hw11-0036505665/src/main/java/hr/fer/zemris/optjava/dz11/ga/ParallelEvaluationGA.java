@@ -73,9 +73,14 @@ public class ParallelEvaluationGA {
     private IRNG rng;
 
     /**
-     * A queue for parallel solution evaluation.
+     * A queue of solutions yet to be evaluated.
      */
-    private LinkedBlockingQueue<GASolution<int[]>> evaluationQueue;
+    private LinkedBlockingQueue<GASolution<int[]>> notEvaluatedQueue;
+
+    /**
+     * A queue of already evaluated solutions.
+     */
+    private LinkedBlockingQueue<GASolution<int[]>> evaluatedQueue;
 
     /**
      * Constructs a {@link ParallelEvaluationGA} object with the given parameters.
@@ -101,7 +106,8 @@ public class ParallelEvaluationGA {
         this.evaluator = evaluator;
 
         this.rng = RNG.getRNG();
-        this.evaluationQueue = new LinkedBlockingQueue<>(populationSize);
+        this.notEvaluatedQueue = new LinkedBlockingQueue<>(populationSize);
+        this.evaluatedQueue = new LinkedBlockingQueue<>(populationSize);
     }
 
     /**
@@ -170,19 +176,19 @@ public class ParallelEvaluationGA {
     }
 
     /**
-     * Evaluates the given population using the {@link #evaluationQueue}.
+     * Evaluates the given population using the {@link #notEvaluatedQueue}.
      *
      * @param population the population to evaluate
      * @throws InterruptedException if a thread is interrupted
      */
     private void evaluate(List<GASolution<int[]>> population) throws InterruptedException {
         for (GASolution<int[]> solution : population) {
-            evaluationQueue.put(solution);
+            notEvaluatedQueue.put(solution);
         }
 
         population.clear();
         for (int i = 0; i < populationSize; i++) {
-            GASolution<int[]> solution = evaluationQueue.take();
+            GASolution<int[]> solution = evaluatedQueue.take();
 
             if (best == null || solution.fitness > best.fitness) {
                 best = solution;
