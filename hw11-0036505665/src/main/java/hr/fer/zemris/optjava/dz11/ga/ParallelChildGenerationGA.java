@@ -8,7 +8,6 @@ import hr.fer.zemris.optjava.rng.RNG;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -101,8 +100,8 @@ public class ParallelChildGenerationGA {
      * @param mutation the mutation to be used on the population
      */
     public ParallelChildGenerationGA(int populationSize, double minFitness, int maxIterations, int rectangleCount,
-                                GrayScaleImage image, ISelection<int[]> selection, ICrossover<int[]> crossover,
-                                IMutation<int[]> mutation, IGAEvaluator<int[]> evaluator) {
+                                     GrayScaleImage image, ISelection<int[]> selection, ICrossover<int[]> crossover,
+                                     IMutation<int[]> mutation, IGAEvaluator<int[]> evaluator) {
         this.populationSize = populationSize;
         this.minFitness = minFitness;
         this.maxIterations = maxIterations;
