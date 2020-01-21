@@ -2,6 +2,7 @@ package hr.fer.zemris.optjava.dz11.ga;
 
 import hr.fer.zemris.generic.ga.GASolution;
 import hr.fer.zemris.generic.ga.ISelection;
+import hr.fer.zemris.optjava.rng.IRNG;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -35,6 +36,11 @@ public class TournamentSelection<T> implements ISelection<T> {
     private int tournamentSize;
 
     /**
+     * The random number generator to use.
+     */
+    private IRNG rng;
+
+    /**
      * Constructs a {@link TournamentSelection} of a given size.
      *
      * @param tournamentSize the size of the tournament
@@ -54,7 +60,7 @@ public class TournamentSelection<T> implements ISelection<T> {
         List<GASolution<T>> tournament = new ArrayList<>();
 
         while (tournament.size() < tournamentSize) {
-            int randomIndex = ThreadLocalRandom.current().nextInt(population.size());
+            int randomIndex = rng.nextInt(0, population.size());
             tournament.add(populationList.get(randomIndex));
         }
 

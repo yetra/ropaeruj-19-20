@@ -70,7 +70,7 @@ public class ParallelEvaluationGA {
     /**
      * The random number generator to use.
      */
-    private IRNG rng; // TODO use in operator implementations
+    private IRNG rng;
 
     /**
      * A qu

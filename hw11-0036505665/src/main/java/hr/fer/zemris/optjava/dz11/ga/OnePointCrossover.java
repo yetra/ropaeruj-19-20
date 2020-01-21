@@ -2,6 +2,7 @@ package hr.fer.zemris.optjava.dz11.ga;
 
 import hr.fer.zemris.generic.ga.GASolution;
 import hr.fer.zemris.generic.ga.ICrossover;
+import hr.fer.zemris.optjava.rng.IRNG;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -31,6 +32,11 @@ public class OnePointCrossover implements ICrossover<int[]> {
     private double probability;
 
     /**
+     * The random number generator to use.
+     */
+    private IRNG rng;
+
+    /**
      * Constructs a {@link OnePointCrossover} of the default probability.
      */
     public OnePointCrossover() {
@@ -58,7 +64,7 @@ public class OnePointCrossover implements ICrossover<int[]> {
 
         GASolution<int[]> firstChild = firstParent.duplicate();
         GASolution<int[]> secondChild = secondParent.duplicate();
-        int point = ThreadLocalRandom.current().nextInt(firstParent.data.length);
+        int point = rng.nextInt(0, firstParent.data.length);
 
         for (int i = point; i < firstParent.data.length; i++) {
             firstChild.data[i] = secondParent.data[i];
