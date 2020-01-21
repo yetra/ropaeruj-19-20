@@ -3,6 +3,7 @@ package hr.fer.zemris.optjava.dz11.ga;
 import hr.fer.zemris.generic.ga.GASolution;
 import hr.fer.zemris.generic.ga.ICrossover;
 import hr.fer.zemris.optjava.rng.IRNG;
+import hr.fer.zemris.optjava.rng.RNG;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -34,7 +35,7 @@ public class OnePointCrossover implements ICrossover<int[]> {
     /**
      * The random number generator to use.
      */
-    private IRNG rng;
+    private IRNG rng = RNG.getRNG();
 
     /**
      * Constructs a {@link OnePointCrossover} of the default probability.
@@ -58,7 +59,7 @@ public class OnePointCrossover implements ICrossover<int[]> {
             throw new IllegalArgumentException("Parent solutions are not of the same size!");
         }
 
-        if (probability > ThreadLocalRandom.current().nextDouble()) {
+        if (probability > rng.nextDouble()) {
             return Arrays.asList(firstParent, secondParent);
         }
 

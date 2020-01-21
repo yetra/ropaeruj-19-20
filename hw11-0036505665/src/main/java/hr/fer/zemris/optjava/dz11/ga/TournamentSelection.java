@@ -3,12 +3,12 @@ package hr.fer.zemris.optjava.dz11.ga;
 import hr.fer.zemris.generic.ga.GASolution;
 import hr.fer.zemris.generic.ga.ISelection;
 import hr.fer.zemris.optjava.rng.IRNG;
+import hr.fer.zemris.optjava.rng.RNG;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * An implementation of tournament selection.
@@ -38,7 +38,7 @@ public class TournamentSelection<T> implements ISelection<T> {
     /**
      * The random number generator to use.
      */
-    private IRNG rng;
+    private IRNG rng = RNG.getRNG();
 
     /**
      * Constructs a {@link TournamentSelection} of a given size.

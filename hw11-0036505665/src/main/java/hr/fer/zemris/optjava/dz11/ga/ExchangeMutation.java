@@ -3,6 +3,7 @@ package hr.fer.zemris.optjava.dz11.ga;
 import hr.fer.zemris.generic.ga.GASolution;
 import hr.fer.zemris.generic.ga.IMutation;
 import hr.fer.zemris.optjava.rng.IRNG;
+import hr.fer.zemris.optjava.rng.RNG;
 
 /**
  * An {@link IMutation} implementation that swaps two values in a given {@link GASolution}.
@@ -14,7 +15,7 @@ public class ExchangeMutation implements IMutation<int[]> {
     /**
      * The random number generator to use.
      */
-    private IRNG rng;
+    private IRNG rng = RNG.getRNG();
 
     @Override
     public GASolution<int[]> of(GASolution<int[]> solution) {
