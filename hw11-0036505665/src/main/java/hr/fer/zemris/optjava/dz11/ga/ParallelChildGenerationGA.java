@@ -144,6 +144,8 @@ public class ParallelChildGenerationGA {
 
             population = nextPopulation;
             nextPopulation.clear();
+
+            iteration++;
         }
 
         for (int i = 0; i < workerCount; i++) {

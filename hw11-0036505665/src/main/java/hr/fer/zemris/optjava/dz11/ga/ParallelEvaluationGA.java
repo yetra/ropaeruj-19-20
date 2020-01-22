@@ -145,6 +145,8 @@ public class ParallelEvaluationGA {
             evaluate(nextPopulation);
             population = nextPopulation;
             nextPopulation.clear();
+
+            iteration++;
         }
 
         for (int i = 0; i < workerCount; i++) {
