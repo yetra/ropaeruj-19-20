@@ -122,8 +122,6 @@ public class ParallelChildGenerationGA {
      * Executes the algorithm.
      */
     public GASolution<int[]> run() throws InterruptedException {
-        List<GASolution<int[]>> nextPopulation = new ArrayList<>(populationSize);
-
         int workerCount = Runtime.getRuntime().availableProcessors();
         EVOThread[] workers = new EVOThread[workerCount];
         for (int i = 0; i < workerCount; i++) {
@@ -139,13 +137,13 @@ public class ParallelChildGenerationGA {
 
             addNewTasks(workerCount);
 
+            List<GASolution<int[]>> nextPopulation = new ArrayList<>(populationSize);
             for (int i = 0; i < populationSize; i++) {
                 Collection<GASolution<int[]>> generated = generatedQueue.take();
                 nextPopulation.addAll(generated);
             }
 
             population = nextPopulation;
-            nextPopulation.clear();
 
             iteration++;
         }
