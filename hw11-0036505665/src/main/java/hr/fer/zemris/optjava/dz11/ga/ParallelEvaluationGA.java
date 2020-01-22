@@ -115,7 +115,6 @@ public class ParallelEvaluationGA {
      */
     public GASolution<int[]> run() throws InterruptedException {
         List<GASolution<int[]>> population = new ArrayList<>(populationSize);
-        List<GASolution<int[]>> nextPopulation = new ArrayList<>(populationSize);
 
         int workerCount = Runtime.getRuntime().availableProcessors();
         EVOThread[] workers = new EVOThread[workerCount];
@@ -130,6 +129,7 @@ public class ParallelEvaluationGA {
         int iteration = 0;
         while (iteration < maxIterations && best.fitness < minFitness){
             System.out.println("Iteration " + iteration + ": " + best);
+            List<GASolution<int[]>> nextPopulation = new ArrayList<>(populationSize);
 
             for (int i = 0; i < populationSize / 2; i++) {
                 GASolution<int[]> firstParent = selection.from(population);
@@ -144,7 +144,6 @@ public class ParallelEvaluationGA {
 
             evaluate(nextPopulation);
             population = nextPopulation;
-            nextPopulation.clear();
 
             iteration++;
         }
