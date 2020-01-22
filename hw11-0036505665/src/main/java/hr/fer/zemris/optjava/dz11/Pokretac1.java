@@ -3,6 +3,7 @@ package hr.fer.zemris.optjava.dz11;
 import hr.fer.zemris.art.GrayScaleImage;
 import hr.fer.zemris.generic.ga.*;
 import hr.fer.zemris.optjava.dz11.ga.*;
+import hr.fer.zemris.optjava.rng.EVOThread;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -44,20 +45,25 @@ public class Pokretac1 {
         Path solutionPath = Paths.get(args[5]);
         Path approximatedImagePath = Paths.get(args[6]);
 
-        ISelection<int[]> selection = new TournamentSelection<>(2);
-        ICrossover<int[]> crossover = new OnePointCrossover();
-        IMutation<int[]> mutation = new ExchangeMutation();
         Evaluator evaluator = new Evaluator(image);
 
-        GASolution<int[]> best = new ParallelEvaluationGA(
-                populationSize, minFitness, maxIterations, rectangleCount,
-                image, selection, crossover, mutation, evaluator
-        ).run();
+        new EVOThread(() -> {
+            try {
+                GASolution<int[]> best = new ParallelEvaluationGA(
+                        populationSize, minFitness, maxIterations, rectangleCount, image,
+                        new TournamentSelection<>(2), new UniformCrossover(), new ExchangeMutation(), evaluator
+                ).run();
 
-        GrayScaleImage approximatedImage = evaluator.draw(best, image);
-        approximatedImage.save(approximatedImagePath.toFile());
+                GrayScaleImage approximatedImage = evaluator.draw(best, image);
+                approximatedImage.save(approximatedImagePath.toFile());
 
-        writeSolution(best, solutionPath);
+                writeSolution(best, solutionPath);
+
+            } catch (InterruptedException | IOException e) {
+                System.out.println("Exception occurred!");
+                System.exit(1);
+            }
+        }).start();
     }
 
     /**
