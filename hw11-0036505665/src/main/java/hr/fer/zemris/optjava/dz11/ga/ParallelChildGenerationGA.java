@@ -161,10 +161,10 @@ public class ParallelChildGenerationGA {
         int height = image.getHeight();
 
         for (int i = 0; i < populationSize; i++) {
-            int[] data = new int[1 + rectangleCount * 5];
+            int[] data = new int[1 + 5 * rectangleCount];
 
             data[0] = rng.nextInt(Byte.MIN_VALUE, Byte.MAX_VALUE);
-            for (int j = 1; j < 1 + rectangleCount * 5; j += 5) {
+            for (int j = 1; j < data.length; j += 5) {
                 data[j] = rng.nextInt(0, width);
                 data[j + 1] = rng.nextInt(0, height);
                 data[j + 2] = rng.nextInt(1, width);
