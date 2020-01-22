@@ -137,6 +137,8 @@ public class ParallelChildGenerationGA {
         while (iteration < maxIterations && best.fitness < minFitness){
             System.out.println("Iteration " + iteration + ": " + best);
 
+            addNewTasks(workerCount);
+
             for (int i = 0; i < populationSize; i++) {
                 Collection<GASolution<int[]>> generated = generatedQueue.take();
                 nextPopulation.addAll(generated);
@@ -183,6 +185,23 @@ public class ParallelChildGenerationGA {
 
             population.add(solution);
         }
+    }
+
+    /**
+     * Adds new tasks to {@link #generationTaskQueue}.
+     *
+     * @param workerCount the number of workers
+     * @throws InterruptedException if a thread is interrupted
+     */
+    private void addNewTasks(int workerCount) throws InterruptedException {
+        int taskSize = populationSize / workerCount;
+        int extra = populationSize - taskSize * workerCount;
+
+        for (int i = 0; i < workerCount - 1; i++) {
+            generationTaskQueue.put(taskSize);
+        }
+
+        generationTaskQueue.put(taskSize + extra);
     }
 
     /**
