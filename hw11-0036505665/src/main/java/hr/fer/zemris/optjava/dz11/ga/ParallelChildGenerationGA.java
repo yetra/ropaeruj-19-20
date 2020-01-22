@@ -135,7 +135,7 @@ public class ParallelChildGenerationGA {
 
         int iteration = 0;
         while (iteration < maxIterations && best.fitness < minFitness){
-            // TODO print best
+            System.out.println("Iteration " + iteration + ": " + best);
 
             for (int i = 0; i < populationSize; i++) {
                 Collection<GASolution<int[]>> generated = generatedQueue.take();

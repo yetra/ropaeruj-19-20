@@ -129,7 +129,7 @@ public class ParallelEvaluationGA {
 
         int iteration = 0;
         while (iteration < maxIterations && best.fitness < minFitness){
-            // TODO print best
+            System.out.println("Iteration " + iteration + ": " + best);
 
             for (int i = 0; i < populationSize / 2; i++) {
                 GASolution<int[]> firstParent = selection.from(population);
