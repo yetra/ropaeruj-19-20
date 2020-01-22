@@ -15,6 +15,9 @@ import java.nio.file.Paths;
 /**
  * The main program for running {@link ParallelEvaluationGA}.
  *
+ * Usage example:
+ * 11-kuca-200-133.png 200 100 10000 -1000 best_1.txt approximated_1.png
+ *
  * @author Bruna Dujmović
  *
  */

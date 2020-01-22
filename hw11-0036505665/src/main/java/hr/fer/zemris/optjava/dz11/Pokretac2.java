@@ -15,6 +15,9 @@ import java.nio.file.Paths;
 /**
  * The main program for running {@link ParallelChildGenerationGA}.
  *
+ * Usage example:
+ * 11-kuca-200-133.png 200 100 10000 -1000 best_2.txt approximated_2.png
+ *
  * @author Bruna Dujmović
  *
  */
