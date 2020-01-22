@@ -87,7 +87,7 @@ public class ParallelChildGenerationGA {
     /**
      * A queue of collections of generated children.
      */
-    private LinkedBlockingQueue<Collection<GASolution<int[]>>> generatedQueue;
+    private LinkedBlockingQueue<GASolution<int[]>> generatedQueue;
 
     /**
      * Constructs a {@link ParallelEvaluationGA} object with the given parameters.
@@ -138,9 +138,8 @@ public class ParallelChildGenerationGA {
             addNewTasks(workerCount);
 
             List<GASolution<int[]>> nextPopulation = new ArrayList<>(populationSize);
-            for (int i = 0; i < populationSize; i++) {
-                Collection<GASolution<int[]>> generated = generatedQueue.take();
-                nextPopulation.addAll(generated);
+            while (nextPopulation.size() < populationSize) {
+                nextPopulation.add(generatedQueue.take());
             }
 
             population = nextPopulation;
@@ -216,8 +215,8 @@ public class ParallelChildGenerationGA {
                         break; // poison
                     }
 
-                    Collection<GASolution<int[]>> generated = new ArrayList<>(childrenToGenerate);
-                    for (int i = 0; i < childrenToGenerate / 2; i++) {
+                    int generatedChildren = 0;
+                    while (generatedChildren < childrenToGenerate) {
                         GASolution<int[]> firstParent = selection.from(population);
                         GASolution<int[]> secondParent = selection.from(population);
                         Collection<GASolution<int[]>> children = crossover.of(firstParent, secondParent);
@@ -230,11 +229,14 @@ public class ParallelChildGenerationGA {
                                 best = child;
                             }
 
-                            generated.add(child);
+                            generatedQueue.put(child);
+                            generatedChildren++;
+
+                            if (generatedChildren == childrenToGenerate) {
+                                break;
+                            }
                         }
                     }
-
-                    generatedQueue.put(generated);
 
                 } catch (InterruptedException e) {
                     e.printStackTrace();
